@@ -61,3 +61,54 @@ Row subTitle({String title, Color color}) {
     ],
   );
 }
+
+Widget buildMenuItem({
+  @required String text,
+  Image image,
+  Icon icon,
+  VoidCallback onClicked,
+}) {
+  final color = Color(0xFF10151A);
+
+  return Column(
+    children: [
+      ListTile(
+        leading: image ?? icon,
+        title: Text(
+          text,
+          style: TextStyle(
+              fontSize: 17, color: color, fontWeight: FontWeight.w400),
+        ),
+        onTap: onClicked,
+      ),
+      Divider(
+        color: Color(0xFFF5F5F5),
+        // color: Colors.grey,
+        thickness: 1,
+        height: 0,
+      )
+    ],
+  );
+}
+
+Widget buttonWidget(
+    {@required VoidCallback buttonAction,
+    @required Color buttonColor,
+    @required String buttonText}) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 45),
+    child: Material(
+      color: buttonColor,
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+      elevation: 1,
+      child: MaterialButton(
+        onPressed: buttonAction,
+        child: Text(
+          buttonText,
+          style: TextStyle(
+              color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+        ),
+      ),
+    ),
+  );
+}

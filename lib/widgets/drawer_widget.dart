@@ -1,4 +1,7 @@
+import 'package:aduaba_app/screens/user_account.dart';
 import 'package:flutter/material.dart';
+
+import '../constants.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -48,7 +51,13 @@ class DrawerWidget extends StatelessWidget {
                   image: Image.asset("assets/cart.png"), text: "Orders"),
               buildMenuItem(
                   image: Image.asset("assets/person.png"),
-                  text: "Account Details"),
+                  text: "Account Details",
+                  onClicked: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => UserAccount()));
+                  }),
             ],
           ),
         ),
@@ -114,24 +123,6 @@ class DrawerWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget buildMenuItem({
-    @required String text,
-    Image image,
-    VoidCallback onClicked,
-  }) {
-    final color = Color(0xFF10151A);
-
-    return ListTile(
-      leading: image,
-      title: Text(
-        text,
-        style:
-            TextStyle(fontSize: 17, color: color, fontWeight: FontWeight.w400),
-      ),
-      onTap: onClicked,
     );
   }
 }
