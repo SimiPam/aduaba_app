@@ -1,11 +1,15 @@
+import 'package:aduaba_app/screens/categories_list_screen.dart';
 import 'package:aduaba_app/screens/user_account.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
 class DrawerWidget extends StatelessWidget {
+  final VoidCallback openDraw;
+
   const DrawerWidget({
     Key key,
+    this.openDraw,
   }) : super(key: key);
 
   @override
@@ -42,22 +46,38 @@ class DrawerWidget extends StatelessWidget {
               buildMenuItem(
                   image: Image.asset("assets/cart.png"), text: "Cart"),
               buildMenuItem(
-                  image: Image.asset("assets/category.png"),
-                  text: "Categories"),
+                image: Image.asset("assets/category.png"),
+                text: "Categories",
+                onClicked: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) =>
+                        CategoriesListingScreen(openDrawer: openDraw),
+                  );
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             CategoriesListingScreen(openDrawer: openDraw)));
+                },
+              ),
               buildMenuItem(
                   image: Image.asset("assets/wishlist.png"),
                   text: "My Wishlist"),
               buildMenuItem(
                   image: Image.asset("assets/cart.png"), text: "Orders"),
               buildMenuItem(
-                  image: Image.asset("assets/person.png"),
-                  text: "Account Details",
-                  onClicked: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => UserAccount()));
-                  }),
+                image: Image.asset("assets/person.png"),
+                text: "Account Details",
+                onClicked: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => UserAccount(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),

@@ -37,44 +37,53 @@ class UserAccount extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
+            padding: EdgeInsets.only(right: 24),
             child: Column(children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: AssetImage("assets/cart.png"),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Column(
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        "Andrea Charles",
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w700),
+                      SizedBox(
+                        width: 20,
                       ),
-                      Text(
-                        "AndreaCharles@gmail.com",
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF999999),
-                            fontWeight: FontWeight.w400),
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: AssetImage("assets/cart.png"),
                       ),
-                      Text(
-                        "0908765432",
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF999999),
-                            fontWeight: FontWeight.w400),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Andrea Charles",
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w700),
+                          ),
+                          Text(
+                            "AndreaCharles@gmail.com",
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF999999),
+                                fontWeight: FontWeight.w400),
+                          ),
+                          Text(
+                            "0908765432",
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF999999),
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                  Image.asset("assets/edit.png"),
                 ],
               ),
               Container(

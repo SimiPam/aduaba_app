@@ -21,7 +21,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
-        child: DrawerWidget(),
+        child: DrawerWidget(
+          openDraw: () {
+            _scaffoldKey.currentState.openDrawer();
+          },
+        ),
       ),
       body: _widget ??
           HomeTab(openDraw: () {
