@@ -91,16 +91,21 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Filter",
-                                    style: TextStyle(
-                                        color: Color(0xFFBBBBBB),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
+                              GestureDetector(
+                                onTap: () {
+                                  _showModalBottomSheet(context);
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Filter",
+                                      style: TextStyle(
+                                          color: Color(0xFFBBBBBB),
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -279,6 +284,36 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  _showModalBottomSheet(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return AnimatedContainer(
+          duration: Duration(milliseconds: 1000),
+          // height: 300,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            children: [
+              Text(
+                "Filter",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Color(0xFF819272),
+                    fontWeight: FontWeight.w700),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
