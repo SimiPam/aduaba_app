@@ -47,7 +47,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   SizedBox(
                     height: 16,
                   ),
-                  buildSearchField(),
+                  buildSearchField('Search Product'),
                 ],
               ),
             ),

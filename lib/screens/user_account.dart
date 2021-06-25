@@ -138,10 +138,13 @@ class UserAccount extends StatelessWidget {
             ]),
           ),
         ),
-        buttonWidget(
-            buttonText: "Log Out",
-            buttonColor: Color(0xFFBB2F48),
-            buttonAction: () {}),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 45),
+          child: buttonWidget(
+              buttonText: "Log Out",
+              buttonColor: Color(0xFFBB2F48),
+              buttonAction: () {}),
+        ),
       ]),
     );
   }

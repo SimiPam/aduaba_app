@@ -105,7 +105,7 @@ class HomeTab extends StatelessWidget {
         SizedBox(
           height: 24,
         ),
-        buildSearchField(),
+        buildSearchField('Search Product'),
         SizedBox(
           height: 20,
         ),
@@ -395,6 +395,4 @@ class HomeTab extends StatelessWidget {
       ],
     );
   }
-
-
 }
