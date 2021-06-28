@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import 'cart_screen.dart';
+import 'empty_cart_screen.dart';
 
 class HomeTab extends StatelessWidget {
   final VoidCallback openDraw;
   HomeTab({Key key, this.openDraw}) : super(key: key);
+
+  bool _cartEmpty = false;
 
   List<String> _categoryList = ["Raw Food", "Spices", "Bakery", "Cosmetic"];
   List<Color> _categoryColors = [
@@ -68,9 +72,20 @@ class HomeTab extends StatelessWidget {
                 "Aduaba Fresh",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              CircleAvatar(
-                backgroundColor: Color(0xFF3A953C),
-                child: Image.asset("assets/homecart.png"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          _cartEmpty ? EmptyCartScreen() : CartScreen(),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: Color(0xFF3A953C),
+                  child: Image.asset("assets/homecart.png"),
+                ),
               ),
             ],
           ),

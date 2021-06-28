@@ -159,3 +159,44 @@ Widget outlineButtonWidget(
     ),
   );
 }
+
+Widget buildAddressInputField(
+    {String text,
+    TextEditingController controller,
+    Function(String) onChange,
+    Function(String) validate}) {
+  return TextFormField(
+    autofocus: false,
+    cursorColor: Color(0xFF10151A),
+    style: TextStyle(
+        fontSize: 15, color: Color(0xFF10151A), fontWeight: FontWeight.w700),
+
+    onChanged: onChange,
+    validator: validate,
+    controller: controller,
+    // onChanged: (tit) {
+    //   if (tit.isNotEmpty) {
+    //     setState(() {
+    //       title = tit;
+    //     });
+    //   }
+    // },
+    maxLines: null,
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(horizontal: 13.5, vertical: 16),
+      hintText: text,
+      hintStyle: TextStyle(
+          color: Color(0xFFBABABA), fontWeight: FontWeight.w400, fontSize: 15),
+      filled: true,
+      fillColor: Color(0xFFF7F7F7),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+    ),
+  );
+}

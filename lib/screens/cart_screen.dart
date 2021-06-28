@@ -1,3 +1,4 @@
+import 'package:aduaba_app/screens/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -137,20 +138,20 @@ class _CartScreenState extends State<CartScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  height: 150,
+                                  height: 140,
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                    // mainAxisAlignment:
+                                    //     MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
                                         width: 250,
                                         child: Text(
                                           "Herbsconnect Organic Acai Berry Powder Freeze Dried",
                                           style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w400,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                       ),
@@ -163,7 +164,7 @@ class _CartScreenState extends State<CartScreen> {
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
                                           letterSpacing: 1.2,
-                                          color: Color(0xFF819272),
+                                          color: Color(0xFFBBBBBB),
                                         ),
                                       ),
                                       SizedBox(
@@ -199,6 +200,9 @@ class _CartScreenState extends State<CartScreen> {
                                             ),
                                           ),
                                         ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                       Row(
                                         mainAxisAlignment:
@@ -285,6 +289,7 @@ class _CartScreenState extends State<CartScreen> {
                             width: 60,
                             height: 60,
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
                                 image: AssetImage(
                                   "assets/fruitbasket.png",
@@ -330,8 +335,8 @@ class _CartScreenState extends State<CartScreen> {
                         "N35,000.00",
                         style: TextStyle(
                             color: Color(0xFF000000),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -341,7 +346,14 @@ class _CartScreenState extends State<CartScreen> {
                   child: buttonWidget(
                       buttonText: "Proceed to Checkout",
                       buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {}),
+                      buttonAction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CheckoutScreen()),
+                        );
+                      }),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 45),

@@ -1,9 +1,9 @@
 import 'package:aduaba_app/model/sort_model.dart';
 import 'package:flutter/material.dart';
 
-class RadioItem extends StatelessWidget {
+class SortRadioItem extends StatelessWidget {
   final SortOptionsModel _item;
-  RadioItem(this._item);
+  SortRadioItem(this._item);
   @override
   Widget build(BuildContext context) {
     return Column(
