@@ -454,7 +454,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                   width: double.infinity,
                   child: buttonWidget(
                     buttonAction: () {
-                      Navigator.pop(context);
                       showDialog(
                         context: context,
                         builder: (context) {

@@ -1,4 +1,5 @@
 import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/screens/card_selection_screen.dart';
 import 'package:flutter/material.dart';
 
 class ShippingDetailsScreen extends StatefulWidget {
@@ -64,129 +65,9 @@ class _ShippingDetailsScreenState extends State<ShippingDetailsScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            showModalBottomSheet(
-                              isScrollControlled: true,
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  height: MediaQuery.of(context).size.height /
-                                      100 *
-                                      50,
-                                  decoration:
-                                      BoxDecoration(color: Colors.white),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Text(
-                                                "New Address",
-                                                style: TextStyle(
-                                                  fontSize: 24,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              IconButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                icon: Icon(Icons.cancel_sharp),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(18.0),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(18.0),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 270),
-                                                      child: Text(
-                                                        "Full Name",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 15),
-                                                    buildTextField('Full Name'),
-                                                    SizedBox(height: 25),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 250),
-                                                      child: Text(
-                                                        "Phone Number",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 15),
-                                                    buildNumberField(
-                                                        'Phone Number'),
-                                                    SizedBox(height: 25),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 180),
-                                                      child: Text(
-                                                        "Additional Phone Number",
-                                                        style: TextStyle(
-                                                            fontSize: 15,
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 15),
-                                                    buildNumberField(
-                                                        'Additional Phone Number'),
-                                                    SizedBox(height: 35),
-                                                    SizedBox(
-                                                      width: double.infinity,
-                                                      child: buttonWidget(
-                                                        buttonAction: () {},
-                                                        buttonColor:
-                                                            Color(0xFF3A953C),
-                                                        buttonText:
-                                                            'Add Address',
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  CardSelection(),
                             );
                           },
                           child: Text(
@@ -238,9 +119,8 @@ class _ShippingDetailsScreenState extends State<ShippingDetailsScreen> {
                                   Text(
                                     "Railway Quarters , tejuosho, Surulere ,Lagos, \nSurulere (Ojuelegba), Lagos \n+2348074057767",
                                     style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w400,
-                                      letterSpacing: 1.2,
                                       color: Colors.grey,
                                     ),
                                   ),
@@ -475,9 +355,8 @@ class _ShippingDetailsScreenState extends State<ShippingDetailsScreen> {
                                   Text(
                                     "Railway Quarters , tejuosho, Surulere ,Lagos, \nSurulere (Ojuelegba), Lagos \n+2348074057767",
                                     style: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w400,
-                                      letterSpacing: 1.2,
                                       color: Colors.grey,
                                     ),
                                   ),

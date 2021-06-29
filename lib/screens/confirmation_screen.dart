@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/home_tab.dart';
+import 'package:aduaba_app/screens/my_order.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -169,7 +170,14 @@ class _ConfirmationTabState extends State<ConfirmationTab> {
                   buttonWidget(
                       buttonText: "Track Order",
                       buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {}),
+                      buttonAction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => MyOrdersScreen(),
+                          ),
+                        );
+                      }),
                   SizedBox(
                     height: 16,
                   ),
@@ -180,7 +188,8 @@ class _ConfirmationTabState extends State<ConfirmationTab> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) => MyHomePage()),
+                            builder: (BuildContext context) => MyHomePage(),
+                          ),
                         );
                       }),
                   SizedBox(

@@ -76,6 +76,7 @@ class AddressRadioItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           TextButton(
+                            onPressed: () {},
                             style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,
                                 minimumSize: Size(50, 30),
@@ -97,6 +98,7 @@ class AddressRadioItem extends StatelessWidget {
                           ),
                           count > 1
                               ? TextButton(
+                                  onPressed: () {},
                                   child: Text(
                                     "Delete",
                                     style: TextStyle(
