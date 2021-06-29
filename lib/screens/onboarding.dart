@@ -37,19 +37,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Padding(
               padding: EdgeInsets.all(22.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 170),
-                    child: Text(
-                      "Explore Fresh Organic \nProducts Everyday",
-                      style: TextStyle(
-                        fontSize: 27,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
+                  Text(
+                    "Explore Fresh Organic \nProducts Everyday",
+                    style: TextStyle(
+                      fontSize: 27,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -85,22 +83,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       );
                     },
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Have an account already?',
-                            style:
-                                TextStyle(fontSize: 15, color: Colors.white70),
-                          ),
-                          TextSpan(
-                            text: ('Sign In '),
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ],
+                    child: Center(
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Have an account already?',
+                              style: TextStyle(
+                                  fontSize: 15, color: Colors.white70),
+                            ),
+                            TextSpan(
+                              text: (' Sign In '),
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -127,19 +127,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Padding(
                 padding: EdgeInsets.all(22.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 140),
-                      child: Text(
-                        "Eat healthy, Spend Wisely.\nBe happy",
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
+                    Text(
+                      "Eat healthy, Spend Wisely.\nBe happy",
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
+                      textAlign: TextAlign.left,
                     ),
                     SizedBox(height: 10),
                     Text(
@@ -175,22 +173,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           ),
                         );
                       },
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Have an account already?',
-                              style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
-                            ),
-                            TextSpan(
-                              text: ('Sign In '),
-                              style: TextStyle(
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                          ],
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: 'Have an account already?',
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.white70),
+                              ),
+                              TextSpan(
+                                text: (' Sign In '),
+                                style: TextStyle(
+                                    fontSize: 21,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -216,19 +216,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Padding(
               padding: EdgeInsets.all(22.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 170),
-                    child: Text(
-                      "Fast Delivery Within 24 \nhours Of Purchase",
-                      style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.left,
+                  Text(
+                    "Fast Delivery Within 24 \nhours Of Purchase",
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
                     ),
+                    textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 10),
                   Text(
@@ -264,22 +262,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       );
                     },
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: 'Have an account already?',
-                            style:
-                                TextStyle(fontSize: 18, color: Colors.white70),
-                          ),
-                          TextSpan(
-                            text: ('Sign In '),
-                            style: TextStyle(
-                                fontSize: 21,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ],
+                    child: Center(
+                      child: RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: 'Have an account already?',
+                              style: TextStyle(
+                                  fontSize: 18, color: Colors.white70),
+                            ),
+                            TextSpan(
+                              text: (' Sign In '),
+                              style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

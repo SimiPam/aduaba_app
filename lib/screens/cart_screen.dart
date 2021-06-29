@@ -359,7 +359,7 @@ class _CartScreenState extends State<CartScreen> {
                   padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 45),
                   child: outlineButtonWidget(
                       buttonText: "Continue Shopping",
-                      buttonColor: Color(0xFF3A953C),
+                      // buttonColor: Color(0xFF3A953C),
                       buttonAction: () {}),
                 ),
               ],
