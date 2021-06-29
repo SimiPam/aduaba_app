@@ -1,7 +1,7 @@
 import 'package:aduaba_app/model/sort_model.dart';
 import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
-import 'package:aduaba_app/widgets/radio_item_widget.dart';
+import 'package:aduaba_app/widgets/sort_radio_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math' as math;
@@ -22,7 +22,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   int _currentTab = 0;
   int height = 0;
   Widget _widget;
-  bool _cartEmpty = true;
+  bool _cartEmpty = false;
 
   List<SortOptionsModel> sampleData = [];
 
@@ -31,7 +31,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     // TODO: implement initState
     super.initState();
 //add this variable to the method that checks if the cart is empty
-    _cartEmpty = true;
+    _cartEmpty = false;
 
     sampleData.add(SortOptionsModel(
       isSelected: false,
@@ -458,7 +458,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         sampleData[index].isSelected = true;
                                       });
                                     },
-                                    child: RadioItem(sampleData[index]),
+                                    child: SortRadioItem(sampleData[index]),
                                   );
                                 })),
                       ],
