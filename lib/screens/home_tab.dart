@@ -11,17 +11,11 @@ class HomeTab extends StatelessWidget {
   bool _cartEmpty = false;
 
   List<String> _categoryList = ["Raw Food", "Spices", "Bakery", "Cosmetic"];
-  List<Color> _categoryColors = [
-    // Color(0xFF3A953C1A),
-    Color(0xFF3A953C),
-    Color(0xFFBB2F48),
-    Color(0xFF3C673D),
-    Color(0xFFE75A21),
-  ];
+
   int _selectedIindex = 0;
 
   Widget _buildCategoryList(int index) {
-    final color = _categoryColors[index % _categoryColors.length];
+    final color = categoryColors[index % categoryColors.length];
     return GestureDetector(
       // onTap: () {
       //   setState(() {

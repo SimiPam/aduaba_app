@@ -286,36 +286,4 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
       },
     );
   }
-
-  Padding buildAddressSubTitle(String text, VoidCallback onPress) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-                color: Color(0xFF10151A)),
-          ),
-          TextButton.icon(
-              onPressed: onPress,
-              icon: Icon(
-                Icons.add,
-                color: Color(0xFF3E3E3E),
-                size: 18,
-              ),
-              label: Text(
-                "Add Address",
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 13,
-                    color: Color(0xFF3E3E3E)),
-              ))
-        ],
-      ),
-    );
-  }
 }

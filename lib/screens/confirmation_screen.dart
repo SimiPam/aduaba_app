@@ -14,31 +14,6 @@ class _ConfirmationTabState extends State<ConfirmationTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // bottomNavigationBar: Padding(
-      //   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 33),
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.stretch,
-      //     children: [
-      //       buttonWidget(
-      //           buttonText: "Track Order",
-      //           buttonColor: Color(0xFF3A953C),
-      //           buttonAction: () {}),
-      //       SizedBox(
-      //         height: 16,
-      //       ),
-      //       outlineButtonWidget(
-      //           buttonText: "Continue Shopping",
-      //           buttonColor: Color(0xFF3A953C),
-      //           buttonAction: () {
-      //             Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                   builder: (BuildContext context) => MyHomePage()),
-      //             );
-      //           }),
-      //     ],
-      //   ),
-      // ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 24),
         child: Column(
