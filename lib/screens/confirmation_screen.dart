@@ -175,7 +175,7 @@ class _ConfirmationTabState extends State<ConfirmationTab> {
                   ),
                   outlineButtonWidget(
                       buttonText: "Continue Shopping",
-                      buttonColor: Color(0xFF3A953C),
+                      // buttonColor: Color(0xFF3A953C),
                       buttonAction: () {
                         Navigator.push(
                           context,

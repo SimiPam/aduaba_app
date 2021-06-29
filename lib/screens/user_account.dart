@@ -1,3 +1,7 @@
+import 'package:aduaba_app/screens/payment.dart';
+import 'package:aduaba_app/screens/shipping_details.dart';
+import 'package:aduaba_app/screens/user_account_edit.dart';
+import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -83,7 +87,17 @@ class UserAccount extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Image.asset("assets/edit.png"),
+                  InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                UserAccountEdit(),
+                          ),
+                        );
+                      },
+                      child: Image.asset("assets/edit.png")),
                 ],
               ),
               Container(
@@ -94,30 +108,61 @@ class UserAccount extends StatelessWidget {
                     SizedBox(
                       height: 28,
                     ),
-                    buildMenuItem(
-                        image: Image.asset(
-                          "assets/wishlist.png",
-                          color: Color(0xFFBB2F48),
-                        ),
-                        text: "My Wishlist"),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => WishlistScreen(),
+                          ),
+                        );
+                      },
+                      child: buildMenuItem(
+                          image: Image.asset(
+                            "assets/wishlist.png",
+                            color: Color(0xFFBB2F48),
+                          ),
+                          text: "My Wishlist"),
+                    ),
                     buildMenuItem(
                         image: Image.asset(
                           "assets/cart.png",
                           color: Color(0xFFE75A21),
                         ),
                         text: "My Orders"),
-                    buildMenuItem(
-                        image: Image.asset(
-                          "assets/payment.png",
-                          color: Color(0xFF3A953C),
-                        ),
-                        text: "Payment"),
-                    buildMenuItem(
-                        image: Image.asset(
-                          "assets/delivery.png",
-                          color: Color(0xFFF39E28),
-                        ),
-                        text: "Shipping details"),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => PaymentScreen(),
+                          ),
+                        );
+                      },
+                      child: buildMenuItem(
+                          image: Image.asset(
+                            "assets/payment.png",
+                            color: Color(0xFF3A953C),
+                          ),
+                          text: "Payment"),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                ShippingDetailsScreen(),
+                          ),
+                        );
+                      },
+                      child: buildMenuItem(
+                          image: Image.asset(
+                            "assets/delivery.png",
+                            color: Color(0xFFF39E28),
+                          ),
+                          text: "Shipping details"),
+                    ),
                     buildMenuItem(
                       icon: Icon(
                         Icons.settings,

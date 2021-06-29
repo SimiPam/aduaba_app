@@ -1,5 +1,59 @@
 import 'package:flutter/material.dart';
 
+Widget buildNumberField(String text) {
+  final color = Colors.white;
+
+  return TextField(
+    keyboardType: TextInputType.number,
+    style: TextStyle(
+      color: Color(0xFFF7F7F7),
+    ),
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      hintText: text,
+      hintStyle: TextStyle(
+          color: Color(0xFFBABABA), fontWeight: FontWeight.w400, fontSize: 15),
+      filled: true,
+      fillColor: Color(0xFFF7F7F7),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+    ),
+  );
+}
+
+Widget buildTextField(String text) {
+  final color = Colors.white;
+
+  return TextField(
+    keyboardType: TextInputType.name,
+    style: TextStyle(
+      color: Color(0xFFF7F7F7),
+    ),
+    decoration: InputDecoration(
+      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      hintText: text,
+      hintStyle: TextStyle(
+          color: Color(0xFFBABABA), fontWeight: FontWeight.w400, fontSize: 15),
+      filled: true,
+      fillColor: Color(0xFFF7F7F7),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+    ),
+  );
+}
+
 Widget buildSearchField(String text) {
   final color = Colors.white;
 
@@ -136,9 +190,71 @@ Widget buttonWidget(
   );
 }
 
-Widget outlineButtonWidget(
+Widget signUpButtonWidget(
     {@required VoidCallback buttonAction,
     @required Color buttonColor,
+    String img,
+    @required String buttonText}) {
+  return Material(
+    color: buttonColor,
+    borderRadius: BorderRadius.all(Radius.circular(5)),
+    elevation: 1,
+    child: MaterialButton(
+      onPressed: buttonAction,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(img),
+          SizedBox(
+            width: 13.5,
+          ),
+          Text(
+            buttonText,
+            style: TextStyle(
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget signUpOutlineButtonWidget(
+    {@required VoidCallback buttonAction,
+    String img,
+    @required String buttonText}) {
+  return Material(
+    color: Colors.transparent,
+    // elevation: 1,
+    shape: RoundedRectangleBorder(
+      side: BorderSide(color: Color(0xFF10151A)),
+      borderRadius: BorderRadius.all(Radius.circular(5)),
+    ),
+    child: MaterialButton(
+      onPressed: buttonAction,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(img),
+          SizedBox(
+            width: 13.5,
+          ),
+          Text(
+            buttonText,
+            style: TextStyle(
+                color: Color(0xFF10151A),
+                fontSize: 16,
+                fontWeight: FontWeight.w700),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget outlineButtonWidget(
+    {@required VoidCallback buttonAction,
+    // @required Color buttonColor,
     @required String buttonText}) {
   return Material(
     color: Colors.transparent,
@@ -159,6 +275,14 @@ Widget outlineButtonWidget(
     ),
   );
 }
+
+final RegExp emailvalidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9,]+@[a-zA-Z0-9,]+\.[a-zA-Z])+");
+const String kEmailNullError = "Please enter your email";
+const String kInvalidEmailError = "Please enter a valid email";
+const String kPassNullError = "Please enter your password";
+const String kShortPassError = "Password too short";
+const String kMatchPassError = "Passwords don't match";
 
 Widget buildAddressInputField(
     {String text,
@@ -240,3 +364,90 @@ List<Color> categoryColors = [
   Color(0xFF3C673D),
   Color(0xFFE75A21),
 ];
+
+TextFormField buildTextFormField(
+    {Function(String) validate,
+    Function(String) onSave,
+    Function(String) onChange,
+    @required bool pass,
+    TextInputType textInputType,
+    String text}) {
+  return TextFormField(
+    obscureText: pass,
+    onSaved: onSave,
+    onChanged: onChange,
+    validator: validate,
+    keyboardType: textInputType ?? TextInputType.name,
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      fillColor: Color(0xfff7f7f7),
+      filled: true,
+      hintText: text,
+      hintStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Color(0xffbababa),
+      ),
+    ),
+  );
+}
+
+TextFormField buildPasswordTextFormField(
+    {Function(String) validate,
+    Function(String) onSave,
+    Function(String) onChange,
+    VoidCallback togglePasswordView,
+    @required bool pass,
+    TextInputType textInputType,
+    String text}) {
+  return TextFormField(
+    obscureText: pass,
+    onSaved: onSave,
+    onChanged: onChange,
+    validator: validate,
+    keyboardType: textInputType ?? TextInputType.name,
+    decoration: InputDecoration(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+      ),
+      fillColor: Color(0xfff7f7f7),
+      filled: true,
+      hintText: text,
+      suffixIcon: InkWell(
+        onTap: togglePasswordView,
+        child: Icon(
+          pass ? Icons.visibility : Icons.visibility_off_outlined,
+          color: Color(0xff999999),
+        ),
+      ),
+      hintStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w400,
+        color: Color(0xffbababa),
+      ),
+    ),
+  );
+}
+
+Text formTextTitle(text) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontSize: 15,
+      color: Color(0xFF10151A),
+      fontWeight: FontWeight.w700,
+    ),
+  );
+}
