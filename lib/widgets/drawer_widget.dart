@@ -1,5 +1,9 @@
+import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/screens/categories_list_screen.dart';
+import 'package:aduaba_app/screens/empty_cart_screen.dart';
+import 'package:aduaba_app/screens/my_order.dart';
 import 'package:aduaba_app/screens/user_account.dart';
+import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -44,7 +48,16 @@ class DrawerWidget extends StatelessWidget {
                 height: 28,
               ),
               buildMenuItem(
-                  image: Image.asset("assets/cart.png"), text: "Cart"),
+                  onClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => CartScreen(),
+                      ),
+                    );
+                  },
+                  image: Image.asset("assets/cart.png"),
+                  text: "Cart"),
               buildMenuItem(
                 image: Image.asset("assets/category.png"),
                 text: "Categories",
@@ -62,10 +75,27 @@ class DrawerWidget extends StatelessWidget {
                 },
               ),
               buildMenuItem(
+                  onClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => WishlistScreen(),
+                      ),
+                    );
+                  },
                   image: Image.asset("assets/wishlist.png"),
                   text: "My Wishlist"),
               buildMenuItem(
-                  image: Image.asset("assets/cart.png"), text: "Orders"),
+                  onClicked: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => MyOrdersScreen(),
+                      ),
+                    );
+                  },
+                  image: Image.asset("assets/cart.png"),
+                  text: "Orders"),
               buildMenuItem(
                 image: Image.asset("assets/person.png"),
                 text: "Account Details",

@@ -20,10 +20,11 @@ class SortRadioItem extends StatelessWidget {
                 child: Text(
                   _item.text,
                   style: TextStyle(
-                      fontSize: 17,
-                      color: Color(0xFF10151A),
-                      fontWeight:
-                          _item.isSelected ? FontWeight.w700 : FontWeight.w400),
+                    fontSize: 17,
+                    color: Color(0xFF10151A),
+                    fontWeight:
+                        _item.isSelected ? FontWeight.w700 : FontWeight.w400,
+                  ),
                 ),
               ),
               _item.isSelected

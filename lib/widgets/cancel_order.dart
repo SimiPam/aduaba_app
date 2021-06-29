@@ -1,18 +1,19 @@
 import 'dart:async';
 
+import 'package:aduaba_app/screens/empty_order.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class DialogBox extends StatefulWidget {
-  const DialogBox({Key key}) : super(key: key);
+class CancelOrderDialogBox extends StatefulWidget {
+  const CancelOrderDialogBox({Key key}) : super(key: key);
 
   @override
-  _DialogBoxState createState() => _DialogBoxState();
+  _CancelOrderDialogBoxState createState() => _CancelOrderDialogBoxState();
 }
 
-class _DialogBoxState extends State<DialogBox> {
+class _CancelOrderDialogBoxState extends State<CancelOrderDialogBox> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -45,11 +46,23 @@ class _DialogBoxState extends State<DialogBox> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  "Your password has \nbeen reset",
+                  "Cancel Order ",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Cancelling this order Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean hendrerit vel neque eget ultrices. ",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -59,15 +72,26 @@ class _DialogBoxState extends State<DialogBox> {
                 SizedBox(
                   width: double.infinity,
                   child: buttonWidget(
-                    buttonText: "Sign In",
-                    buttonColor: Color(0xFF3A953C),
+                    buttonText: "Yes. Cancel Order",
+                    buttonColor: Color(0xFFBB2F48),
                     buttonAction: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(),
+                          builder: (context) => EmptyOrder(),
                         ),
                       );
+                    },
+                  ),
+                ),
+                SizedBox(height: 15),
+                SizedBox(
+                  width: double.infinity,
+                  child: buttonWidget(
+                    buttonText: "No, Don’t Cancel Order",
+                    buttonColor: Colors.grey,
+                    buttonAction: () {
+                      Navigator.pop(context);
                     },
                   ),
                 ),
