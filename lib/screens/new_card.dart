@@ -1,3 +1,4 @@
+import 'package:aduaba_app/widgets/card_carousel.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -45,23 +46,9 @@ class _NewCardScreenState extends State<NewCardScreen> {
                   SizedBox(
                     height: 50,
                   ),
-                  Card(
-                    child: Container(
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            "assets/card.png",
-                          ),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.transparent,
-                      ),
-                    ),
+                  SingleChildScrollView(
+                    child: CardCarousel(),
                   ),
-                  SizedBox(height: 80),
                   Text(
                     "Name on card",
                     style: TextStyle(

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:aduaba_app/screens/home_screen.dart';
+import 'package:aduaba_app/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -65,7 +66,7 @@ class _DialogBoxState extends State<DialogBox> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyHomePage(),
+                          builder: (context) => SignIn(),
                         ),
                       );
                     },

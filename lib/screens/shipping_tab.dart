@@ -150,9 +150,15 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
               ],
             ),
           ),
-          buildAddressSubTitle("Shipping address", () {
-            _addAddressModalBottomSheet(context, () {});
-          }),
+          buildAddressSubTitle(
+            "Shipping address",
+            () {
+              _addAddressModalBottomSheet(
+                context,
+                () {},
+              );
+            },
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: sampleData.length,

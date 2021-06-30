@@ -176,25 +176,28 @@ class _CardSelectionState extends State<CardSelection> {
                         color: Color(0xFF10151A)),
                   ),
                   TextButton.icon(
-                      onPressed: () {
-                        _addCardModalBottomSheet(context);
-                      },
-                      icon: Icon(
-                        Icons.add,
-                        color: Color(0xFF3E3E3E),
-                        size: 18,
-                      ),
-                      label: Text(
-                        "Add New Card",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 13,
-                            color: Color(0xFF3E3E3E)),
-                      ))
+                    onPressed: () {
+                      _addCardModalBottomSheet(context);
+                    },
+                    icon: Icon(
+                      Icons.add,
+                      color: Color(0xFF3E3E3E),
+                      size: 18,
+                    ),
+                    label: Text(
+                      "Add New Card",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                          color: Color(0xFF3E3E3E)),
+                    ),
+                  )
                 ],
               ),
             ),
-            SingleChildScrollView(child: CardCarousel()),
+            SingleChildScrollView(
+              child: CardCarousel(),
+            ),
           ],
         ),
       ),
