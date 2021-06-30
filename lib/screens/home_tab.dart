@@ -11,6 +11,8 @@ class HomeTab extends StatelessWidget {
   bool _cartEmpty = false;
 
   List<String> _categoryList = ["Raw Food", "Spices", "Bakery", "Cosmetic"];
+  final duplicateItems = List<String>.generate(10, (i) => "Item $i");
+  var items = List<String>();
 
   int _selectedIindex = 0;
 
@@ -115,6 +117,19 @@ class HomeTab extends StatelessWidget {
           height: 24,
         ),
         buildSearchField('Search Product'),
+        Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  '${items[index]}',
+                ),
+              );
+            },
+          ),
+        ),
         SizedBox(
           height: 20,
         ),

@@ -4,19 +4,47 @@ import 'package:aduaba_app/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key key}) : super(key: key);
-
+  OnboardingScreen({
+    Key key,
+    this.title,
+    this.subtitle,
+    this.image,
+  }) : super(key: key);
+  final String title, subtitle, image;
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  int currentPage = 0;
+
+  List<String> title = [
+    "Explore Fresh Organic \nProducts Everyday",
+    "Eat healthy, Spend Wisely.\nBe happy",
+    "Fast Delivery Within 24 \nhours Of Purchase",
+  ];
+
+  List<String> subtitle = [
+    "Search through a variety of products that help you keep fit and healthy",
+    "Discover products by our vendors at very affordable prices",
+    "Worried about time? Don’t stress, our products are at our doorstep before sunse",
+  ];
+  List<String> image = [
+    "assets/onboarding1.png",
+    "assets/onboarding2.png",
+    "assets/onboarding3.png",
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final PageController controller = PageController(initialPage: 0);
     return Scaffold(
       body: PageView(
+        onPageChanged: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },
         scrollDirection: Axis.horizontal,
         controller: controller,
         children: [
@@ -40,8 +68,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      subtitle.length,
+                      (index) => buildDot(index: index),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    "Explore Fresh Organic \nProducts Everyday",
+                    title[0],
                     style: TextStyle(
                       fontSize: 27,
                       color: Colors.white,
@@ -51,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Search through a variety of products that help you keep fit and healthy",
+                    subtitle[0],
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.white70,
@@ -130,8 +168,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: List.generate(
+                        subtitle.length,
+                        (index) => buildDot(index: index),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Text(
-                      "Eat healthy, Spend Wisely.\nBe happy",
+                      title[1],
                       style: TextStyle(
                         fontSize: 25,
                         color: Colors.white,
@@ -141,7 +189,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "Discover products by our vendors at very affordable prices",
+                      subtitle[1],
                       style: TextStyle(
                         fontSize: 17,
                         color: Colors.white70,
@@ -209,7 +257,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage(
-                  'assets/onboarding3.png',
+                  image[2],
                 ),
               ),
             ),
@@ -219,8 +267,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: List.generate(
+                      subtitle.length,
+                      (index) => buildDot(index: index),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    "Fast Delivery Within 24 \nhours Of Purchase",
+                    title[2],
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.white,
@@ -230,7 +288,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   SizedBox(height: 10),
                   Text(
-                    "Worried about time? Don't stress, our products are at our doorstep before sunset",
+                    subtitle[2],
                     style: TextStyle(
                       fontSize: 17,
                       color: Colors.white70,
@@ -288,6 +346,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  AnimatedContainer buildDot({int index}) {
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 2),
+      margin: EdgeInsets.only(right: 9),
+      // duration: kAnimationDuration,
+      height: 7,
+      width: currentPage == index ? 20 : 6,
+      decoration: BoxDecoration(
+        color: Colors.green,
+        borderRadius: BorderRadius.circular(3),
       ),
     );
   }

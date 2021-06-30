@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 
@@ -10,6 +13,25 @@ class UserAccountEdit extends StatefulWidget {
 }
 
 class _UserAccountEditState extends State<UserAccountEdit> {
+  File _image;
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,38 +66,47 @@ class _UserAccountEditState extends State<UserAccountEdit> {
                 SizedBox(
                   height: 40,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 120),
-                  child: SizedBox(
-                    height: 115,
-                    width: 115,
-                    child: Stack(
-                      overflow: Overflow.visible,
-                      fit: StackFit.expand,
-                      children: [
-                        CircleAvatar(
-                          //  backgroundColor: Colors.red,
-                          backgroundImage: AssetImage("assets/person.png"),
-                        ),
-                        Positioned(
-                          bottom: 70,
-                          right: -7,
-                          child: SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: FlatButton(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(35),
-                                side: BorderSide(color: Colors.grey),
+                Center(
+                  child: GestureDetector(
+                    onTap: () {
+                      _showPicker(context);
+                    },
+                    child: CircleAvatar(
+                      radius: 55,
+                      backgroundImage: AssetImage("assets/Profile.png"),
+                      child: _image != null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(80),
+                              child: Image.file(
+                                _image,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
                               ),
-                              color: Colors.white,
-                              onPressed: () {},
-                              child: Icon(Icons.camera),
+                            )
+                          : Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 90, bottom: 65),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0xff979797),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  width: 30,
+                                  height: 30,
+                                  child: InkWell(
+                                    onTap: () {
+                                      _showPicker(context);
+                                    },
+                                    child: Image.asset(
+                                      "assets/Vector.png",
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ),
@@ -122,6 +153,37 @@ class _UserAccountEditState extends State<UserAccountEdit> {
           ),
         ],
       ),
+    );
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(Icons.photo_library),
+                    title: new Text('Photo Library'),
+                    onTap: () {
+                      _imgFromGallery();
+                      Navigator.of(context).pop();
+                    }),
+                new ListTile(
+                  leading: new Icon(Icons.photo_camera),
+                  title: new Text('Camera'),
+                  onTap: () {
+                    _imgFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

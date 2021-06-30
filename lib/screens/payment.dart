@@ -79,7 +79,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         ),
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(Icons.delete_outline_outlined),
+                          icon: Icon(Icons.delete_forever_outlined),
                         ),
                       ],
                     ),
@@ -102,7 +102,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           ),
                         ),
                         IconButton(
-                            onPressed: () {}, icon: Icon(Icons.delete_rounded))
+                            onPressed: () {},
+                            icon: Icon(Icons.delete_forever_outlined))
                       ],
                     )
                   ],

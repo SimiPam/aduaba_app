@@ -4,12 +4,48 @@ import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController editingController = TextEditingController();
+
+  final duplicateItems = List<String>.generate(10, (i) => "Item $i");
+  var items = List<String>();
+
+  @override
+  void initState() {
+    items.addAll(duplicateItems);
+    super.initState();
+  }
+
+  void filterSearchResults(String query) {
+    List<String> dummySearchList = List<String>();
+    dummySearchList.addAll(duplicateItems);
+    if (query.isNotEmpty) {
+      List<String> dummyListData = List<String>();
+      dummySearchList.forEach((item) {
+        if (item.contains(query)) {
+          dummyListData.add(item);
+        }
+      });
+      setState(() {
+        items.clear();
+        items.addAll(dummyListData);
+      });
+      return;
+    } else {
+      setState(() {
+        items.clear();
+        items.addAll(duplicateItems);
+      });
+    }
+  }
 
   int _currentTab = 0;
 
@@ -110,6 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final color = Colors.white;
 
     return TextField(
+      onChanged: (value) {
+        filterSearchResults(value);
+      },
+      controller: editingController,
       style: TextStyle(
         color: Color(0xFFF7F7F7),
       ),
