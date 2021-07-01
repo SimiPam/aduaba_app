@@ -70,11 +70,6 @@ class DrawerWidget extends StatelessWidget {
                     builder: (context) =>
                         CategoriesListingScreen(openDrawer: openDraw),
                   );
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (BuildContext context) =>
-                  //             CategoriesListingScreen(openDrawer: openDraw)));
                 },
               ),
               buildMenuItem(
