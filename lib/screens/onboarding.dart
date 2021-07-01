@@ -128,13 +128,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             TextSpan(
                               text: 'Have an account already?',
                               style: TextStyle(
-                                  fontSize: 15, color: Colors.white70),
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
                             ),
                             TextSpan(
                               text: (' Sign In '),
                               style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.white),
                             ),
                           ],
@@ -206,7 +208,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SignIn(),
+                                builder: (context) => SignUp(),
                               ),
                             );
                           }),
@@ -228,13 +230,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               TextSpan(
                                 text: 'Have an account already?',
                                 style: TextStyle(
-                                    fontSize: 18, color: Colors.white70),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
                               ),
                               TextSpan(
                                 text: (' Sign In '),
                                 style: TextStyle(
-                                    fontSize: 21,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w400,
                                     color: Colors.white),
                               ),
                             ],
@@ -305,7 +309,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => SignIn(),
+                              builder: (context) => SignUp(),
                             ),
                           );
                         }),
@@ -327,13 +331,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             TextSpan(
                               text: 'Have an account already?',
                               style: TextStyle(
-                                  fontSize: 18, color: Colors.white70),
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white),
                             ),
                             TextSpan(
                               text: (' Sign In '),
                               style: TextStyle(
-                                  fontSize: 21,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
                                   color: Colors.white),
                             ),
                           ],

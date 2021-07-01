@@ -244,7 +244,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 24, vertical: 32),
-                          // height: MediaQuery.of(context).size.height / 100 * 60,
+                          height: MediaQuery.of(context).size.height / 100 * 60,
                           child: otpForm(context),
                         ),
                       );
@@ -340,7 +340,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   builder: (BuildContext context) {
                     return SingleChildScrollView(
                       child: Container(
-                        // height: MediaQuery.of(context).size.height / 100 * 60,
+                        height: MediaQuery.of(context).size.height / 100 * 60,
                         padding:
                             EdgeInsets.symmetric(horizontal: 24, vertical: 32),
                         child: newPasswordModal(),
