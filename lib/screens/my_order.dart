@@ -1,3 +1,4 @@
+import 'package:aduaba_app/model/order_model.dart';
 import 'package:aduaba_app/screens/category_screen.dart';
 import 'package:aduaba_app/screens/discover_tab.dart';
 import 'package:aduaba_app/screens/home_tab.dart';
@@ -13,28 +14,39 @@ class MyOrdersScreen extends StatefulWidget {
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
-  // List<String> status = [
-  //   "Estimated Delivery Due Date on 21 Dec",
-  //   "Cancelled",
-  //   "Delivered 31 Dec"
-  // ];
-
-  List<String> date = [
-    " On 22 January, 2020 1:15 pm ",
-    " On 22 January, 2020 1:15 pm ",
-    " On 22 January, 2020 1:15 pm ",
+  List<OrderModel> orderList = [
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Estimated Delivery Due Date on 21 Dec",
+      id: "Order #: 341924186",
+    ),
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Cancelled",
+      id: "Order #: 341924186",
+    ),
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Delivered 31 Dec",
+      id: "Order #: 341924186",
+    ),
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Estimated Delivery Due Date on 21 Dec",
+      id: "Order #: 341924186",
+    ),
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Cancelled",
+      id: "Order #: 341924186",
+    ),
+    OrderModel(
+      deliveryDate: " On 22 January, 2020 1:15 pm ",
+      status: "Delivered 31 Dec",
+      id: "Order #: 341924186",
+    ),
   ];
 
-  List<String> orderNo = [
-    "Order #: 341924186",
-    "Order #: 341924186",
-    "Order #: 341924186",
-  ];
-  final status = [
-    "Estimated Delivery Due Date on 21 Dec",
-    "Cancelled",
-    "Delivered 31 Dec"
-  ];
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentTab = 0;
   Widget _widget;
@@ -100,8 +112,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 3,
+                  itemCount: orderList.length,
                   itemBuilder: (_, index) {
+                    OrderModel orderItem = orderList[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -131,7 +144,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 25,
+                                  width: 16,
                                 ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,30 +152,33 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Text(
-                                      orderNo[index],
+                                      orderItem.id,
                                       style: TextStyle(
                                         color: Color(0xff131313),
-                                        fontSize: 16.5,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      date[index],
+                                      orderItem.deliveryDate,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 13,
                                         fontWeight: FontWeight.w400,
                                         // letterSpacing: 1.2,
                                         color: Colors.grey.withOpacity(0.3),
                                       ),
                                     ),
                                     SizedBox(height: 10),
-                                    Text(
-                                      status[index],
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xfff2902f),
+                                    Container(
+                                      width: 265,
+                                      child: Text(
+                                        orderItem.status,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xfff2902f),
+                                        ),
                                       ),
                                     ),
                                   ],

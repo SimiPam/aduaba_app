@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
 
-Widget buildNumberField(String text) {
+// Widget buildNumberField(String text) {
+//   final color = Colors.white;
+//
+//   return TextField(
+//     keyboardType: TextInputType.number,
+//     style: TextStyle(
+//       color: Color(0xFFF7F7F7),
+//     ),
+//     decoration: InputDecoration(
+//       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+//       hintText: text,
+//       hintStyle: TextStyle(
+//           color: Color(0xFFBABABA), fontWeight: FontWeight.w400, fontSize: 15),
+//       filled: true,
+//       fillColor: Color(0xFFF7F7F7),
+//       enabledBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(5),
+//         borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.circular(5),
+//         borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+//       ),
+//     ),
+//   );
+// }
+
+Widget buildTextField(String text) {
   final color = Colors.white;
 
   return TextField(
-    keyboardType: TextInputType.number,
+    keyboardType: TextInputType.name,
     style: TextStyle(
       color: Color(0xFFF7F7F7),
     ),
@@ -27,11 +54,10 @@ Widget buildNumberField(String text) {
   );
 }
 
-Widget buildTextField(String text) {
+Widget buildVendorSearchField(String text) {
   final color = Colors.white;
 
   return TextField(
-    keyboardType: TextInputType.name,
     style: TextStyle(
       color: Color(0xFFF7F7F7),
     ),
@@ -40,6 +66,10 @@ Widget buildTextField(String text) {
       hintText: text,
       hintStyle: TextStyle(
           color: Color(0xFFBABABA), fontWeight: FontWeight.w400, fontSize: 15),
+      prefixIcon: Icon(
+        Icons.search_rounded,
+        color: Color(0xFFBABABA),
+      ),
       filled: true,
       fillColor: Color(0xFFF7F7F7),
       enabledBorder: OutlineInputBorder(

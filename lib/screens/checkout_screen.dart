@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/checkout_stepper_screen.dart';
+import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -267,7 +268,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                CheckoutStepperScreen(),
+                                ShippingAddressTab(),
                           ),
                         );
                       }),
