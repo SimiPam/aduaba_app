@@ -1,5 +1,8 @@
+import 'package:aduaba_app/screens/my_order.dart';
 import 'package:aduaba_app/screens/payment.dart';
+import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/screens/shipping_details.dart';
+import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:aduaba_app/screens/user_account_edit.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +58,7 @@ class UserAccount extends StatelessWidget {
                       ),
                       CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage("assets/cart.png"),
+                        backgroundImage: AssetImage("assets/Profile.png"),
                       ),
                       SizedBox(
                         width: 16,
@@ -108,23 +111,31 @@ class UserAccount extends StatelessWidget {
                     SizedBox(
                       height: 28,
                     ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => WishlistScreen(),
-                          ),
-                        );
-                      },
-                      child: buildMenuItem(
-                          image: Image.asset(
-                            "assets/wishlist.png",
-                            color: Color(0xFFBB2F48),
-                          ),
-                          text: "My Wishlist"),
-                    ),
                     buildMenuItem(
+                        onClicked: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  WishlistScreen(),
+                            ),
+                          );
+                        },
+                        image: Image.asset(
+                          "assets/wishlist.png",
+                          color: Color(0xFFBB2F48),
+                        ),
+                        text: "My Wishlist"),
+                    buildMenuItem(
+                        onClicked: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  MyOrdersScreen(),
+                            ),
+                          );
+                        },
                         image: Image.asset(
                           "assets/cart.png",
                           color: Color(0xFFE75A21),
@@ -152,7 +163,7 @@ class UserAccount extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                ShippingDetailsScreen(),
+                                ShippingAddressTab(),
                           ),
                         );
                       },

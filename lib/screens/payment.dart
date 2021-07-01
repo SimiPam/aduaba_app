@@ -15,7 +15,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
@@ -43,189 +43,86 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                Divider(
-                  color: Colors.grey,
-                ),
                 SizedBox(height: 30),
-                Text(
-                  "My Cards",
-                  style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                SizedBox(height: 25),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: Image(
-                            image: AssetImage(
-                              "assets/visa.png",
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "0091•••• •••• 2017",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.delete_outline_outlined),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: Image(
-                            image: AssetImage("assets/mastercard.jpeg"),
-                          ),
-                        ),
-                        Text(
-                          "0091•••• •••• 2017",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        IconButton(
-                            onPressed: () {}, icon: Icon(Icons.delete_rounded))
-                      ],
-                    )
-                  ],
-                ),
-                //  SizedBox(height: 500),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 600),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: buttonWidget(
-                        buttonAction: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  NewCardScreen(),
-                            ),
-                          );
-                          // showModalBottomSheet(
-                          //   isScrollControlled: true,
-                          //   context: context,
-                          //   builder: (BuildContext context) {
-                          //     return Container(
-                          //       height: MediaQuery.of(context).size.height /
-                          //           100 *
-                          //           65,
-                          //       decoration: BoxDecoration(color: Colors.white),
-                          //       child: Column(
-                          //         children: [
-                          //           Row(
-                          //             mainAxisAlignment:
-                          //                 MainAxisAlignment.spaceAround,
-                          //             children: [
-                          //               Text(
-                          //                 "New Card",
-                          //                 style: TextStyle(
-                          //                   fontSize: 24,
-                          //                   color: Colors.black,
-                          //                   fontWeight: FontWeight.w700,
-                          //                 ),
-                          //               ),
-                          //               IconButton(
-                          //                 onPressed: () {
-                          //                   Navigator.pop(context);
-                          //                 },
-                          //                 icon: Icon(Icons.cancel_sharp),
-                          //               )
-                          //             ],
-                          //           ),
-                          //           Padding(
-                          //             padding: const EdgeInsets.all(18.0),
-                          //             child: Column(
-                          //               mainAxisAlignment:
-                          //                   MainAxisAlignment.start,
-                          //               children: [
-                          //                 SizedBox(height: 35),
-                          //                 Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       right: 300),
-                          //                   child: Text(
-                          //                     "Name on card",
-                          //                     style: TextStyle(
-                          //                         fontSize: 15,
-                          //                         color: Colors.black,
-                          //                         fontWeight: FontWeight.bold),
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(height: 15),
-                          //                 buildTextField('Card Name'),
-                          //                 SizedBox(height: 25),
-                          //                 Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       right: 300),
-                          //                   child: Text(
-                          //                     "Card Number",
-                          //                     style: TextStyle(
-                          //                         fontSize: 15,
-                          //                         color: Colors.black,
-                          //                         fontWeight: FontWeight.bold),
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(height: 15),
-                          //                 buildNumberField('Card Number'),
-                          //                 SizedBox(height: 25),
-                          //                 Padding(
-                          //                   padding: const EdgeInsets.only(
-                          //                       right: 300),
-                          //                   child: Text(
-                          //                     "Expiry Date",
-                          //                     style: TextStyle(
-                          //                         fontSize: 15,
-                          //                         color: Colors.black,
-                          //                         fontWeight: FontWeight.bold),
-                          //                   ),
-                          //                 ),
-                          //                 SizedBox(height: 15),
-                          //                 buildNumberField('Expiry Date'),
-                          //                 SizedBox(height: 35),
-                          //                 SizedBox(
-                          //                   width: double.infinity,
-                          //                   child: buttonWidget(
-                          //                       buttonAction: () {},
-                          //                       buttonColor: Color(0xFF3A953C),
-                          //                       buttonText: 'Save '),
-                          //                 )
-                          //               ],
-                          //             ),
-                          //           )
-                          //         ],
-                          //       ),
-                          //     );
-                          //   },
-                          // );
-                        },
-                        buttonColor: Color(0xFF3A953C),
-                        buttonText: 'Add New Card'),
-                  ),
-                ),
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24,
+            ),
+            child: Text(
+              "My Cards",
+              style: TextStyle(
+                fontSize: 24,
+                color: Color(0xFF10151A),
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (_, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: 24.0,
+                      right: 24,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: Image(
+                                image: AssetImage("assets/mastercard.jpeg"),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 23,
+                            ),
+                            Text(
+                              "0091•••• •••• 2017",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.delete,
+                              size: 20,
+                            ))
+                      ],
+                    ),
+                  );
+                }),
+          ),
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 45),
+        child: SizedBox(
+          width: double.infinity,
+          child: buttonWidget(
+              buttonAction: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => NewCardScreen(),
+                  ),
+                );
+              },
+              buttonColor: Color(0xFF3A953C),
+              buttonText: 'Add New Card'),
+        ),
       ),
     );
   }

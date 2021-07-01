@@ -1,4 +1,5 @@
 import 'package:aduaba_app/model/address_model.dart';
+import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/widgets/address_radio_item_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -37,144 +38,159 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
   int _index = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Color(0xFF424347),
-                    size: 35,
-                  ),
-                ),
-                SizedBox(
-                  height: 22,
-                ),
-                Text(
-                  "Checkout",
-                  style: TextStyle(
-                      fontSize: 24,
-                      color: Color(0xFF819272),
-                      fontWeight: FontWeight.w700),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Stack(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Image.asset('assets/filled.png')),
-                    Positioned(
-                      top: 9,
-                      left: 15,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5 - 38,
-                        child: Divider(
-                          color: Color(0xFF3A953C),
-                          // color: Colors.grey,
-                          thickness: 4,
-                          height: 0,
-                        ),
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.topCenter,
-                        child: Image.asset('assets/outlined.png')),
-                    Positioned(
-                      top: 9,
-                      right: 16,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5 - 45,
-                        child: Divider(
-                          color: Color(0xFF999999),
-                          // color: Colors.grey,
-                          thickness: 4,
-                          height: 0,
-                        ),
-                      ),
-                    ),
-                    Align(
-                        alignment: Alignment.topRight,
-                        child: Image.asset('assets/outlined.png')),
-                  ],
-                ),
-                SizedBox(
-                  height: 11,
-                ),
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        "Billing",
-                        style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Payment",
-                        style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        "Confirmation",
-                        style: TextStyle(
-                            color: Color(0xFF999999),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          buildAddressSubTitle("Shipping address", () {
-            _addAddressModalBottomSheet(context, () {});
-          }),
-          Expanded(
-            child: ListView.builder(
-              itemCount: sampleData.length,
-              itemBuilder: (_, index) {
-                return InkWell(
-                    //highlightColor: Colors.red,
-                    splashColor: Colors.blueAccent,
+    return Scaffold(
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
                     onTap: () {
-                      if (sampleData.length > 1) {
-                        setState(() {
-                          sampleData
-                              .forEach((element) => element.isSelected = false);
-                          sampleData[index].isSelected = true;
-                        });
-                      }
+                      Navigator.pop(context);
                     },
-                    child: AddressRadioItem(
-                        item: sampleData[index], count: sampleData.length));
-              },
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Color(0xFF424347),
+                      size: 35,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 22,
+                  ),
+                  Text(
+                    "Checkout",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xFF819272),
+                        fontWeight: FontWeight.w700),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Stack(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: Image.asset('assets/filled.png')),
+                      Positioned(
+                        top: 9,
+                        left: 15,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5 - 38,
+                          child: Divider(
+                            color: Color(0xFF3A953C),
+                            // color: Colors.grey,
+                            thickness: 4,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.topCenter,
+                          child: Image.asset('assets/outlined.png')),
+                      Positioned(
+                        top: 9,
+                        right: 16,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.5 - 45,
+                          child: Divider(
+                            color: Color(0xFF999999),
+                            // color: Colors.grey,
+                            thickness: 4,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                      Align(
+                          alignment: Alignment.topRight,
+                          child: Image.asset('assets/outlined.png')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 11,
+                  ),
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "Billing",
+                          style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Payment",
+                          style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Text(
+                          "Confirmation",
+                          style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            buildAddressSubTitle("Shipping address", () {
+              _addAddressModalBottomSheet(context, () {});
+            }),
+            Expanded(
+              child: ListView.builder(
+                itemCount: sampleData.length,
+                itemBuilder: (_, index) {
+                  return InkWell(
+                      //highlightColor: Colors.red,
+                      splashColor: Colors.blueAccent,
+                      onTap: () {
+                        if (sampleData.length > 1) {
+                          setState(() {
+                            sampleData.forEach(
+                                (element) => element.isSelected = false);
+                            sampleData[index].isSelected = true;
+                          });
+                        }
+                      },
+                      child: AddressRadioItem(
+                          item: sampleData[index], count: sampleData.length));
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 33),
+        child: buttonWidget(
+            buttonText: "Proceed To Payment",
+            buttonColor: Color(0xFF3A953C),
+            buttonAction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => PaymentTab()),
+              );
+            }),
       ),
     );
   }

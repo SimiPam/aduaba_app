@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 
@@ -10,6 +13,35 @@ class UserAccountEdit extends StatefulWidget {
 }
 
 class _UserAccountEditState extends State<UserAccountEdit> {
+  File _image;
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      _image = image;
+      imageAdded = true;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      imageAdded = true;
+      _image = image;
+    });
+  }
+
+  bool imageAdded = false;
+  removeImage() {
+    setState(() {
+      imageAdded = false;
+      _image = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,45 +73,58 @@ class _UserAccountEditState extends State<UserAccountEdit> {
                       color: Color(0xFF819272),
                       fontWeight: FontWeight.w700),
                 ),
-                SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 120),
-                  child: SizedBox(
-                    height: 115,
-                    width: 115,
-                    child: Stack(
-                      overflow: Overflow.visible,
-                      fit: StackFit.expand,
-                      children: [
-                        CircleAvatar(
-                          //  backgroundColor: Colors.red,
-                          backgroundImage: AssetImage("assets/person.png"),
+              ],
+            ),
+          ),
+          Expanded(
+              child: Container(
+            padding: EdgeInsets.only(left: 24, right: 24),
+            child: ListView(
+              // crossAxisAlignment: CrossAxisAlignment.start,start
+              children: [
+                Container(
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: CircleAvatar(
+                          radius: 65,
+                          backgroundImage: _image != null
+                              ? FileImage(
+                                  _image,
+                                )
+                              : AssetImage("assets/Profile.png"),
                         ),
-                        Positioned(
-                          bottom: 70,
-                          right: -7,
-                          child: SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: FlatButton(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(35),
-                                side: BorderSide(color: Colors.grey),
+                      ),
+                      Positioned(
+                        top: 0.0,
+                        right: 111.0,
+                        child: InkWell(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border:
+                                    Border.all(color: Colors.white, width: 3),
+                                color: Color(0xff979797)),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Image.asset(
+                                "assets/vector.png",
+                                fit: BoxFit.scaleDown,
                               ),
-                              color: Colors.white,
-                              onPressed: () {},
-                              child: Icon(Icons.camera),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 70),
+
+                SizedBox(height: 40),
                 Text(
                   "First Name",
                   style: TextStyle(
@@ -108,20 +153,65 @@ class _UserAccountEditState extends State<UserAccountEdit> {
                       fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 15),
-                buildNumberField('Phone Number'),
-                SizedBox(height: 65),
-                SizedBox(
-                  width: double.infinity,
-                  child: buttonWidget(
-                      buttonAction: () {},
-                      buttonColor: Color(0xFF3A953C),
-                      buttonText: 'Save Changes'),
-                )
+                buildTextField('Phone Number'),
+                // SizedBox(height: 65),
+                // SizedBox(
+                //   width: double.infinity,
+                //   child:
+                // ),
+              ],
+            ),
+          ))
+        ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 45),
+        child: buttonWidget(
+            buttonAction: () {},
+            buttonColor: Color(0xFF3A953C),
+            buttonText: 'Save Changes'),
+      ),
+    );
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext bc) {
+        return SafeArea(
+          child: Container(
+            child: new Wrap(
+              children: <Widget>[
+                new ListTile(
+                    leading: new Icon(Icons.photo_library),
+                    title: new Text('Photo Library'),
+                    onTap: () {
+                      _imgFromGallery();
+                      Navigator.of(context).pop();
+                    }),
+                new ListTile(
+                  leading: new Icon(Icons.photo_camera),
+                  title: new Text('Camera'),
+                  onTap: () {
+                    _imgFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                imageAdded
+                    ? new ListTile(
+                        leading: new Icon(Icons.cancel),
+                        title: new Text('Remove Image'),
+                        onTap: () {
+                          removeImage();
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    : ListTile(),
               ],
             ),
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

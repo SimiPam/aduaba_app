@@ -534,7 +534,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         SizedBox(
                           height: 8,
                         ),
-                        buildSearchField("Search vendor"),
+                        buildVendorSearchField("Search vendor"),
                         SizedBox(
                           height: 8,
                         ),
