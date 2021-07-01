@@ -1,9 +1,11 @@
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
+import 'cart_screen.dart';
 import 'category_screen.dart';
 import 'details_screen.dart';
 import 'discover_tab.dart';
+import 'empty_cart_screen.dart';
 import 'home_tab.dart';
 
 class CategoriesListingScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class CategoriesListingScreen extends StatefulWidget {
 class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   int _currentTab = 0;
+  bool _cartEmpty = false;
   Widget _widget;
   @override
   Widget build(BuildContext context) {
@@ -64,9 +67,21 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                               color: Color(0xFF819272),
                               fontWeight: FontWeight.w700),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Color(0xFF3A953C),
-                          child: Image.asset("assets/homecart.png"),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => _cartEmpty
+                                    ? EmptyCartScreen()
+                                    : CartScreen(),
+                              ),
+                            );
+                          },
+                          child: CircleAvatar(
+                            backgroundColor: Color(0xFF3A953C),
+                            child: Image.asset("assets/homecart.png"),
+                          ),
                         ),
                       ],
                     ),

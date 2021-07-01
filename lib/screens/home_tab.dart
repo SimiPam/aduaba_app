@@ -4,6 +4,7 @@ import '../constants.dart';
 import 'cart_screen.dart';
 import 'categories_list_screen.dart';
 import 'category_screen.dart';
+import 'details_screen.dart';
 import 'empty_cart_screen.dart';
 
 class HomeTab extends StatelessWidget {
@@ -277,7 +278,16 @@ class HomeTab extends StatelessWidget {
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DetailsScreen(
+                        imageUrl: "assets/fruitbasket.png",
+                      ),
+                    ),
+                  );
+                },
                 child: Container(
                   margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
                   width: MediaQuery.of(context).size.width / 2 - 32,
@@ -400,7 +410,16 @@ class HomeTab extends StatelessWidget {
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => DetailsScreen(
+                        imageUrl: "assets/fruitbasket.png",
+                      ),
+                    ),
+                  );
+                },
                 child: Container(
                   margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
                   width: MediaQuery.of(context).size.width / 2 - 32,
