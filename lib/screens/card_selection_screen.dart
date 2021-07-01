@@ -1,7 +1,7 @@
 import 'package:aduaba_app/model/card_detail_model.dart';
 import 'package:aduaba_app/widgets/card_carousel.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:paystack_manager/paystack_pay_manager.dart';
 import '../constants.dart';
 import 'confirmation_screen.dart';
 
@@ -204,14 +204,73 @@ class _CardSelectionState extends State<CardSelection> {
             buttonText: "Pay Now",
             buttonColor: Color(0xFF3A953C),
             buttonAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => ConfirmationTab()),
-              );
+              _processPayment();
             }),
       ),
     );
+  }
+
+  void _processPayment() {
+    try {
+      PaystackPayManager(context: context)
+        ..setSecretKey(kSECRET_KEY)
+// Your company Image
+        ..setCompanyAssetImage(Image(
+          image: AssetImage("assets/landing_image.png"),
+        ))
+        ..setAmount(
+            100000) // you need to add two zeros at the end e.g 100000 = N1,000.00
+// you can set your own unique transaction reference, here am using timestamp
+        ..setReference(DateTime.now().millisecondsSinceEpoch.toString())
+        ..setCurrency(
+            "NGN") // Set currency, the platform only has three currencies, when registering the
+        // list of countries listed is the currency that is available for you to use
+        ..setEmail("p.pamd18@gmail.com") // user email address and information
+        ..setFirstName("Aduaba")
+        ..setLastName("Fresh")
+        ..setMetadata(
+          {
+            "custom_fields": [
+              {
+                "value": "Aduaba", // set this your company name
+                "display_name": "Payment_to",
+                "variable_name": "Payment_to"
+              }
+            ]
+          },
+        )
+        ..onSuccesful(_onPaymentSuccessful)
+        ..onPending(_onPaymentPending)
+        ..onFailed(_onPaymentFailed)
+        ..onCancel(_onCancel)
+        ..initialize();
+    } catch (error) {
+      print('Payment Error ==> $error');
+    }
+  }
+
+  void _onPaymentSuccessful(Transaction transaction) {
+    print('Transaction succesful');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (BuildContext context) => ConfirmationTab()),
+    );
+    print(
+        "Transaction message ==> ${transaction.message}, Ref ${transaction.refrenceNumber}");
+  }
+
+  void _onPaymentPending(Transaction transaction) {
+    print('Transaction Pending');
+    print("Transaction Ref ${transaction.refrenceNumber}");
+  }
+
+  void _onPaymentFailed(Transaction transaction) {
+    print('Transaction Failed');
+    print("Transaction message ==> ${transaction.message}");
+  }
+
+  void _onCancel(Transaction transaction) {
+    print('Transaction Cancelled');
   }
 
   _addCardModalBottomSheet(context) {

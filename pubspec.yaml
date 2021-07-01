@@ -28,17 +28,24 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  google_fonts: ^2.1.0
+  google_fonts: ^1.1.2
   flutter_staggered_grid_view: ^0.4.0
   font_awesome_flutter: ^9.1.0
   syncfusion_flutter_sliders: 18.4.49-beta
   carousel_slider: ^4.0.0
   image_picker: ^0.6.6+5
   flutter_credit_card: ^2.0.0
+  paystack_manager:
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+
+plugin:
+  androidPackage: maugost.com.paystackflutter
+  pluginClass: PaystackFlutterPlugin
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
