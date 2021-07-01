@@ -1,5 +1,6 @@
 import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/screens/categories_list_screen.dart';
+import 'package:aduaba_app/screens/empty_cart_screen.dart';
 import 'package:aduaba_app/screens/empty_wishlist.dart';
 import 'package:aduaba_app/screens/my_order.dart';
 import 'package:aduaba_app/screens/user_account.dart';
@@ -18,6 +19,7 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool _cartEmpty = false;
     return ListView(
       children: [
         DrawerHeader(
@@ -52,7 +54,8 @@ class DrawerWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => CartScreen(),
+                        builder: (BuildContext context) =>
+                            _cartEmpty ? EmptyCartScreen() : CartScreen(),
                       ),
                     );
                   },

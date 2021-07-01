@@ -140,7 +140,7 @@ Widget buildRangeField(String text) {
   );
 }
 
-Row subTitle({String title, Color color}) {
+Row subTitle({String title, Color color, VoidCallback onTapped}) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -152,21 +152,24 @@ Row subTitle({String title, Color color}) {
           fontWeight: FontWeight.w700,
         ),
       ),
-      Row(
-        children: [
-          Text(
-            "View all  ",
-            style: TextStyle(
-              fontSize: 13,
-              color: color ?? Color(0xFF999999),
-              fontWeight: FontWeight.w400,
+      GestureDetector(
+        onTap: onTapped,
+        child: Row(
+          children: [
+            Text(
+              "View all  ",
+              style: TextStyle(
+                fontSize: 13,
+                color: color ?? Color(0xFF999999),
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
-          Image.asset(
-            "assets/arrow.png",
-            color: color ?? Color(0xFF999999),
-          )
-        ],
+            Image.asset(
+              "assets/arrow.png",
+              color: color ?? Color(0xFF999999),
+            )
+          ],
+        ),
       ),
     ],
   );

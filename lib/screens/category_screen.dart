@@ -8,6 +8,7 @@ import 'dart:math' as math;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import '../constants.dart';
+import 'details_screen.dart';
 import 'discover_tab.dart';
 import 'empty_cart_screen.dart';
 import 'home_tab.dart';
@@ -234,7 +235,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     crossAxisSpacing: 16.0,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => DetailsScreen(
+                                imageUrl: "assets/fruitbasket.png",
+                              ),
+                            ),
+                          );
+                        },
                         child: Container(
                           // height: 70,
                           margin: EdgeInsets.only(top: 0, bottom: 0, right: 0),

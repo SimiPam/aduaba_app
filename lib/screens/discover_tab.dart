@@ -2,6 +2,8 @@ import 'package:aduaba_app/screens/search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import 'details_screen.dart';
+
 class DiscoverTab extends StatelessWidget {
   final VoidCallback openDraw;
   DiscoverTab({Key key, this.openDraw}) : super(key: key);
@@ -131,7 +133,16 @@ class DiscoverTab extends StatelessWidget {
               crossAxisSpacing: 16.0,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => DetailsScreen(
+                          imageUrl: "assets/fruitbasket.png",
+                        ),
+                      ),
+                    );
+                  },
                   child: Container(
                     // height: 70,
                     margin: EdgeInsets.only(top: 0, bottom: 0, right: 0),

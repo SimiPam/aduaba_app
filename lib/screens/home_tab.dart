@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import 'cart_screen.dart';
+import 'categories_list_screen.dart';
+import 'category_screen.dart';
 import 'empty_cart_screen.dart';
 
 class HomeTab extends StatelessWidget {
@@ -16,14 +18,17 @@ class HomeTab extends StatelessWidget {
 
   int _selectedIindex = 0;
 
-  Widget _buildCategoryList(int index) {
+  Widget _buildCategoryList(int index, context) {
     final color = categoryColors[index % categoryColors.length];
     return GestureDetector(
-      // onTap: () {
-      //   setState(() {
-      //     _selectedIindex = index;
-      //   });
-      // },
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => CategoryScreen(),
+          ),
+        );
+      },
       child: Container(
         // height: 60,
         // width: 60,
@@ -133,7 +138,21 @@ class HomeTab extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        subTitle(title: "Categories"),
+        subTitle(
+          title: "Categories",
+          onTapped: () {
+            showDialog(
+              context: context,
+              builder: (context) =>
+                  CategoriesListingScreen(openDrawer: openDraw),
+            );
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (BuildContext context) =>
+            //             CategoriesListingScreen(openDrawer: openDraw)));
+          },
+        ),
         SizedBox(
           height: 16,
         ),
@@ -145,7 +164,7 @@ class HomeTab extends StatelessWidget {
                 .asMap()
                 .entries
                 .map(
-                  (MapEntry map) => _buildCategoryList(map.key),
+                  (MapEntry map) => _buildCategoryList(map.key, context),
                 )
                 .toList(),
           ),
