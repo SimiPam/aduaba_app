@@ -164,49 +164,7 @@ class _EmptyCartScreenState extends State<EmptyCartScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Color(0xFF3A953C),
-        currentIndex: _currentTab,
-        onTap: (int val) {
-          setState(() {
-            _currentTab = val;
-            print(val);
-            if (val == 2) {
-              _scaffoldKey.currentState.openDrawer();
-            } else if (val == 1) {
-              _widget = DiscoverTab(openDraw: () {
-                _scaffoldKey.currentState.openDrawer();
-              });
-            } else {
-              _widget = HomeTab(openDraw: () {
-                _scaffoldKey.currentState.openDrawer();
-              });
-            }
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz_outlined),
-            label: "",
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }

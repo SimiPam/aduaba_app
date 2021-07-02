@@ -1,3 +1,4 @@
+import 'package:aduaba_app/constants.dart';
 import 'package:aduaba_app/screens/category_screen.dart';
 import 'package:aduaba_app/screens/discover_tab.dart';
 import 'package:aduaba_app/screens/home_tab.dart';
@@ -13,12 +14,6 @@ class MyOrdersScreen extends StatefulWidget {
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
-  // List<String> status = [
-  //   "Estimated Delivery Due Date on 21 Dec",
-  //   "Cancelled",
-  //   "Delivered 31 Dec"
-  // ];
-
   List<String> date = [
     " On 22 January, 2020 1:15 pm ",
     " On 22 January, 2020 1:15 pm ",
@@ -142,7 +137,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                       orderNo[index],
                                       style: TextStyle(
                                         color: Color(0xff131313),
-                                        fontSize: 16.5,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
@@ -160,7 +155,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                     Text(
                                       status[index],
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w400,
                                         color: Color(0xfff2902f),
                                       ),
@@ -187,49 +182,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
               ),
             ],
           ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Color(0xFF3A953C),
-        currentIndex: _currentTab,
-        onTap: (int val) {
-          setState(() {
-            _currentTab = val;
-            print(val);
-            if (val == 2) {
-              _scaffoldKey.currentState.openDrawer();
-            } else if (val == 1) {
-              _widget = DiscoverTab(openDraw: () {
-                _scaffoldKey.currentState.openDrawer();
-              });
-            } else {
-              _widget = HomeTab(openDraw: () {
-                _scaffoldKey.currentState.openDrawer();
-              });
-            }
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz_outlined),
-            label: "",
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }

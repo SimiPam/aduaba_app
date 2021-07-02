@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/my_order.dart';
+import 'package:aduaba_app/screens/my_wishlist.dart';
 import 'package:aduaba_app/screens/payment.dart';
 import 'package:aduaba_app/screens/shipping_details.dart';
 import 'package:aduaba_app/screens/user_account_edit.dart';
@@ -114,8 +115,7 @@ class UserAccount extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  WishlistScreen(),
+                              builder: (BuildContext context) => MyWishList(),
                             ),
                           );
                         },

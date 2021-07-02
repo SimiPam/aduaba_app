@@ -33,7 +33,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 22,
+                  height: 15,
                 ),
                 Text(
                   "Payment",
@@ -45,8 +45,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
                 Divider(
                   color: Colors.grey,
+                  height: 50,
                 ),
-                SizedBox(height: 30),
+                //SizedBox(height: 10),
                 Text(
                   "My Cards",
                   style: TextStyle(
@@ -77,9 +78,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.delete_forever_outlined),
+                        InkWell(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: Image.asset('assets/trash.png'),
+                          ),
                         ),
                       ],
                     ),
@@ -101,14 +106,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.delete_forever_outlined))
+                        // IconButton(
+                        //   onPressed: () {},
+                        //   icon: Icon(Icons.delete),
+                        // ),
+                        InkWell(
+                          onTap: () {},
+                          child: SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: Image.asset('assets/trash.png'),
+                          ),
+                        ),
                       ],
                     )
                   ],
                 ),
-                //  SizedBox(height: 500),
 
                 Padding(
                   padding: const EdgeInsets.only(top: 600),

@@ -2,6 +2,7 @@ import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/screens/categories_list_screen.dart';
 import 'package:aduaba_app/screens/empty_wishlist.dart';
 import 'package:aduaba_app/screens/my_order.dart';
+import 'package:aduaba_app/screens/my_wishlist.dart';
 import 'package:aduaba_app/screens/user_account.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class DrawerWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => WishlistScreen(),
+                        builder: (BuildContext context) => MyWishList(),
                       ),
                     );
                   },

@@ -44,7 +44,7 @@ class _EmptyWishlistState extends State<EmptyWishlist> {
                   height: 22,
                 ),
                 Text(
-                  "My Orders",
+                  "My Wishlist",
                   style: TextStyle(
                       fontSize: 24,
                       color: Color(0xFF819272),
@@ -63,52 +63,6 @@ class _EmptyWishlistState extends State<EmptyWishlist> {
                           fontSize: 13,
                           fontWeight: FontWeight.w400),
                     ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Icons.check,
-                    //           size: 20,
-                    //           color: Color(0xFF999999),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 4,
-                    //         ),
-                    //         Text(
-                    //           "Select All",
-                    //           style: TextStyle(
-                    //               color: Color(0xFF999999),
-                    //               fontSize: 13,
-                    //               fontWeight: FontWeight.w400),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //     SizedBox(
-                    //       width: 20,
-                    //     ),
-                    //     Row(
-                    //       children: [
-                    //         Icon(
-                    //           Icons.delete,
-                    //           size: 18,
-                    //           color: Color(0xFF999999),
-                    //         ),
-                    //         SizedBox(
-                    //           width: 4,
-                    //         ),
-                    //         Text(
-                    //           "Delete Selected",
-                    //           style: TextStyle(
-                    //               color: Color(0xFF999999),
-                    //               fontSize: 13,
-                    //               fontWeight: FontWeight.w400),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
                   ],
                 )
               ],
@@ -139,7 +93,7 @@ class _EmptyWishlistState extends State<EmptyWishlist> {
                   margin: EdgeInsets.only(top: 16),
                   width: 273,
                   child: Text(
-                    "Hit the green button down below to create an order",
+                    "Hit the green button down below to find interesting products",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Color(0xFF10151A),
@@ -153,57 +107,13 @@ class _EmptyWishlistState extends State<EmptyWishlist> {
           Container(
             padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16),
             child: buttonWidget(
-                buttonText: "Start Ordering",
+                buttonText: "Discover products",
                 buttonColor: Color(0xFF3A953C),
                 buttonAction: () {}),
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedItemColor: Color(0xFF3A953C),
-        // currentIndex: _currentTab,
-        // onTap: (int val) {
-        //   setState(
-        //     () {
-        //       _currentTab = val;
-        //       print(val);
-        //       if (val == 2) {
-        //         _scaffoldKey.currentState.openDrawer();
-        //       } else if (val == 1) {
-        //         _widget = DiscoverTab(openDraw: () {
-        //           _scaffoldKey.currentState.openDrawer();
-        //         });
-        //       } else {
-        //         _widget = HomeTab(openDraw: () {
-        //           _scaffoldKey.currentState.openDrawer();
-        //         });
-        //       }
-        //     },
-        //   );
-        // },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              size: 30,
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz_outlined),
-            label: "",
-          ),
-        ],
-      ),
+      bottomNavigationBar: bottomNavBar(),
     );
   }
 }

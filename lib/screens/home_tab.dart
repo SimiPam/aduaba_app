@@ -117,19 +117,19 @@ class HomeTab extends StatelessWidget {
           height: 24,
         ),
         buildSearchField('Search Product'),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  '${items[index]}',
-                ),
-              );
-            },
-          ),
-        ),
+        // Expanded(
+        //   child: ListView.builder(
+        //     shrinkWrap: true,
+        //     itemCount: items.length,
+        //     itemBuilder: (context, index) {
+        //       return ListTile(
+        //         title: Text(
+        //           '${items[index]}',
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
         SizedBox(
           height: 20,
         ),

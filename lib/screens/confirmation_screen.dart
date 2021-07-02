@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/home_tab.dart';
+import 'package:aduaba_app/screens/order_summary.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -167,22 +168,30 @@ class _ConfirmationTabState extends State<ConfirmationTab> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   buttonWidget(
-                      buttonText: "Track Order",
-                      buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {}),
+                    buttonText: "Track Order",
+                    buttonColor: Color(0xFF3A953C),
+                    buttonAction: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => OrderSummary()),
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: 16,
                   ),
                   outlineButtonWidget(
-                      buttonText: "Continue Shopping",
-                      // buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => MyHomePage()),
-                        );
-                      }),
+                    buttonText: "Continue Shopping",
+                    // buttonColor: Color(0xFF3A953C),
+                    buttonAction: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => MyHomePage()),
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: 45,
                   ),

@@ -244,7 +244,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                         child: Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 24, vertical: 32),
-                          // height: MediaQuery.of(context).size.height / 100 * 60,
+                          height: MediaQuery.of(context).size.height / 100 * 60,
                           child: otpForm(context),
                         ),
                       );
@@ -351,36 +351,6 @@ class _ResetPasswordState extends State<ResetPassword> {
               }),
         ),
       ],
-    );
-  }
-
-  Widget pinField(FocusNode fNode, Function(String) onChange) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Color(0xFFF7F7F7),
-      ),
-      child: SizedBox(
-        width: (75.75),
-        height: 47,
-        child: TextFormField(
-          focusNode: fNode,
-          obscureText: false,
-          keyboardType: TextInputType.number,
-          style: TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF10151A)),
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            enabledBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            border: InputBorder.none,
-            disabledBorder: InputBorder.none,
-          ),
-          onChanged: onChange,
-        ),
-      ),
     );
   }
 

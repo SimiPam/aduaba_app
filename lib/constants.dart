@@ -1,4 +1,242 @@
+import 'package:aduaba_app/screens/discover_tab.dart';
+import 'package:aduaba_app/screens/home_tab.dart';
 import 'package:flutter/material.dart';
+
+Widget pinField(FocusNode fNode, Function(String) onChange) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(5),
+      color: Color(0xFFF7F7F7),
+    ),
+    child: SizedBox(
+      width: (75.75),
+      height: 47,
+      child: TextFormField(
+        focusNode: fNode,
+        obscureText: false,
+        keyboardType: TextInputType.number,
+        style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF10151A)),
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          border: InputBorder.none,
+          disabledBorder: InputBorder.none,
+        ),
+        onChanged: onChange,
+      ),
+    ),
+  );
+}
+
+Expanded shippingAddress() {
+  return Expanded(
+    child: ListView.builder(
+      itemCount: 2,
+      itemBuilder: (_, index) {
+        return Container(
+          margin: EdgeInsets.only(bottom: 16, top: 0, left: 24, right: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "David Fayemi",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Railway Quarters , tejuosho, Surulere ,Lagos, \nSurulere (Ojuelegba), Lagos \n+2348074057767",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              letterSpacing: 1.2,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "change",
+                              style: TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  //Image.asset("assets/arrowforward.png"),
+
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.delete_outline_outlined),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              Divider(
+                color: Color(0xFFF5F5F5),
+                // color: Colors.grey,
+                thickness: 1,
+                height: 0,
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
+}
+
+BottomNavigationBar bottomNavBar() {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  int _currentTab = 0;
+  Widget _widget;
+  return BottomNavigationBar(
+    showSelectedLabels: false,
+    showUnselectedLabels: false,
+    selectedItemColor: Color(0xFF3A953C),
+    currentIndex: _currentTab,
+    // onTap: (int val) {
+    //   setState(() {
+    //     _currentTab = val;
+    //     print(val);
+    //     if (val == 2) {
+    //       _scaffoldKey.currentState.openDrawer();
+    //     } else if (val == 1) {
+    //       _widget = DiscoverTab(openDraw: () {
+    //         _scaffoldKey.currentState.openDrawer();
+    //       });
+    //     } else {
+    //       _widget = HomeTab(openDraw: () {
+    //         _scaffoldKey.currentState.openDrawer();
+    //       });
+    //     }
+    //   });
+    // },
+    items: [
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.home_outlined,
+          size: 30,
+        ),
+        label: "",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.search,
+          size: 30,
+        ),
+        label: "",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.more_horiz_outlined),
+        label: "",
+      ),
+    ],
+  );
+}
+
+Expanded billingAddress() {
+  return Expanded(
+    child: ListView.builder(
+      itemCount: 2,
+      itemBuilder: (_, index) {
+        return Container(
+          margin: EdgeInsets.only(bottom: 16, top: 0, left: 24, right: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "David Fayemi",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Railway Quarters , tejuosho, Surulere ,Lagos, \nSurulere (Ojuelegba), Lagos \n+2348074057767",
+                            style: TextStyle(
+                              fontSize: 16,
+                              letterSpacing: 1.2,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "change",
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  //Image.asset("assets/arrowforward.png"),
+
+                  IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.delete_outline_outlined),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 18,
+              ),
+              Divider(
+                color: Color(0xFFF5F5F5),
+                // color: Colors.grey,
+                thickness: 1,
+                height: 0,
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  );
+}
 
 Widget buildNumberField(String text) {
   final color = Colors.white;
