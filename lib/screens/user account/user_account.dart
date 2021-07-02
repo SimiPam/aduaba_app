@@ -1,12 +1,12 @@
-import 'package:aduaba_app/screens/my_order.dart';
-import 'package:aduaba_app/screens/my_wishlist.dart';
-import 'package:aduaba_app/screens/payment.dart';
-import 'package:aduaba_app/screens/shipping_details.dart';
-import 'package:aduaba_app/screens/user_account_edit.dart';
-import 'package:aduaba_app/screens/wishlist.dart';
-import 'package:flutter/material.dart';
+import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/screens/orders/my_order.dart';
 
-import '../constants.dart';
+import 'package:aduaba_app/screens/payment/payment.dart';
+import 'package:aduaba_app/screens/shipping/shipping_details.dart';
+import 'package:aduaba_app/screens/user%20account/user_account_edit.dart';
+
+import 'package:aduaba_app/screens/wishlist/my_wishlist.dart';
+import 'package:flutter/material.dart';
 
 class UserAccount extends StatelessWidget {
   @override

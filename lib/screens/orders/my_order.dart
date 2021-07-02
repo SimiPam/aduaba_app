@@ -1,8 +1,7 @@
 import 'package:aduaba_app/constants.dart';
-import 'package:aduaba_app/screens/category_screen.dart';
 import 'package:aduaba_app/screens/discover_tab.dart';
-import 'package:aduaba_app/screens/home_tab.dart';
-import 'package:aduaba_app/screens/order_summary.dart';
+
+import 'package:aduaba_app/screens/orders/order_summary.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 

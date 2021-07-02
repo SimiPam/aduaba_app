@@ -1,9 +1,8 @@
 import 'dart:io';
 
+import 'package:aduaba_app/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../constants.dart';
 
 class UserAccountEdit extends StatefulWidget {
   UserAccountEdit({Key key}) : super(key: key);

@@ -1,10 +1,9 @@
-import 'package:aduaba_app/screens/home_tab.dart';
-import 'package:aduaba_app/screens/order_summary.dart';
+import 'package:aduaba_app/screens/home/home_screen.dart';
+import 'package:aduaba_app/screens/orders/order_summary.dart';
+
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-import 'checkout_screen.dart';
-import 'home_screen.dart';
 
 class ConfirmationTab extends StatefulWidget {
   @override

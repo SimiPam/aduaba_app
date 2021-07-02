@@ -1,5 +1,5 @@
 import 'package:aduaba_app/screens/discover_tab.dart';
-import 'package:aduaba_app/screens/home_tab.dart';
+
 import 'package:flutter/material.dart';
 
 Widget pinField(FocusNode fNode, Function(String) onChange) {

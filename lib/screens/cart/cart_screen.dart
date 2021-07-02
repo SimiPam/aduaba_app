@@ -1,7 +1,7 @@
-import 'package:aduaba_app/screens/checkout_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/screens/checkout/checkout_screen.dart';
 
-import '../constants.dart';
+import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
   @override
@@ -344,16 +344,17 @@ class _CartScreenState extends State<CartScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16),
                   child: buttonWidget(
-                      buttonText: "Proceed to Checkout",
-                      buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CheckoutScreen()),
-                        );
-                      }),
+                    buttonText: "Proceed to Checkout",
+                    buttonColor: Color(0xFF3A953C),
+                    buttonAction: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                CheckoutScreen()),
+                      );
+                    },
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 45),

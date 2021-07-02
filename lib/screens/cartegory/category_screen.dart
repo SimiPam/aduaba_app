@@ -1,5 +1,8 @@
+import 'package:aduaba_app/constants.dart';
 import 'package:aduaba_app/model/sort_model.dart';
-import 'package:aduaba_app/screens/cart_screen.dart';
+import 'package:aduaba_app/screens/cart/cart_screen.dart';
+import 'package:aduaba_app/screens/cart/empty_cart_screen.dart';
+
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:aduaba_app/widgets/sort_radio_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +10,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math' as math;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import '../constants.dart';
-import 'discover_tab.dart';
-import 'empty_cart_screen.dart';
-import 'home_tab.dart';
 
 class CategoryScreen extends StatefulWidget {
   @override

@@ -1,10 +1,8 @@
-import 'package:aduaba_app/screens/cart_screen.dart';
-import 'package:aduaba_app/screens/categories_list_screen.dart';
-import 'package:aduaba_app/screens/empty_wishlist.dart';
-import 'package:aduaba_app/screens/my_order.dart';
-import 'package:aduaba_app/screens/my_wishlist.dart';
-import 'package:aduaba_app/screens/user_account.dart';
-import 'package:aduaba_app/screens/wishlist.dart';
+import 'package:aduaba_app/screens/cart/cart_screen.dart';
+import 'package:aduaba_app/screens/cartegory/categories_list_screen.dart';
+import 'package:aduaba_app/screens/orders/my_order.dart';
+import 'package:aduaba_app/screens/user%20account/user_account.dart';
+import 'package:aduaba_app/screens/wishlist/my_wishlist.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';

@@ -3,9 +3,6 @@ import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'category_screen.dart';
-import 'details_screen.dart';
-import 'discover_tab.dart';
-import 'home_tab.dart';
 
 class CategoriesListingScreen extends StatefulWidget {
   final VoidCallback openDrawer;

@@ -1,8 +1,7 @@
+import 'package:aduaba_app/constants.dart';
 import 'package:aduaba_app/model/address_model.dart';
 import 'package:aduaba_app/widgets/address_radio_item_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
 
 class ShippingAddressTab extends StatefulWidget {
   @override

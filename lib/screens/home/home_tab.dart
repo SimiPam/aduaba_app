@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/screens/cart/cart_screen.dart';
+import 'package:aduaba_app/screens/cart/empty_cart_screen.dart';
 
-import '../constants.dart';
-import 'cart_screen.dart';
-import 'empty_cart_screen.dart';
+import 'package:flutter/material.dart';
 
 class HomeTab extends StatelessWidget {
   final VoidCallback openDraw;

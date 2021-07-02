@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:aduaba_app/screens/home_screen.dart';
-import 'package:aduaba_app/screens/onboarding.dart';
-import 'package:aduaba_app/screens/sign_in.dart';
-import 'package:aduaba_app/screens/sign_up.dart';
+import 'package:aduaba_app/screens/onboarding/onboarding.dart';
+
 import 'package:flutter/material.dart';
 
 class LandingPage extends StatefulWidget {

@@ -1,7 +1,9 @@
 import 'package:aduaba_app/constants.dart';
-import 'package:aduaba_app/screens/home_screen.dart';
+import 'package:aduaba_app/screens/home/home_screen.dart';
+
 import 'package:aduaba_app/screens/reset_password.dart';
-import 'package:aduaba_app/screens/sign_up.dart';
+import 'package:aduaba_app/screens/sign%20up/sign_up.dart';
+
 import 'package:aduaba_app/widgets/form_errors.dart';
 import 'package:flutter/material.dart';
 

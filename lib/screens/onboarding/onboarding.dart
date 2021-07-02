@@ -1,6 +1,7 @@
 import 'package:aduaba_app/constants.dart';
-import 'package:aduaba_app/screens/sign_in.dart';
-import 'package:aduaba_app/screens/sign_up.dart';
+import 'package:aduaba_app/screens/sign%20in/sign_in.dart';
+import 'package:aduaba_app/screens/sign%20up/sign_up.dart';
+
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {

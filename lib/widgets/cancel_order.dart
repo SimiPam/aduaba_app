@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:aduaba_app/screens/empty_wishlist.dart';
-import 'package:aduaba_app/screens/home_screen.dart';
+import 'package:aduaba_app/screens/wishlist/empty_wishlist.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';

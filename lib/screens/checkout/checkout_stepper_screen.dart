@@ -1,11 +1,11 @@
+import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/screens/card_selection_screen.dart';
 import 'package:aduaba_app/screens/confirmation_screen.dart';
-import 'package:aduaba_app/screens/payment_tab.dart';
-import 'package:aduaba_app/screens/shipping_tab.dart';
-import 'package:flutter/material.dart';
+import 'package:aduaba_app/screens/payment/payment_tab.dart';
 
-import '../constants.dart';
-import 'card_selection_screen.dart';
-import 'home_screen.dart';
+import 'package:aduaba_app/screens/shipping/shipping_tab.dart';
+
+import 'package:flutter/material.dart';
 
 class CheckoutStepperScreen extends StatefulWidget {
   @override
