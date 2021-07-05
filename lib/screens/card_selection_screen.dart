@@ -2,7 +2,7 @@ import 'package:aduaba_app/model/card_detail_model.dart';
 import 'package:aduaba_app/widgets/card_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:paystack_manager/paystack_pay_manager.dart';
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'confirmation_screen.dart';
 
 final List<CardModel> cards = [

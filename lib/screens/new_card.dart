@@ -4,7 +4,7 @@ import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class NewCardScreen extends StatefulWidget {
   const NewCardScreen({Key key}) : super(key: key);

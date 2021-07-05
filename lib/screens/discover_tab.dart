@@ -4,7 +4,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'details_screen.dart';
 
 class DiscoverTab extends StatelessWidget {

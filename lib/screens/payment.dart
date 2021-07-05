@@ -1,7 +1,7 @@
 import 'package:aduaba_app/screens/new_card.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({Key key}) : super(key: key);

@@ -2,7 +2,7 @@ import 'package:aduaba_app/screens/checkout_screen.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class CartScreen extends StatefulWidget {
   @override

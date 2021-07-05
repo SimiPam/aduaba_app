@@ -1,7 +1,7 @@
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'discover_tab.dart';
 import 'home_tab.dart';
 

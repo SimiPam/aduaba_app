@@ -1,7 +1,7 @@
 import 'package:aduaba_app/screens/home_tab.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'checkout_screen.dart';
 import 'home_screen.dart';
 

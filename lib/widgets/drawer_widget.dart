@@ -7,7 +7,7 @@ import 'package:aduaba_app/screens/user_account.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'custom_page_route.dart';
 
 class DrawerWidget extends StatelessWidget {

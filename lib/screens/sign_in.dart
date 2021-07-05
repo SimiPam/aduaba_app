@@ -1,4 +1,4 @@
-import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/utilities/constants.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:aduaba_app/screens/reset_password.dart';
 import 'package:aduaba_app/screens/sign_up.dart';

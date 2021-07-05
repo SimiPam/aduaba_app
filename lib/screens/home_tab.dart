@@ -2,7 +2,7 @@ import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'cart_screen.dart';
 import 'categories_list_screen.dart';
 import 'category_screen.dart';

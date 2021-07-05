@@ -1,8 +1,8 @@
-import 'package:aduaba_app/constants.dart';
-import 'package:aduaba_app/onboarding_data.dart';
+import 'package:aduaba_app/utilities/constants.dart';
+import 'package:aduaba_app/utilities/onboarding_data.dart';
 import 'package:aduaba_app/screens/sign_in.dart';
 import 'package:aduaba_app/screens/sign_up.dart';
-import 'package:aduaba_app/transformers/transformer.dart';
+import 'package:aduaba_app/utilities/transformers/transformer.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:transformer_page_view/transformer_page_view.dart';

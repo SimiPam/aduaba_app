@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class UserAccountEdit extends StatefulWidget {
   UserAccountEdit({Key key}) : super(key: key);
@@ -14,11 +14,13 @@ class UserAccountEdit extends StatefulWidget {
 
 class _UserAccountEditState extends State<UserAccountEdit> {
   File _image;
+  String imagePath;
   _imgFromCamera() async {
     File image = await ImagePicker.pickImage(
         source: ImageSource.camera, imageQuality: 50);
 
     setState(() {
+      imagePath = image.path;
       _image = image;
       imageAdded = true;
     });
@@ -29,6 +31,7 @@ class _UserAccountEditState extends State<UserAccountEdit> {
         source: ImageSource.gallery, imageQuality: 50);
 
     setState(() {
+      imagePath = image.path;
       imageAdded = true;
       _image = image;
     });

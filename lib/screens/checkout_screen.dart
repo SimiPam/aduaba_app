@@ -2,7 +2,7 @@ import 'package:aduaba_app/screens/checkout_stepper_screen.dart';
 import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class CheckoutScreen extends StatefulWidget {
   @override

@@ -9,7 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math' as math;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-import '../constants.dart';
+import '../utilities/constants.dart';
 import 'details_screen.dart';
 import 'discover_tab.dart';
 import 'empty_cart_screen.dart';

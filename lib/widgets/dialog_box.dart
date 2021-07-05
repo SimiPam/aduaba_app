@@ -4,7 +4,7 @@ import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:aduaba_app/screens/sign_in.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class DialogBox extends StatefulWidget {
   const DialogBox({Key key}) : super(key: key);

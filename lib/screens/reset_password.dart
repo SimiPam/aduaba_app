@@ -1,7 +1,7 @@
 import 'package:aduaba_app/widgets/dialog_box.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class ResetPassword extends StatefulWidget {
   const ResetPassword({Key key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:aduaba_app/screens/user_account_edit.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../utilities/constants.dart';
 
 class UserAccount extends StatelessWidget {
   @override

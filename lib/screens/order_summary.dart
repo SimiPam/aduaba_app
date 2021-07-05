@@ -1,4 +1,4 @@
-import 'package:aduaba_app/constants.dart';
+import 'package:aduaba_app/utilities/constants.dart';
 import 'package:aduaba_app/widgets/cancel_order.dart';
 import 'package:flutter/material.dart';
 
