@@ -1,5 +1,6 @@
 import 'package:aduaba_app/constants.dart';
 import 'package:aduaba_app/screens/sign_in.dart';
+import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/form_errors.dart';
 import 'package:flutter/material.dart';
 
@@ -237,8 +238,9 @@ class _SignUpState extends State<SignUp> {
                           //   // KeyboardUtil.hideKeyboard(context);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => SignIn(),
+                            CustomPageRoute(
+                              child: SignIn(),
+                              direction: AxisDirection.left,
                             ),
                           );
                         }),
@@ -248,8 +250,9 @@ class _SignUpState extends State<SignUp> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => SignIn(),
+                        CustomPageRoute(
+                          child: SignIn(),
+                          direction: AxisDirection.left,
                         ),
                       );
                     },

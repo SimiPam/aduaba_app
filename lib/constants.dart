@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 const kSECRET_KEY = "sk_test_414a941f5dd0feeca0465bf86813cf5d830e562f";
@@ -28,6 +29,8 @@ const kSECRET_KEY = "sk_test_414a941f5dd0feeca0465bf86813cf5d830e562f";
 //     ),
 //   );
 // }
+
+final detailsPageTransitionType = ContainerTransitionType.fade;
 
 Widget buildTextField(String text) {
   final color = Colors.white;

@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/checkout_screen.dart';
+import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -360,7 +361,13 @@ class _CartScreenState extends State<CartScreen> {
                   child: outlineButtonWidget(
                       buttonText: "Continue Shopping",
                       // buttonColor: Color(0xFF3A953C),
-                      buttonAction: () {}),
+                      buttonAction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => MyHomePage()),
+                        );
+                      }),
                 ),
               ],
             ),

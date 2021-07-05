@@ -8,6 +8,7 @@ import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import 'custom_page_route.dart';
 
 class DrawerWidget extends StatelessWidget {
   final VoidCallback openDraw;
@@ -53,31 +54,38 @@ class DrawerWidget extends StatelessWidget {
                   onClicked: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            _cartEmpty ? EmptyCartScreen() : CartScreen(),
+                      CustomPageRoute(
+                        direction: AxisDirection.left,
+                        child: _cartEmpty ? EmptyCartScreen() : CartScreen(),
                       ),
                     );
                   },
                   image: Image.asset("assets/cart.png"),
                   text: "Cart"),
               buildMenuItem(
-                image: Image.asset("assets/category.png"),
-                text: "Categories",
-                onClicked: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) =>
-                        CategoriesListingScreen(openDrawer: openDraw),
-                  );
-                },
-              ),
+                  image: Image.asset("assets/category.png"),
+                  text: "Categories",
+                  onClicked: () {
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) =>
+                    //       CategoriesListingScreen(openDrawer: openDraw),
+                    // );
+                    Navigator.push(
+                      context,
+                      CustomPageRoute(
+                        child: CategoriesListingScreen(openDrawer: openDraw),
+                        direction: AxisDirection.left,
+                      ),
+                    );
+                  }),
               buildMenuItem(
                   onClicked: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => WishlistScreen(),
+                      CustomPageRoute(
+                        child: WishlistScreen(),
+                        direction: AxisDirection.left,
                       ),
                     );
                   },
@@ -87,8 +95,9 @@ class DrawerWidget extends StatelessWidget {
                   onClicked: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => MyOrdersScreen(),
+                      CustomPageRoute(
+                        child: MyOrdersScreen(),
+                        direction: AxisDirection.left,
                       ),
                     );
                   },
@@ -100,8 +109,9 @@ class DrawerWidget extends StatelessWidget {
                 onClicked: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => UserAccount(),
+                    CustomPageRoute(
+                      child: UserAccount(),
+                      direction: AxisDirection.left,
                     ),
                   );
                 },

@@ -2,6 +2,7 @@ import 'package:aduaba_app/constants.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:aduaba_app/screens/reset_password.dart';
 import 'package:aduaba_app/screens/sign_up.dart';
+import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/form_errors.dart';
 import 'package:flutter/material.dart';
 
@@ -140,8 +141,9 @@ class _SignInState extends State<SignIn> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => ResetPassword(),
+                          CustomPageRoute(
+                            child: ResetPassword(),
+                            direction: AxisDirection.up,
                           ),
                         );
                       },
@@ -167,8 +169,9 @@ class _SignInState extends State<SignIn> {
                           //   // KeyboardUtil.hideKeyboard(context);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => MyHomePage(),
+                            CustomPageRoute(
+                              child: MyHomePage(),
+                              direction: AxisDirection.up,
                             ),
                           );
                         }),
@@ -218,8 +221,9 @@ class _SignInState extends State<SignIn> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => SignUp(),
+                        CustomPageRoute(
+                          child: SignUp(),
+                          direction: AxisDirection.right,
                         ),
                       );
                     },

@@ -4,8 +4,8 @@ import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key key, this.switchTab}) : super(key: key);
+  final int switchTab;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -22,6 +22,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     items.addAll(duplicateItems);
     super.initState();
+    if (widget.switchTab != null) {
+      if (widget.switchTab == 2) {
+        _currentTab = 2;
+        _scaffoldKey.currentState.openDrawer();
+      } else if (widget.switchTab == 1) {
+        _currentTab = 1;
+        _widget = DiscoverTab(openDraw: () {
+          _scaffoldKey.currentState.openDrawer();
+        });
+      }
+    }
   }
 
   void filterSearchResults(String query) {

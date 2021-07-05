@@ -1,3 +1,5 @@
+import 'package:aduaba_app/widgets/custom_page_route.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -15,7 +17,7 @@ class HomeTab extends StatelessWidget {
 
   List<String> _categoryList = ["Raw Food", "Spices", "Bakery", "Cosmetic"];
   final duplicateItems = List<String>.generate(10, (i) => "Item $i");
-  var items = List<String>();
+  // var items = List<String>();
 
   int _selectedIindex = 0;
 
@@ -25,8 +27,9 @@ class HomeTab extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => CategoryScreen(),
+          CustomPageRoute(
+            // builder: (BuildContext context) => CategoryScreen(),
+            child: CategoryScreen(),
           ),
         );
       },
@@ -123,35 +126,35 @@ class HomeTab extends StatelessWidget {
           height: 24,
         ),
         buildSearchField('Search Product'),
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  '${items[index]}',
-                ),
-              );
-            },
-          ),
-        ),
+        // Expanded(
+        //   child: ListView.builder(
+        //     shrinkWrap: true,
+        //     itemCount: items.length,
+        //     itemBuilder: (context, index) {
+        //       return ListTile(
+        //         title: Text(
+        //           '${items[index]}',
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // ),
         SizedBox(
           height: 20,
         ),
         subTitle(
           title: "Categories",
           onTapped: () {
-            showDialog(
-              context: context,
-              builder: (context) =>
-                  CategoriesListingScreen(openDrawer: openDraw),
-            );
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (BuildContext context) =>
-            //             CategoriesListingScreen(openDrawer: openDraw)));
+            // showDialog(
+            //   context: context,
+            //   builder: (context) =>
+            //       CategoriesListingScreen(openDrawer: openDraw),
+            // );
+            Navigator.push(
+                context,
+                CustomPageRoute(
+                    direction: AxisDirection.left,
+                    child: CategoriesListingScreen(openDrawer: openDraw)));
           },
         ),
         SizedBox(
@@ -277,125 +280,127 @@ class HomeTab extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => DetailsScreen(
-                        imageUrl: "assets/fruitbasket.png",
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
-                  width: MediaQuery.of(context).size.width / 2 - 32,
-                  // color: Colors.red,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Positioned(
-                        bottom: 10,
-                        child: Container(
-                          height: 120,
-                          width: MediaQuery.of(context).size.width / 2 - 32,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(10.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Emmanuel Produce",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w300,
-                                    letterSpacing: 1.2,
-                                    color: Color(0xFF819272),
+              return OpenContainer(
+                closedElevation: 0,
+                openElevation: 0,
+                transitionDuration: Duration(milliseconds: 500),
+                transitionType: detailsPageTransitionType,
+                openBuilder: (context, _) => DetailsScreen(
+                  imageUrl: "assets/fruitbasket.png",
+                ),
+                closedBuilder: (context, VoidCallback openContainer) =>
+                    GestureDetector(
+                  onTap: openContainer,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
+                    width: MediaQuery.of(context).size.width / 2 - 32,
+                    // color: Colors.red,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Positioned(
+                          bottom: 10,
+                          child: Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2 - 32,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Emmanuel Produce",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w300,
+                                      letterSpacing: 1.2,
+                                      color: Color(0xFF819272),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  "Herbsconnect Organic Acai Berry Powder Freeze Dried",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
+                                  SizedBox(
+                                    height: 4,
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "N35,000.00",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 1.2,
-                                        color: Color(0xFFF39E28),
-                                      ),
+                                  Text(
+                                    "Herbsconnect Organic Acai Berry Powder Freeze Dried",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    Text(
-                                      "・",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFFF3A953C),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "N35,000.00",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w700,
+                                          letterSpacing: 1.2,
+                                          color: Color(0xFFF39E28),
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "In stock",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                        color: Color(0xFFF3A953C),
+                                      Text(
+                                        "・",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xFFF3A953C),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                      Text(
+                                        "In stock",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w400,
+                                          color: Color(0xFFF3A953C),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Colors.black54,
-                          //     offset: Offset(0, 2),
-                          //     blurRadius: 6,
-                          //   ),
-                          // ],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image(
-                            width: MediaQuery.of(context).size.width / 2 - 32,
-                            height: MediaQuery.of(context).size.width / 2 - 32,
-                            image: AssetImage("assets/fruitbasket.png"),
-                            fit: BoxFit.cover,
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                            // boxShadow: [
+                            //   BoxShadow(
+                            //     color: Colors.black54,
+                            //     offset: Offset(0, 2),
+                            //     blurRadius: 6,
+                            //   ),
+                            // ],
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image(
+                              width: MediaQuery.of(context).size.width / 2 - 32,
+                              height:
+                                  MediaQuery.of(context).size.width / 2 - 32,
+                              image: AssetImage("assets/fruitbasket.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Image.asset("assets/whiteheart.png"),
-                      ),
-                    ],
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Image.asset("assets/whiteheart.png"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -409,45 +414,47 @@ class HomeTab extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: 6,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => DetailsScreen(
-                        imageUrl: "assets/fruitbasket.png",
-                      ),
-                    ),
-                  );
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
-                  width: MediaQuery.of(context).size.width / 2 - 32,
-                  // color: Colors.red,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: Image(
-                            width: MediaQuery.of(context).size.width / 2 - 32,
-                            height: MediaQuery.of(context).size.width / 2 - 32,
-                            image: AssetImage("assets/fruitbasket.png"),
-                            fit: BoxFit.cover,
+              return OpenContainer(
+                closedElevation: 0,
+                openElevation: 0,
+                transitionDuration: Duration(milliseconds: 500),
+                transitionType: detailsPageTransitionType,
+                openBuilder: (context, _) => DetailsScreen(
+                  imageUrl: "assets/fruitbasket.png",
+                ),
+                closedBuilder: (context, VoidCallback openContainer) =>
+                    GestureDetector(
+                  onTap: openContainer,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 16, bottom: 32, right: 16),
+                    width: MediaQuery.of(context).size.width / 2 - 32,
+                    // color: Colors.red,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Image(
+                              width: MediaQuery.of(context).size.width / 2 - 32,
+                              height:
+                                  MediaQuery.of(context).size.width / 2 - 32,
+                              image: AssetImage("assets/fruitbasket.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Positioned(
-                        top: 10,
-                        right: 10,
-                        child: Image.asset("assets/whiteheart.png"),
-                      ),
-                    ],
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Image.asset("assets/whiteheart.png"),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );

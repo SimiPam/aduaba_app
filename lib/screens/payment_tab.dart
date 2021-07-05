@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 import 'card_selection_screen.dart';
+import 'confirmation_screen.dart';
 
 class PaymentTab extends StatefulWidget {
   @override
@@ -298,11 +299,19 @@ class _PaymentTabState extends State<PaymentTab> {
             buttonText: "Pay Now",
             buttonColor: Color(0xFF3A953C),
             buttonAction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => CardSelection()),
-              );
+              if (_index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => CardSelection()),
+                );
+              } else {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => ConfirmationTab()),
+                );
+              }
             }),
       ),
     );

@@ -240,13 +240,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                     isScrollControlled: true,
                     context: context,
                     builder: (BuildContext context) {
-                      return SingleChildScrollView(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 32),
-                          height: MediaQuery.of(context).size.height / 100 * 60,
-                          child: otpForm(context),
-                        ),
+                      return Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+                        height: MediaQuery.of(context).size.height / 100 * 60,
+                        child: otpForm(context),
                       );
                     },
                   );
@@ -260,97 +258,97 @@ class _ResetPasswordState extends State<ResetPassword> {
     );
   }
 
-  Column otpForm(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Enter 4 Digits Code",
-              style: TextStyle(
-                fontSize: 24,
-                color: Color(0xFF3C673D),
-                fontWeight: FontWeight.w700,
+  Widget otpForm(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Enter 4 Digits Code",
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFF3C673D),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Enter the four digits code sent to your email address",
-          style: TextStyle(
-            fontSize: 17,
-            color: Color(0xff999999),
-            fontWeight: FontWeight.w400,
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.close),
+              ),
+            ],
           ),
-        ),
-        SizedBox(
-          height: 40,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            pinField(
-              null,
-              (value) {
-                nextField(value: value, focusNode: pin2FocusNode);
-              },
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Enter the four digits code sent to your email address",
+            style: TextStyle(
+              fontSize: 17,
+              color: Color(0xff999999),
+              fontWeight: FontWeight.w400,
             ),
-            pinField(
-              pin2FocusNode,
-              (value) {
-                nextField(value: value, focusNode: pin3FocusNode);
-              },
-            ),
-            pinField(
-              pin3FocusNode,
-              (value) {
-                nextField(value: value, focusNode: pin4FocusNode);
-              },
-            ),
-            pinField(
-              pin4FocusNode,
-              (value) {
-                nextField(value: value, focusNode: pin5FocusNode);
-              },
-            ),
-          ],
-        ),
-        Spacer(),
-        SizedBox(
-          width: double.infinity,
-          child: buttonWidget(
-              buttonText: "Continue",
-              buttonColor: Color(0xFF3A953C),
-              buttonAction: () {
-                Navigator.pop(context);
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return SingleChildScrollView(
-                      child: Container(
+          ),
+          SizedBox(
+            height: 40,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              pinField(
+                null,
+                (value) {
+                  nextField(value: value, focusNode: pin2FocusNode);
+                },
+              ),
+              pinField(
+                pin2FocusNode,
+                (value) {
+                  nextField(value: value, focusNode: pin3FocusNode);
+                },
+              ),
+              pinField(
+                pin3FocusNode,
+                (value) {
+                  nextField(value: value, focusNode: pin4FocusNode);
+                },
+              ),
+              pinField(
+                pin4FocusNode,
+                (value) {
+                  nextField(value: value, focusNode: pin5FocusNode);
+                },
+              ),
+            ],
+          ),
+          Spacer(),
+          SizedBox(
+            width: double.infinity,
+            child: buttonWidget(
+                buttonText: "Continue",
+                buttonColor: Color(0xFF3A953C),
+                buttonAction: () {
+                  Navigator.pop(context);
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
                         height: MediaQuery.of(context).size.height / 100 * 60,
                         padding:
                             EdgeInsets.symmetric(horizontal: 24, vertical: 32),
                         child: newPasswordModal(),
-                      ),
-                    );
-                  },
-                );
-              }),
-        ),
-      ],
+                      );
+                    },
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -384,95 +382,97 @@ class _ResetPasswordState extends State<ResetPassword> {
     );
   }
 
-  Column newPasswordModal() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Reset Password",
-              style: TextStyle(
-                fontSize: 24,
-                color: Color(0xFF3C673D),
-                fontWeight: FontWeight.w700,
+  Widget newPasswordModal() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Reset Password",
+                style: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFF3C673D),
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: Icon(Icons.close),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          "Set the new password for your account so you can login and access the features",
-          style: TextStyle(
-            fontSize: 17,
-            color: Color(0xff999999),
-            fontWeight: FontWeight.w400,
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.close),
+              ),
+            ],
           ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "New Password",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF10151A),
+          SizedBox(
+            height: 16,
+          ),
+          Text(
+            "Set the new password for your account so you can login and access the features",
+            style: TextStyle(
+              fontSize: 17,
+              color: Color(0xff999999),
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "New Password",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF10151A),
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                buildTextField('Enter Password'),
-                SizedBox(height: 16),
-                Text(
-                  "Confirm Password",
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF10151A),
+                  SizedBox(height: 16),
+                  buildTextField('Enter Password'),
+                  SizedBox(height: 16),
+                  Text(
+                    "Confirm Password",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF10151A),
+                    ),
                   ),
-                ),
-                SizedBox(height: 16),
-                buildTextField('Confirm Password'),
-                SizedBox(height: 36),
-                SizedBox(
-                  width: double.infinity,
-                  child: buttonWidget(
-                    buttonAction: () {
-                      Navigator.pop(context);
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return SingleChildScrollView(
-                            child: DialogBox(),
-                          );
-                        },
-                      );
-                    },
-                    buttonColor: Color(0xFF3A953C),
-                    buttonText: 'Save password',
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ],
+                  SizedBox(height: 16),
+                  buildTextField('Confirm Password'),
+                  SizedBox(height: 36),
+                  SizedBox(
+                    width: double.infinity,
+                    child: buttonWidget(
+                      buttonAction: () {
+                        Navigator.pop(context);
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return SingleChildScrollView(
+                              child: DialogBox(),
+                            );
+                          },
+                        );
+                      },
+                      buttonColor: Color(0xFF3A953C),
+                      buttonText: 'Save password',
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

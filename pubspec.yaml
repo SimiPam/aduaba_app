@@ -36,6 +36,11 @@ dependencies:
   image_picker: ^0.6.6+5
   flutter_credit_card: ^2.0.0
   paystack_manager:
+  # container transform animation
+  animations: ^1.1.2
+  # pageview transform animation
+  transformer_page_view: ^0.1.6
+
 
 
 dev_dependencies:
