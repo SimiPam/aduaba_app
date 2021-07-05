@@ -17,11 +17,11 @@ class _OrderSummaryState extends State<OrderSummary> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.all(30),
+        margin: EdgeInsets.all(25),
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 220),
+              padding: const EdgeInsets.only(right: 200),
               child: Column(
                 children: [
                   SizedBox(
@@ -40,9 +40,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  SizedBox(height: 5),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -58,9 +56,9 @@ class _OrderSummaryState extends State<OrderSummary> {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 10),
             Divider(height: 20),
-            SizedBox(height: 16),
+            SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.only(right: 150),
               child: Text(
@@ -86,6 +84,7 @@ class _OrderSummaryState extends State<OrderSummary> {
             //   stepperType: stepperType,
             //   currentStep: _currentStep,
             // ),
+            Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 270),
               child: SizedBox(

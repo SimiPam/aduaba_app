@@ -123,7 +123,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 600),
+                  padding: const EdgeInsets.only(top: 520),
                   child: SizedBox(
                     width: double.infinity,
                     child: buttonWidget(
