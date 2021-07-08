@@ -20,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   bool noResult = false;
   List<Product> productList;
   String message = '';
+  String history;
   Future<List<Product>> productAlbum;
   int count = 1;
   Future<List<Product>> searchProducts(name) async {
@@ -37,7 +38,10 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    productAlbum = searchProducts(widget.search);
+    if (widget.search != null) {
+      productAlbum = searchProducts(widget.search);
+      history = widget.search;
+    }
   }
 
   // Product productFound;
@@ -97,6 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           buildSearchField('Search Product', (value) {
                             setState(() {
                               productAlbum = searchProducts(value);
+                              history = value;
                             });
                           }),
                         ],
@@ -136,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             : Container(
                                 height: MediaQuery.of(context).size.width / 3,
                                 // flex: 1,
-                                child: widget.search == null
+                                child: history == null
                                     ? Container()
                                     : ListView.builder(
                                         itemCount: count,
@@ -150,7 +155,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               ListTile(
                                                 leading: Icon(
                                                     Icons.access_time_outlined),
-                                                title: Text(widget.search),
+                                                title: Text(history),
                                                 trailing: GestureDetector(
                                                     onTap: () {
                                                       setState(() {
