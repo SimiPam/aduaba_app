@@ -40,8 +40,7 @@ class AuthProvider extends ChangeNotifier {
       "password": password,
       "confirmPassword": confirmPassword,
       "firstName": firstName,
-      "lastName": lastName,
-      "username": "u56"
+      "lastName": lastName
     };
 
     return await post(AppUrl.register, body: json.encode(apiBodyData),
