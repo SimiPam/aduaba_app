@@ -1,10 +1,16 @@
+import 'package:aduaba_app/model/product.dart';
+import 'package:aduaba_app/providers/product_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 import 'details_screen.dart';
 
 class SearchScreen extends StatefulWidget {
+  final String search;
+
+  const SearchScreen({this.search});
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -47,7 +53,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   SizedBox(
                     height: 16,
                   ),
-                  buildSearchField('Search Product'),
+                  buildSearchField('Search Product', (value) {}),
                 ],
               ),
             ),
@@ -85,27 +91,41 @@ class _SearchScreenState extends State<SearchScreen> {
                     : Container(
                         height: MediaQuery.of(context).size.width / 3,
                         // flex: 1,
-                        child: ListView.builder(
-                            itemCount: 2,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  ListTile(
-                                    leading: Icon(Icons.access_time_outlined),
-                                    title: Text("Recent search"),
-                                    trailing: Icon(Icons.close),
-                                    contentPadding: EdgeInsets.only(left: 0),
-                                  ),
-                                  Divider(
-                                    color: Color(0xFFF5F5F5),
-                                    // color: Colors.grey,
-                                    thickness: 1,
-                                    height: 0,
-                                  )
-                                ],
-                              );
-                            }),
+                        child: widget.search == null
+                            ? Container()
+                            : ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (context, index) {
+                                  bool delete = false;
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ListTile(
+                                        leading:
+                                            Icon(Icons.access_time_outlined),
+                                        title: Text(widget.search),
+                                        trailing: delete
+                                            ? Text("")
+                                            : GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    delete = true;
+                                                  });
+                                                },
+                                                child: Icon(Icons.close)),
+                                        contentPadding:
+                                            EdgeInsets.only(left: 0),
+                                      ),
+                                      Divider(
+                                        color: Color(0xFFF5F5F5),
+                                        // color: Colors.grey,
+                                        thickness: 1,
+                                        height: 0,
+                                      )
+                                    ],
+                                  );
+                                }),
                       ),
               ],
             ),
@@ -134,131 +154,153 @@ class _SearchScreenState extends State<SearchScreen> {
             //     ),
             //   ),
             // ),
-            Expanded(
-              // flex: 5,
-              child: ListView.builder(
-                  itemCount: 6,
-                  itemBuilder: (_, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => DetailsScreen(
-                              imageUrl: "assets/fruitbasket.png",
-                            ),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(bottom: 16, top: 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Hero(
-                                  tag: "assets/fruitbasket.png",
-                                  child: Container(
-                                    width: 90,
-                                    height: 120,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                          "assets/fruitbasket.png",
-                                        ),
-                                        fit: BoxFit.fill,
-                                      ),
+            FutureBuilder(
+                future: Provider.of<ProductModel>(context, listen: false)
+                    .searchProducts(widget.search),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      // flex: 5,
+                      child: ListView.builder(
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (_, index) {
+                            Product product = snapshot.data[index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        DetailsScreen(
+                                      // imageUrl: "assets/fruitbasket.png",
+                                      imageUrl: product.imageUrl,
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  height: 120,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Container(
-                                        width: 250,
-                                        child: Text(
-                                          "Herbsconnect Organic Acai Berry Powder Freeze Dried",
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w400,
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 16, top: 0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Hero(
+                                          tag: "assets/fruitbasket.png",
+                                          child: Container(
+                                            width: 90,
+                                            height: 120,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                  // "assets/fruitbasket.png",
+                                                  product.imageUrl,
+                                                ),
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        "Emmanuel Produce",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 1.2,
-                                          color: Color(0xFF819272),
+                                        SizedBox(
+                                          width: 10,
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "N35,000.00",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 1.2,
-                                              color: Color(0xFFF39E28),
-                                            ),
+                                        Container(
+                                          height: 120,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Container(
+                                                width: 250,
+                                                child: Text(
+                                                  "Herbsconnect Organic Acai Berry Powder Freeze Dried",
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Emmanuel Produce",
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: 1.2,
+                                                  color: Color(0xFF819272),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "N35,000.00",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      letterSpacing: 1.2,
+                                                      color: Color(0xFFF39E28),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "・",
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      color: Color(0xFFF3A953C),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "In stock",
+                                                    style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Color(0xFFF3A953C),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
                                           ),
-                                          Text(
-                                            "・",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xFFF3A953C),
-                                            ),
-                                          ),
-                                          Text(
-                                            "In stock",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xFFF3A953C),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 28,
+                                    ),
+                                    Divider(
+                                      color: Color(0xFFF5F5F5),
+                                      // color: Colors.grey,
+                                      thickness: 1,
+                                      height: 0,
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 28,
-                            ),
-                            Divider(
-                              color: Color(0xFFF5F5F5),
-                              // color: Colors.grey,
-                              thickness: 1,
-                              height: 0,
-                            ),
-                          ],
-                        ),
-                      ),
+                              ),
+                            );
+                          }),
                     );
-                  }),
-            ),
+                  }
+                  return Text('Error retrieving results: ${snapshot.error}');
+                }),
           ],
         ),
       ),

@@ -1,7 +1,15 @@
+import 'package:aduaba_app/model/category.dart';
+import 'package:aduaba_app/model/user.dart';
+import 'package:aduaba_app/providers/category_provider.dart';
+import 'package:aduaba_app/screens/search_screen.dart';
+import 'package:aduaba_app/services/category_api.dart';
+import 'package:aduaba_app/utilities/app_url.dart';
+import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 import '../utilities/constants.dart';
 import 'cart_screen.dart';
 import 'categories_list_screen.dart';
@@ -11,25 +19,28 @@ import 'empty_cart_screen.dart';
 
 class HomeTab extends StatelessWidget {
   final VoidCallback openDraw;
-  HomeTab({Key key, this.openDraw}) : super(key: key);
+  final String name;
+  HomeTab({Key key, this.openDraw, this.name}) : super(key: key);
 
   bool _cartEmpty = false;
 
-  List<String> _categoryList = ["Raw Food", "Spices", "Bakery", "Cosmetic"];
+  List<Category> _categoryList = [];
   final duplicateItems = List<String>.generate(10, (i) => "Item $i");
   // var items = List<String>();
 
   int _selectedIindex = 0;
 
   Widget _buildCategoryList(int index, context) {
+    print(_categoryList);
     final color = categoryColors[index % categoryColors.length];
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           CustomPageRoute(
-            // builder: (BuildContext context) => CategoryScreen(),
-            child: CategoryScreen(),
+            child: CategoryScreen(
+              categoryName: _categoryList[index].categoryName,
+            ),
           ),
         );
       },
@@ -47,11 +58,12 @@ class HomeTab extends StatelessWidget {
         ),
         alignment: Alignment.center,
         child: Text(
-          _categoryList[index],
+          _categoryList[index].categoryName,
           style: TextStyle(
             fontSize: 13,
             color: color,
           ),
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
@@ -59,6 +71,21 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CategoryModel categoryProvider = Provider.of<CategoryModel>(context);
+    List<Category> categories = [];
+
+    Future<List<Category>> getAllCategories() async {
+      categories = await categoryProvider.getAllCategories();
+      print("category list:");
+      Category category = categories[1];
+      print(category.categoryName);
+      _categoryList = categories;
+      return categories;
+    }
+
+    print(_categoryList);
+
+    // Future<User> getUserData() => UserPreferences().getUser();
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24.0),
       children: [
@@ -100,8 +127,20 @@ class HomeTab extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // FutureBuilder(
+              //     future: getUserData(),
+              //     builder: (context, snapshot) {
+              //       return Text(
+              //         "Hi ${snapshot.data.firstName}",
+              //         style: TextStyle(
+              //           fontSize: 17,
+              //           color: Color(0xff3A683B),
+              //           fontWeight: FontWeight.w400,
+              //         ),
+              //       );
+              //     }),
               Text(
-                "Hi Simi",
+                "Hi $name",
                 style: TextStyle(
                   fontSize: 17,
                   color: Color(0xff3A683B),
@@ -125,20 +164,15 @@ class HomeTab extends StatelessWidget {
         SizedBox(
           height: 24,
         ),
-        buildSearchField('Search Product'),
-        // Expanded(
-        //   child: ListView.builder(
-        //     shrinkWrap: true,
-        //     itemCount: items.length,
-        //     itemBuilder: (context, index) {
-        //       return ListTile(
-        //         title: Text(
-        //           '${items[index]}',
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
+        buildSearchField('Search Product', (val) {
+          // searchValues.add(val);
+          Navigator.push(
+            context,
+            CustomPageRoute(
+              child: SearchScreen(search: val),
+            ),
+          );
+        }),
         SizedBox(
           height: 20,
         ),
@@ -160,19 +194,74 @@ class HomeTab extends StatelessWidget {
         SizedBox(
           height: 16,
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: _categoryList
-                .asMap()
-                .entries
-                .map(
-                  (MapEntry map) => _buildCategoryList(map.key, context),
-                )
-                .toList(),
-          ),
-        ),
+        //
+        FutureBuilder(
+            future: categoryProvider.getAllCategories(),
+            builder: (context, snapshot) {
+              Category category = snapshot.data[1];
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(category.categoryName),
+                    ]),
+              );
+            }),
+
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        //   child: FutureBuilder(
+        //     // future: Provider.of<CategoryModel>(context,listen: false).fetchCategories(),
+        //     future: getAllCategories(),
+        //     builder: (context, snapshot) {
+        //       // final model = Provider.of<CategoryModel>(context);
+        //       _categoryList = snapshot.data;
+        //       print(_categoryList);
+        //       print(CategoryApi.instance.getAllCategories());
+        //       // print(snapshot.data);
+        //       return snapshot.hasData
+        //           ? Row(
+        //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //               children: snapshot.data
+        //                   .asMap()
+        //                   .entries
+        //                   .map(
+        //                     (MapEntry map) =>
+        //                         _buildCategoryList(map.key, context),
+        //                   )
+        //                   .toList(),
+        //             )
+        //           : Container();
+        //     },
+        //   ),
+        // ),
+
+        // SingleChildScrollView(
+        //   scrollDirection: Axis.horizontal,
+        //   child: ChangeNotifierProvider(
+        //     create: (context) => CategoryModel(),
+        //     child: Builder(builder: (context) {
+        //       final model = Provider.of<CategoryModel>(context);
+        //       _categoryList = model.categoryList;
+        //       print(model);
+        //       print(model.categoryList);
+        //       return _categoryList.isNotEmpty
+        //           ? Container()
+        //           : Row(
+        //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //               children: _categoryList
+        //                   .asMap()
+        //                   .entries
+        //                   .map(
+        //                     (MapEntry map) =>
+        //                         _buildCategoryList(map.key, context),
+        //                   )
+        //                   .toList(),
+        //             );
+        //     }),
+        //   ),
+        // ),
         SizedBox(height: 32),
         subTitle(title: "Today's Promo"),
         Container(
