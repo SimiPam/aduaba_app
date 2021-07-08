@@ -111,7 +111,7 @@ Widget buildSearchField(String text, Function(String) onSubmit) {
   return TextField(
     onSubmitted: onSubmit,
     style: TextStyle(
-      color: Color(0xFFF7F7F7),
+      color: Color(0xFF10151A),
     ),
     decoration: InputDecoration(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

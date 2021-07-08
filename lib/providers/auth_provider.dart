@@ -42,11 +42,41 @@ class AuthProvider extends ChangeNotifier {
       "firstName": firstName,
       "lastName": lastName
     };
+    // Register register = Register(
+    //   email: "s1@gmail.com",
+    //   phoneNumber: "08011111111",
+    //   firstName: "st",
+    //   lastName: "st",
+    //   avataUrl: "assets/cart.png",
+    //   password: "SimiPam123",
+    //   confirmPassword: "SimiPam123",
+    // );
+
+    // Register({
+    // this.userId,
+    // this.firstName,
+    // this.lastName,
+    // this.email,
+    // this.phoneNumber,
+    // this.avataUrl,
+    // this.password,
+    // this.confirmPassword});
+
+    // final Map<String, dynamic> apiBodyData = {
+    //   "email": "s1@gmail.com",
+    //   "password": "SimiPam123",
+    //   "confirmPassword": "SimiPam123",
+    //   "firstName": "st",
+    //   "lastName": "pt",
+    //   "phoneNumber": "08011111111",
+    //   "username": "simi1",
+    //   "avataUrl": "assets/cart.png"
+    // };
 
     return await post(AppUrl.register, body: json.encode(apiBodyData),
             // body: register,
             headers: {'Content-Type': 'application/json'})
-        .then(onRegValue)
+        .then(onValue)
         .catchError(onError);
   }
 
@@ -54,7 +84,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  static Future<FutureOr> onRegValue(Response response) async {
+  static Future<FutureOr> onValue(Response response) async {
     var result;
 
     final Map<String, dynamic> responseData = json.decode(response.body);
@@ -63,8 +93,7 @@ class AuthProvider extends ChangeNotifier {
 
     if (response.statusCode == 200) {
       var userData = responseData['data'];
-      print(responseData);
-      print(userData);
+
       // now we will create a user model
       User authUser = User.fromJson(responseData);
 
@@ -97,12 +126,7 @@ class AuthProvider extends ChangeNotifier {
 
     Response response = await post(AppUrl.login, body: json.encode(apiBodyData),
         // body: register,
-        headers: {
-          'Content-Type': 'application/json',
-          'Charset': 'utf-8'
-          // 'Authorization':
-          //     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzaW1pMSIsImp0aSI6ImJmMmU5NjliLTAyMWUtNGU2Zi1hYmU4LTc0MWNjNzIwNjNiNCIsImVtYWlsIjoiczFAZ21haWwuY29tIiwidWlkIjoiY2ZjYjA5YzQtM2FhNy00NDdkLWEyN2YtN2Q0NjdmNWMyODI2Iiwicm9sZXMiOiJVc2VyIiwiZXhwIjoxNjI1NjU5OTM3LCJpc3MiOiJTZWN1cmVBcGkiLCJhdWQiOiJTZWN1cmVBcGlVc2VyIn0.rzr5Gwg5mcqYNF6ICnhyi2y8O2JrGFryNvHB49kzET8',
-        });
+        headers: {'Content-Type': 'application/json', 'Charset': 'utf-8'});
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseData = json.decode(response.body);

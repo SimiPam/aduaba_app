@@ -29,8 +29,9 @@ class CategoryApi {
     return responseBody.map((e) => Category.fromJson(e)).toList();
   }
 
-  Future<List<Category>> getAllProductsFromCategory(String name) async {
+  Future<Category> getAllProductsFromCategory(String name) async {
     String token = await user.getToken();
+    print("token: $token");
     String search = name.replaceAll(" ", "%20");
     var result;
     final getCategory = await http
@@ -39,8 +40,10 @@ class CategoryApi {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
-
-    final List responseBody = jsonDecode(getCategory.body);
-    return responseBody.map((e) => Category.fromJson(e)).toList();
+    print(getCategory.statusCode);
+    final Map<String, dynamic> responseBody = jsonDecode(getCategory.body);
+    print(responseBody);
+    Category category = Category.fromJson(responseBody);
+    return category;
   }
 }

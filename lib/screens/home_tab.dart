@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:aduaba_app/model/category.dart';
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
@@ -17,21 +19,25 @@ import 'category_screen.dart';
 import 'details_screen.dart';
 import 'empty_cart_screen.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   final VoidCallback openDraw;
   final String name;
   HomeTab({Key key, this.openDraw, this.name}) : super(key: key);
 
+  @override
+  _HomeTabState createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  Future<List<Category>> categoryAlbum;
+
   bool _cartEmpty = false;
 
   List<Category> _categoryList = [];
-  final duplicateItems = List<String>.generate(10, (i) => "Item $i");
-  // var items = List<String>();
 
   int _selectedIindex = 0;
 
-  Widget _buildCategoryList(int index, context) {
-    print(_categoryList);
+  Widget _buildCategoryList(int index, context, Category category) {
     final color = categoryColors[index % categoryColors.length];
     return GestureDetector(
       onTap: () {
@@ -39,53 +45,64 @@ class HomeTab extends StatelessWidget {
           context,
           CustomPageRoute(
             child: CategoryScreen(
-              categoryName: _categoryList[index].categoryName,
+              categoryName: category.categoryName,
             ),
           ),
         );
       },
       child: Container(
-        // height: 60,
-        // width: 60,
         width: 92,
         height: 50,
-        // padding: EdgeInsets.all(16),
         margin: EdgeInsets.only(right: 8),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
-          // shape: BoxShape.circle,
           borderRadius: BorderRadius.circular(8),
         ),
         alignment: Alignment.center,
-        child: Text(
-          _categoryList[index].categoryName,
-          style: TextStyle(
-            fontSize: 13,
-            color: color,
+        child: Center(
+          child: Text(
+            category.categoryName,
+            style: TextStyle(
+              fontSize: 13,
+              color: color,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
-          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
   }
 
+  UserPreferences user = UserPreferences();
+
+  Future<List<Category>> getAllCategories() async {
+    await Future.delayed(Duration(seconds: 5));
+
+    String token = await user.getToken();
+
+    final getCategory = await http.get(AppUrl.category, headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(getCategory.statusCode);
+    final List responseBody = jsonDecode(getCategory.body);
+
+    var result = responseBody.map((e) => Category.fromJson(e)).toList();
+
+    return result;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    categoryAlbum = getAllCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
-    CategoryModel categoryProvider = Provider.of<CategoryModel>(context);
-    List<Category> categories = [];
-
-    Future<List<Category>> getAllCategories() async {
-      categories = await categoryProvider.getAllCategories();
-      print("category list:");
-      Category category = categories[1];
-      print(category.categoryName);
-      _categoryList = categories;
-      return categories;
-    }
-
-    print(_categoryList);
-
-    // Future<User> getUserData() => UserPreferences().getUser();
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24.0),
       children: [
@@ -97,7 +114,7 @@ class HomeTab extends StatelessWidget {
               Builder(builder: (BuildContext context) {
                 return GestureDetector(
                   child: Icon(Icons.menu_outlined),
-                  onTap: openDraw,
+                  onTap: widget.openDraw,
                 );
               }),
               Text(
@@ -140,7 +157,7 @@ class HomeTab extends StatelessWidget {
               //       );
               //     }),
               Text(
-                "Hi $name",
+                "Hi ${widget.name}",
                 style: TextStyle(
                   fontSize: 17,
                   color: Color(0xff3A683B),
@@ -188,80 +205,33 @@ class HomeTab extends StatelessWidget {
                 context,
                 CustomPageRoute(
                     direction: AxisDirection.left,
-                    child: CategoriesListingScreen(openDrawer: openDraw)));
+                    child:
+                        CategoriesListingScreen(openDrawer: widget.openDraw)));
           },
         ),
         SizedBox(
           height: 16,
         ),
-        //
         FutureBuilder(
-            future: categoryProvider.getAllCategories(),
+            future: categoryAlbum,
             builder: (context, snapshot) {
-              Category category = snapshot.data[1];
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(category.categoryName),
-                    ]),
+                child: snapshot.hasData
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: snapshot.data
+                            .asMap()
+                            .entries
+                            .map<Widget>(
+                              (MapEntry map) => _buildCategoryList(
+                                  map.key, context, map.value),
+                            )
+                            .toList(),
+                      )
+                    : Container(),
               );
             }),
-
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: FutureBuilder(
-        //     // future: Provider.of<CategoryModel>(context,listen: false).fetchCategories(),
-        //     future: getAllCategories(),
-        //     builder: (context, snapshot) {
-        //       // final model = Provider.of<CategoryModel>(context);
-        //       _categoryList = snapshot.data;
-        //       print(_categoryList);
-        //       print(CategoryApi.instance.getAllCategories());
-        //       // print(snapshot.data);
-        //       return snapshot.hasData
-        //           ? Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //               children: snapshot.data
-        //                   .asMap()
-        //                   .entries
-        //                   .map(
-        //                     (MapEntry map) =>
-        //                         _buildCategoryList(map.key, context),
-        //                   )
-        //                   .toList(),
-        //             )
-        //           : Container();
-        //     },
-        //   ),
-        // ),
-
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: ChangeNotifierProvider(
-        //     create: (context) => CategoryModel(),
-        //     child: Builder(builder: (context) {
-        //       final model = Provider.of<CategoryModel>(context);
-        //       _categoryList = model.categoryList;
-        //       print(model);
-        //       print(model.categoryList);
-        //       return _categoryList.isNotEmpty
-        //           ? Container()
-        //           : Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //               children: _categoryList
-        //                   .asMap()
-        //                   .entries
-        //                   .map(
-        //                     (MapEntry map) =>
-        //                         _buildCategoryList(map.key, context),
-        //                   )
-        //                   .toList(),
-        //             );
-        //     }),
-        //   ),
-        // ),
         SizedBox(height: 32),
         subTitle(title: "Today's Promo"),
         Container(

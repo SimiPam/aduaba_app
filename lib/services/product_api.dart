@@ -23,6 +23,7 @@ class ProductApi {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+    print(getProduct.statusCode);
     final List responseBody = jsonDecode(getProduct.body);
     return responseBody.map((e) => Product.fromJson(e)).toList();
   }
@@ -30,21 +31,27 @@ class ProductApi {
   Future<List<Product>> getProductByName(String name) async {
     var result;
     String token = await user.getToken();
+    String search = name.replaceAll(" ", "%20");
     final getProduct = await http
-        .get(AppUrl.baseUrl + '/find-productby-name?name=$name', headers: {
+        .get(AppUrl.baseUrl + '/search-products?name=$search', headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+    print(getProduct.statusCode);
+    print(getProduct.body);
     if (getProduct.statusCode == 200) {
+      print("storing");
       final List responseBody = jsonDecode(getProduct.body);
       result = responseBody.map((e) => Product.fromJson(e)).toList();
+      print(result);
     } else if (getProduct.statusCode == 404) {
       result = {
         'status': false,
         'message': json.decode(getProduct.body)['error']
       };
     }
+
     return result;
   }
 }

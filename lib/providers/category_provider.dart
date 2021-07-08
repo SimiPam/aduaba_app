@@ -95,23 +95,23 @@ class CategoryProductModel extends ChangeNotifier {
 
   HomeState get homeState => _homeState;
 
-  Future<List<Category>> fetchProductsFromCategory(String name) async {
-    return _fetchProductsFromCategory(name);
-  }
+  // Future<List<Category>> fetchProductsFromCategory(String name) async {
+  //   return _fetchProductsFromCategory(name);
+  // }
 
-  Future<List<Category>> _fetchProductsFromCategory(String name) async {
-    _homeState = HomeState.Loading;
-    try {
-      await Future.delayed(Duration(seconds: 5));
-      final apiCategory =
-          await CategoryApi.instance.getAllProductsFromCategory(name);
-      categoryList = apiCategory;
-      _homeState = HomeState.Loaded;
-    } catch (e) {
-      message = '$e';
-      _homeState = HomeState.Error;
-    }
-    notifyListeners();
-    return categoryList;
-  }
+  // Future<List<Category>> _fetchProductsFromCategory(String name) async {
+  //   _homeState = HomeState.Loading;
+  //   try {
+  //     await Future.delayed(Duration(seconds: 5));
+  //     final apiCategory =
+  //         await CategoryApi.instance.getAllProductsFromCategory(name);
+  //     categoryList = apiCategory;
+  //     _homeState = HomeState.Loaded;
+  //   } catch (e) {
+  //     message = '$e';
+  //     _homeState = HomeState.Error;
+  //   }
+  //   notifyListeners();
+  //   return categoryList;
+  // }
 }

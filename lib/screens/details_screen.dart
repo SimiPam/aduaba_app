@@ -1,11 +1,25 @@
 import 'dart:async';
 
+import 'package:aduaba_app/model/product.dart';
 import 'package:flutter/material.dart';
 
-class DetailsScreen extends StatelessWidget {
+class DetailsScreen extends StatefulWidget {
   final String imageUrl;
+  final Product product;
 
-  const DetailsScreen({Key key, this.imageUrl}) : super(key: key);
+  const DetailsScreen({Key key, this.imageUrl, this.product}) : super(key: key);
+
+  @override
+  _DetailsScreenState createState() => _DetailsScreenState();
+}
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  bool isLiked = false;
+
+  void toggleLike() {
+    isLiked = !isLiked;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,10 +30,15 @@ class DetailsScreen extends StatelessWidget {
               Container(
                 height: MediaQuery.of(context).size.width,
                 width: MediaQuery.of(context).size.width,
-                child: Hero(
-                  tag: imageUrl,
+                child: GestureDetector(
+                  onDoubleTap: () {
+                    setState(() {
+                      isLiked = true;
+                    });
+                  },
                   child: Image(
-                    image: AssetImage(imageUrl),
+                    image: NetworkImage(widget.product.imageUrl),
+                    // image: AssetImage("assets/fruitbasket.png"),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -55,21 +74,35 @@ class DetailsScreen extends StatelessWidget {
                         Container(
                           width: 250,
                           child: Text(
-                            "Herbsconnect Organic Acai Berry Powder Freeze Dried",
+                            widget.product.name,
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                        Image.asset("assets/redheart.png"),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              toggleLike();
+                            });
+                          },
+                          child: isLiked
+                              ? Image.asset("assets/redheart.png")
+                              // : Image.asset("assets/whiteheart.png"),
+                              : Icon(
+                                  Icons.favorite_border_outlined,
+                                  size: 25,
+                                  color: Color(0xFF10151A),
+                                ),
+                        ),
                       ],
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      "Emmanuel Produce",
+                      widget.product.vendorId,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -85,7 +118,7 @@ class DetailsScreen extends StatelessWidget {
                 Container(
                   width: 300,
                   child: Text(
-                    "Lal Qilla Diabetes and Obesity Basmati Rice 5kg. Using a unique technique during cultivation and processing, Lal Qilla has introduced a specially processed low G.I. parboiled rice. This remarkable rice helps rice lovers with diabetes to ",
+                    widget.product.description,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w300,
@@ -131,7 +164,7 @@ class DetailsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "N35,000.00",
+                  widget.product.unitPrice.toString(),
                   style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w700,

@@ -3,6 +3,7 @@ import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/model/sort_model.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/cart_screen.dart';
+import 'package:aduaba_app/services/category_api.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:aduaba_app/widgets/product_widget.dart';
 import 'package:aduaba_app/widgets/sort_radio_item_widget.dart';
@@ -22,7 +23,7 @@ import 'home_tab.dart';
 class CategoryScreen extends StatefulWidget {
   final String categoryName;
 
-  const CategoryScreen({@required this.categoryName});
+  CategoryScreen({@required this.categoryName});
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -34,8 +35,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
   int height = 0;
   Widget _widget;
   bool _cartEmpty = false;
-
+  Category categoryList;
+  String message = '';
+  Future<Category> categoryAlbum;
   List<SortOptionsModel> sampleData = [];
+
+  Future<Category> _fetchProductsFromCategory(String name) async {
+    print(name);
+    try {
+      await Future.delayed(Duration(seconds: 5));
+      final apiCategory =
+          await CategoryApi.instance.getAllProductsFromCategory(name);
+      categoryList = apiCategory;
+      print(categoryList);
+    } catch (e) {
+      message = '$e';
+    }
+    return categoryList;
+  }
 
   @override
   void initState() {
@@ -43,6 +60,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
     super.initState();
 //add this variable to the method that checks if the cart is empty
     _cartEmpty = false;
+
+    print(widget.categoryName);
+
+    categoryAlbum = _fetchProductsFromCategory(widget.categoryName);
 
     sampleData.add(SortOptionsModel(
       isSelected: false,
@@ -75,8 +96,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: _widget ??
           FutureBuilder(
-              future: Provider.of<CategoryProductModel>(context, listen: false)
-                  .fetchProductsFromCategory(widget.categoryName),
+              future: categoryAlbum,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -86,6 +106,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
                 if (snapshot.hasData) {
                   Category category = snapshot.data;
+                  // print(snapshot.data[0]);
                   List<Product> products = category.products;
                   return Container(
                     child: Column(
@@ -148,7 +169,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${snapshot.data.length} items listed",
+                                    "${products.length} items listed",
+                                    // "items listed",
                                     style: TextStyle(
                                         color: Color(0xFFBBBBBB),
                                         fontSize: 13,
@@ -265,6 +287,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           child: StaggeredGridView.countBuilder(
                             crossAxisCount: 4,
                             itemCount: products.length,
+                            // itemCount: 4,
                             staggeredTileBuilder: (index) =>
                                 StaggeredTile.count(2, 3),
                             mainAxisSpacing: 28.0,
@@ -277,6 +300,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 transitionDuration: Duration(seconds: 1),
                                 transitionType: detailsPageTransitionType,
                                 openBuilder: (context, _) => DetailsScreen(
+                                  // imageUrl: null,
+                                  product: products[index],
                                   imageUrl: product.imageUrl,
                                 ),
                                 closedBuilder:
@@ -287,7 +312,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   productSubText: product.description,
                                   productPrice: product.unitPrice.toString(),
                                   img: product.imageUrl,
+                                  // img: null,
                                   productAvailability: product.isAvailable,
+                                  // productAvailability: true,
                                 ),
                               );
                             },

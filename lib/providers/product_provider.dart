@@ -34,18 +34,18 @@ class ProductModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Product>> searchProducts(name) async {
-    _homeState = HomeState.Loading;
-    try {
-      await Future.delayed(Duration(seconds: 5));
-      final apiProducts = await ProductApi.instance.getProductByName(name);
-      products = apiProducts;
-      _homeState = HomeState.Loaded;
-    } catch (e) {
-      message = '$e';
-      _homeState = HomeState.Error;
-    }
-    notifyListeners();
-    return products;
-  }
+  // Future<List<Product>> searchProducts(name) async {
+  //   _homeState = HomeState.Loading;
+  //   try {
+  //     await Future.delayed(Duration(seconds: 5));
+  //     final apiProducts = await ProductApi.instance.getProductByName(name);
+  //     products = apiProducts;
+  //     _homeState = HomeState.Loaded;
+  //   } catch (e) {
+  //     message = '$e';
+  //     _homeState = HomeState.Error;
+  //   }
+  //   notifyListeners();
+  //   return products;
+  // }
 }
