@@ -30,6 +30,22 @@ const kSECRET_KEY = "sk_test_414a941f5dd0feeca0465bf86813cf5d830e562f";
 //   );
 // }
 
+List<String> searchValues = [];
+
+bool validateEmail(String value) {
+  bool _msg;
+  RegExp regex = new RegExp(
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+  if (value.isEmpty) {
+    // _msg = "Your username is required";
+    _msg = false;
+  } else if (!regex.hasMatch(value)) {
+    // _msg = "Please provide a valid emal address";
+    _msg = false;
+  }
+  return true;
+}
+
 final detailsPageTransitionType = ContainerTransitionType.fade;
 
 Widget buildTextField(String text) {
@@ -89,12 +105,13 @@ Widget buildVendorSearchField(String text) {
   );
 }
 
-Widget buildSearchField(String text) {
+Widget buildSearchField(String text, Function(String) onSubmit) {
   final color = Colors.white;
 
   return TextField(
+    onSubmitted: onSubmit,
     style: TextStyle(
-      color: Color(0xFFF7F7F7),
+      color: Color(0xFF10151A),
     ),
     decoration: InputDecoration(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

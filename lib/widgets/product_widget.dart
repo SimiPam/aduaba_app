@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -112,19 +113,23 @@ class ProductWidget extends StatelessWidget {
                 child: Image(
                   width: MediaQuery.of(context).size.width / 2 - 32,
                   height: MediaQuery.of(context).size.width / 2 - 32,
-                  image: AssetImage(img),
+                  image: NetworkImage(img),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             Positioned(
               top: 10,
-              right: 10,
+              right: 20,
               child: GestureDetector(
                 onTap: onFav,
                 child: Container(
-                    height: 15,
-                    width: 13,
+                    height: 20,
+                    width: 20,
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(7)),
                     child: Image.asset(
                       "assets/whiteheart.png",
                       fit: BoxFit.fill,

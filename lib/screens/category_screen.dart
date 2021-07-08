@@ -1,11 +1,16 @@
+import 'package:aduaba_app/model/category.dart';
+import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/model/sort_model.dart';
+import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/cart_screen.dart';
+import 'package:aduaba_app/services/category_api.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:aduaba_app/widgets/product_widget.dart';
 import 'package:aduaba_app/widgets/sort_radio_item_widget.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -16,6 +21,10 @@ import 'empty_cart_screen.dart';
 import 'home_tab.dart';
 
 class CategoryScreen extends StatefulWidget {
+  final String categoryName;
+
+  CategoryScreen({@required this.categoryName});
+
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
 }
@@ -26,8 +35,24 @@ class _CategoryScreenState extends State<CategoryScreen> {
   int height = 0;
   Widget _widget;
   bool _cartEmpty = false;
-
+  Category categoryList;
+  String message = '';
+  Future<Category> categoryAlbum;
   List<SortOptionsModel> sampleData = [];
+
+  Future<Category> _fetchProductsFromCategory(String name) async {
+    print(name);
+    try {
+      await Future.delayed(Duration(seconds: 5));
+      final apiCategory =
+          await CategoryApi.instance.getAllProductsFromCategory(name);
+      categoryList = apiCategory;
+      print(categoryList);
+    } catch (e) {
+      message = '$e';
+    }
+    return categoryList;
+  }
 
   @override
   void initState() {
@@ -35,6 +60,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
     super.initState();
 //add this variable to the method that checks if the cart is empty
     _cartEmpty = false;
+
+    print(widget.categoryName);
+
+    categoryAlbum = _fetchProductsFromCategory(widget.categoryName);
 
     sampleData.add(SortOptionsModel(
       isSelected: false,
@@ -66,201 +95,238 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
       ),
       body: _widget ??
-          Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Color(0xFF424347),
-                          size: 35,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 22,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Categories",
-                            style: TextStyle(
-                                fontSize: 24,
-                                color: Color(0xFF819272),
-                                fontWeight: FontWeight.w700),
+          FutureBuilder(
+              future: categoryAlbum,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                if (snapshot.hasData) {
+                  Category category = snapshot.data;
+                  // print(snapshot.data[0]);
+                  List<Product> products = category.products;
+                  return Container(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 30, horizontal: 24),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  color: Color(0xFF424347),
+                                  size: 35,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 22,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Categories",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        color: Color(0xFF819272),
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              _cartEmpty
+                                                  ? EmptyCartScreen()
+                                                  : CartScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: CircleAvatar(
+                                      backgroundColor: Color(0xFF3A953C),
+                                      child: Image.asset("assets/homecart.png"),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${products.length} items listed",
+                                    // "items listed",
+                                    style: TextStyle(
+                                        color: Color(0xFFBBBBBB),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Container(
+                                    height: 24,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            _showSortModalBottomSheet(context);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  Transform.rotate(
+                                                    angle: 90 * math.pi / 180,
+                                                    child: Icon(
+                                                      Icons
+                                                          .arrow_right_alt_sharp,
+                                                      size: 20,
+                                                      color: Color(0xFF999999),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    left: 4,
+                                                    child: Transform.rotate(
+                                                      angle:
+                                                          270 * math.pi / 180,
+                                                      child: Icon(
+                                                        Icons
+                                                            .arrow_right_alt_sharp,
+                                                        size: 20,
+                                                        color:
+                                                            Color(0xFF999999),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(
+                                                "Sort",
+                                                style: TextStyle(
+                                                    color: Color(0xFF3E3E3E),
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Icon(
+                                                Icons.keyboard_arrow_down,
+                                                size: 20,
+                                                color: Color(0xFFDEDEDE),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        VerticalDivider(
+                                          color: Color(0xFFF5F5F5),
+                                          // color: Colors.grey,
+                                          thickness: 1,
+                                          width: 0,
+                                        ),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _showFilterModalBottomSheet(
+                                                context);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.filter_alt_sharp,
+                                                size: 18,
+                                                color: Color(0xFF999999),
+                                              ),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(
+                                                "Filter",
+                                                style: TextStyle(
+                                                    color: Color(0xFF3E3E3E),
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) => _cartEmpty
-                                      ? EmptyCartScreen()
-                                      : CartScreen(),
+                        ),
+                        Expanded(
+                          child: StaggeredGridView.countBuilder(
+                            crossAxisCount: 4,
+                            itemCount: products.length,
+                            // itemCount: 4,
+                            staggeredTileBuilder: (index) =>
+                                StaggeredTile.count(2, 3),
+                            mainAxisSpacing: 28.0,
+                            crossAxisSpacing: 16.0,
+                            itemBuilder: (context, index) {
+                              Product product = products[index];
+                              return OpenContainer(
+                                closedElevation: 0,
+                                openElevation: 0,
+                                transitionDuration: Duration(seconds: 1),
+                                transitionType: detailsPageTransitionType,
+                                openBuilder: (context, _) => DetailsScreen(
+                                  // imageUrl: null,
+                                  product: products[index],
+                                  imageUrl: product.imageUrl,
+                                ),
+                                closedBuilder:
+                                    (context, VoidCallback openContainer) =>
+                                        ProductWidget(
+                                  onPress: openContainer,
+                                  productName: product.name,
+                                  productSubText: product.description,
+                                  productPrice: product.unitPrice.toString(),
+                                  img: product.imageUrl,
+                                  // img: null,
+                                  productAvailability: product.isAvailable,
+                                  // productAvailability: true,
                                 ),
                               );
                             },
-                            child: CircleAvatar(
-                              backgroundColor: Color(0xFF3A953C),
-                              child: Image.asset("assets/homecart.png"),
-                            ),
                           ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "18 items listed",
-                            style: TextStyle(
-                                color: Color(0xFFBBBBBB),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Container(
-                            height: 24,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _showSortModalBottomSheet(context);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Transform.rotate(
-                                            angle: 90 * math.pi / 180,
-                                            child: Icon(
-                                              Icons.arrow_right_alt_sharp,
-                                              size: 20,
-                                              color: Color(0xFF999999),
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 4,
-                                            child: Transform.rotate(
-                                              angle: 270 * math.pi / 180,
-                                              child: Icon(
-                                                Icons.arrow_right_alt_sharp,
-                                                size: 20,
-                                                color: Color(0xFF999999),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        "Sort",
-                                        style: TextStyle(
-                                            color: Color(0xFF3E3E3E),
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Icon(
-                                        Icons.keyboard_arrow_down,
-                                        size: 20,
-                                        color: Color(0xFFDEDEDE),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                VerticalDivider(
-                                  color: Color(0xFFF5F5F5),
-                                  // color: Colors.grey,
-                                  thickness: 1,
-                                  width: 0,
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _showFilterModalBottomSheet(context);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.filter_alt_sharp,
-                                        size: 18,
-                                        color: Color(0xFF999999),
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        "Filter",
-                                        style: TextStyle(
-                                            color: Color(0xFF3E3E3E),
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: StaggeredGridView.countBuilder(
-                    crossAxisCount: 4,
-                    itemCount: 4,
-                    staggeredTileBuilder: (index) => StaggeredTile.count(2, 3),
-                    mainAxisSpacing: 28.0,
-                    crossAxisSpacing: 16.0,
-                    itemBuilder: (context, index) {
-                      return OpenContainer(
-                        closedElevation: 0,
-                        openElevation: 0,
-                        transitionDuration: Duration(seconds: 1),
-                        transitionType: detailsPageTransitionType,
-                        openBuilder: (context, _) => DetailsScreen(
-                          imageUrl: "assets/fruitbasket.png",
                         ),
-                        closedBuilder: (context, VoidCallback openContainer) =>
-                            ProductWidget(
-                          onPress: openContainer,
-                          productName: "Emmanuel Produce",
-                          productSubText:
-                              "Herbsconnect Organic Acai Berry Powder Freeze Dried",
-                          productPrice: "N35,000.00",
-                          img: "assets/fruitbasket.png",
-                          productAvailability: true,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
+                      ],
+                    ),
+                  );
+                }
+
+                return Text('Error retrieving results: ${snapshot.error}');
+              }),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

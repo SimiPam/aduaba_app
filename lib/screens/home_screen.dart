@@ -4,8 +4,9 @@ import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.switchTab}) : super(key: key);
+  MyHomePage({Key key, this.switchTab, this.name}) : super(key: key);
   final int switchTab;
+  final String name;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -75,9 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       body: _widget ??
-          HomeTab(openDraw: () {
-            _scaffoldKey.currentState.openDrawer();
-          }),
+          HomeTab(
+              name: widget.name,
+              openDraw: () {
+                _scaffoldKey.currentState.openDrawer();
+              }),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,

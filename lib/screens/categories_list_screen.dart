@@ -1,5 +1,9 @@
+import 'package:aduaba_app/model/category.dart';
+import 'package:aduaba_app/model/product.dart';
+import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'cart_screen.dart';
 import 'category_screen.dart';
@@ -99,96 +103,103 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                 ),
               ),
               Expanded(
-                child: ListView.builder(
-                    itemCount: 6,
-                    itemBuilder: (_, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CategoryScreen(),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              bottom: 16, top: 0, left: 24, right: 24),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                child: ChangeNotifierProvider(
+                  create: (context) => CategoryModel(),
+                  child: Builder(builder: (context) {
+                    final model = Provider.of<CategoryModel>(context);
+                    List<Category> _categoryList = [];
+                    _categoryList = model.categoryList;
+                    return ListView.builder(
+                        itemCount: _categoryList.length,
+                        itemBuilder: (_, index) {
+                          Category category = _categoryList[index];
+                          List<Product> products = category.products;
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      CategoryScreen(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  bottom: 16, top: 0, left: 24, right: 24),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Hero(
-                                        tag: "assets/fruitbasket.png",
-                                        child: Container(
-                                          width: 60,
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                "assets/fruitbasket.png",
-                                              ),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                      Row(
                                         children: [
-                                          Text(
-                                            "Raw Fruit",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 1.2,
+                                          Container(
+                                            width: 60,
+                                            height: 60,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                  "assets/fruitbasket.png",
+                                                ),
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 5,
+                                            width: 10,
                                           ),
-                                          Text(
-                                            "234 items",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 1.2,
-                                              color: Color(0xFFBBBBBB),
-                                            ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text(
+                                                category.categoryName,
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w700,
+                                                  letterSpacing: 1.2,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "${products.length} items",
+                                                style: TextStyle(
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w400,
+                                                  letterSpacing: 1.2,
+                                                  color: Color(0xFFBBBBBB),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
+                                      Image.asset("assets/arrowforward.png"),
                                     ],
                                   ),
-                                  Image.asset("assets/arrowforward.png"),
+                                  SizedBox(
+                                    height: 28,
+                                  ),
+                                  Divider(
+                                    color: Color(0xFFF5F5F5),
+                                    // color: Colors.grey,
+                                    thickness: 1,
+                                    height: 0,
+                                  ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 28,
-                              ),
-                              Divider(
-                                color: Color(0xFFF5F5F5),
-                                // color: Colors.grey,
-                                thickness: 1,
-                                height: 0,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }),
+                            ),
+                          );
+                        });
+                  }),
+                ),
               )
             ],
           ),
