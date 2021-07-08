@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:aduaba_app/model/category.dart';
 import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
+import 'package:aduaba_app/utilities/app_url.dart';
+import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:http/http.dart' as http;
 import 'cart_screen.dart';
 import 'category_screen.dart';
 import 'details_screen.dart';
@@ -26,6 +30,35 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
   int _currentTab = 0;
   bool _cartEmpty = false;
   Widget _widget;
+  Future<List<Category>> categoryAlbum;
+  UserPreferences user = UserPreferences();
+
+  Future<List<Category>> getAllCategories() async {
+    await Future.delayed(Duration(seconds: 5));
+
+    String token = await user.getToken();
+
+    final getCategory = await http.get(AppUrl.category, headers: {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(getCategory.statusCode);
+    final List responseBody = jsonDecode(getCategory.body);
+
+    var result = responseBody.map((e) => Category.fromJson(e)).toList();
+
+    return result;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    categoryAlbum = getAllCategories();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,170 +72,181 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
       ),
       // appBar: AppBar(),
       body: _widget ??
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-                child: Column(
+          FutureBuilder(
+              future: categoryAlbum,
+              builder: (context, snapshot) {
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(
-                        Icons.arrow_back,
-                        color: Color(0xFF424347),
-                        size: 35,
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Icon(
+                              Icons.arrow_back,
+                              color: Color(0xFF424347),
+                              size: 35,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 22,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Categories",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: Color(0xFF819272),
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          _cartEmpty
+                                              ? EmptyCartScreen()
+                                              : CartScreen(),
+                                    ),
+                                  );
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: Color(0xFF3A953C),
+                                  child: Image.asset("assets/homecart.png"),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Text(
+                            snapshot.hasData
+                                ? "${snapshot.data.length} categories"
+                                : "23 categories",
+                            style: TextStyle(
+                                color: Color(0xFFBBBBBB),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w400),
+                          )
+                        ],
                       ),
                     ),
-                    SizedBox(
-                      height: 22,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Categories",
-                          style: TextStyle(
-                              fontSize: 24,
-                              color: Color(0xFF819272),
-                              fontWeight: FontWeight.w700),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (BuildContext context) => _cartEmpty
-                                    ? EmptyCartScreen()
-                                    : CartScreen(),
-                              ),
-                            );
-                          },
-                          child: CircleAvatar(
-                            backgroundColor: Color(0xFF3A953C),
-                            child: Image.asset("assets/homecart.png"),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      "23 categories",
-                      style: TextStyle(
-                          color: Color(0xFFBBBBBB),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400),
+                    Expanded(
+                      child: snapshot.hasData
+                          ? ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (_, index) {
+                                Category category = snapshot.data[index];
+                                List<Product> products = category.products;
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            CategoryScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        bottom: 16,
+                                        top: 0,
+                                        left: 24,
+                                        right: 24),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 60,
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                        "assets/fruitbasket.png",
+                                                      ),
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Text(
+                                                      category.categoryName,
+                                                      style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        letterSpacing: 1.2,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      "${products.length} items",
+                                                      style: TextStyle(
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        letterSpacing: 1.2,
+                                                        color:
+                                                            Color(0xFFBBBBBB),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Image.asset(
+                                                "assets/arrowforward.png"),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 28,
+                                        ),
+                                        Divider(
+                                          color: Color(0xFFF5F5F5),
+                                          // color: Colors.grey,
+                                          thickness: 1,
+                                          height: 0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              })
+                          : Container(),
                     )
                   ],
-                ),
-              ),
-              Expanded(
-                child: ChangeNotifierProvider(
-                  create: (context) => CategoryModel(),
-                  child: Builder(builder: (context) {
-                    final model = Provider.of<CategoryModel>(context);
-                    List<Category> _categoryList = [];
-                    _categoryList = model.categoryList;
-                    return ListView.builder(
-                        itemCount: _categoryList.length,
-                        itemBuilder: (_, index) {
-                          Category category = _categoryList[index];
-                          List<Product> products = category.products;
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      CategoryScreen(),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                  bottom: 16, top: 0, left: 24, right: 24),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 60,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                  "assets/fruitbasket.png",
-                                                ),
-                                                fit: BoxFit.fill,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                category.categoryName,
-                                                style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w700,
-                                                  letterSpacing: 1.2,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              Text(
-                                                "${products.length} items",
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w400,
-                                                  letterSpacing: 1.2,
-                                                  color: Color(0xFFBBBBBB),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Image.asset("assets/arrowforward.png"),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 28,
-                                  ),
-                                  Divider(
-                                    color: Color(0xFFF5F5F5),
-                                    // color: Colors.grey,
-                                    thickness: 1,
-                                    height: 0,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
-                  }),
-                ),
-              )
-            ],
-          ),
+                );
+              }),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
