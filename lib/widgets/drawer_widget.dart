@@ -1,3 +1,4 @@
+import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/screens/categories_list_screen.dart';
 import 'package:aduaba_app/screens/empty_cart_screen.dart';
@@ -5,6 +6,7 @@ import 'package:aduaba_app/screens/empty_wishlist.dart';
 import 'package:aduaba_app/screens/my_order.dart';
 import 'package:aduaba_app/screens/user_account.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
+import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constants.dart';
@@ -20,28 +22,65 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<User> getUserData() => UserPreferences().getUser();
     bool _cartEmpty = false;
     return ListView(
       children: [
         DrawerHeader(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              CircleAvatar(
-                radius: 20,
-                backgroundImage: AssetImage("assets/Profile.png"),
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              Text(
-                "Andrea Charles",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-              ),
-            ],
-          ),
+          // child: Row(
+          //   children: [
+          // SizedBox(
+          //   width: 20,
+          // ),
+          // CircleAvatar(
+          //   radius: 20,
+          //   backgroundImage: AssetImage("assets/Profile.png"),
+          // ),
+          // SizedBox(
+          //   width: 16,
+          // ),
+          // Text(
+          //   "Andrea Charles",
+          //   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+          // ),
+          child: FutureBuilder(
+              future: getUserData(),
+              builder: (context, snapshot) {
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CircleAvatar(
+                      radius: 20,
+                      backgroundImage: AssetImage("assets/Profile.png"),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    // Text(
+                    //   "Andrea Charles",
+                    //   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                    // ),
+                    FutureBuilder(
+                        future: getUserData(),
+                        builder: (context, snapshot) {
+                          return Text(
+                            snapshot.hasData
+                                ? "Hi ${snapshot.data.firstName} ${snapshot.data.lastName}"
+                                : "Hi there!",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Color(0xff3A683B),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          );
+                        }),
+                  ],
+                );
+              }),
+          //   ],
+          // ),
         ),
         Container(
           padding: EdgeInsets.only(left: 20),

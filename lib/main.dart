@@ -79,10 +79,44 @@ class MyApp extends StatelessWidget {
                         ),
                       );
                     } else if (snapshot.data.token == null) {
-                      return OnboardingScreen();
+                      Timer(
+                        const Duration(seconds: 2),
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OnboardingScreen(),
+                          ),
+                        ),
+                      );
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                'assets/landing_image.png',
+                              ),
+                              fit: BoxFit.cover),
+                        ),
+                      );
                     } else {
                       Provider.of<UserProvider>(context).setUser(snapshot.data);
-                      return MyHomePage();
+                      Timer(
+                        const Duration(seconds: 2),
+                        () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyHomePage(),
+                          ),
+                        ),
+                      );
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                'assets/landing_image.png',
+                              ),
+                              fit: BoxFit.cover),
+                        ),
+                      );
                     }
                 }
               }),

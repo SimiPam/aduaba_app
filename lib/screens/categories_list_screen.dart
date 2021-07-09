@@ -133,7 +133,7 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                           Text(
                             snapshot.hasData
                                 ? "${snapshot.data.length} categories"
-                                : "23 categories",
+                                : "0 categories",
                             style: TextStyle(
                                 color: Color(0xFFBBBBBB),
                                 fontSize: 13,
@@ -155,7 +155,9 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (BuildContext context) =>
-                                            CategoryScreen(),
+                                            CategoryScreen(
+                                          categoryName: category.categoryName,
+                                        ),
                                       ),
                                     );
                                   },
@@ -242,7 +244,9 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                                   ),
                                 );
                               })
-                          : Container(),
+                          : Center(
+                              child: CircularProgressIndicator(),
+                            ),
                     )
                   ],
                 );

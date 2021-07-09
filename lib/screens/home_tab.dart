@@ -102,7 +102,15 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    categoryAlbum = null;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Future<User> getUserData() => UserPreferences().getUser();
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24.0),
       children: [
@@ -144,26 +152,28 @@ class _HomeTabState extends State<HomeTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // FutureBuilder(
-              //     future: getUserData(),
-              //     builder: (context, snapshot) {
-              //       return Text(
-              //         "Hi ${snapshot.data.firstName}",
-              //         style: TextStyle(
-              //           fontSize: 17,
-              //           color: Color(0xff3A683B),
-              //           fontWeight: FontWeight.w400,
-              //         ),
-              //       );
-              //     }),
-              Text(
-                "Hi ${widget.name}",
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Color(0xff3A683B),
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
+              FutureBuilder(
+                  future: getUserData(),
+                  builder: (context, snapshot) {
+                    return Text(
+                      snapshot.hasData
+                          ? "Hi ${snapshot.data.firstName}"
+                          : "Hi there!",
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xff3A683B),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    );
+                  }),
+              // Text(
+              //   "Hi ${widget.name}",
+              //   style: TextStyle(
+              //     fontSize: 17,
+              //     color: Color(0xff3A683B),
+              //     fontWeight: FontWeight.w400,
+              //   ),
+              // ),
               SizedBox(
                 height: 8,
               ),

@@ -86,6 +86,8 @@ class _SignUpState extends State<SignUp> {
                 ),
               );
             } else {
+              auth.registeredInStatus = Status.NotRegistered;
+              auth.notify();
               Flushbar(
                 title: 'Registration fail',
                 message: response.toString(),
@@ -94,6 +96,8 @@ class _SignUpState extends State<SignUp> {
             }
           });
         } else {
+          auth.registeredInStatus = Status.NotRegistered;
+          auth.notify();
           Flushbar(
             title: 'Mismatch password',
             message: 'Please enter valid confirm password',
@@ -101,6 +105,8 @@ class _SignUpState extends State<SignUp> {
           ).show(context);
         }
       } else {
+        auth.registeredInStatus = Status.NotRegistered;
+        auth.notify();
         Flushbar(
           title: 'Invalid form',
           message: 'Please complete the form properly',

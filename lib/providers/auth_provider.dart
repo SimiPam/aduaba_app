@@ -115,6 +115,11 @@ class AuthProvider extends ChangeNotifier {
     return result;
   }
 
+  static onError(error) {
+    print('the error is $error');
+    return {'status': false, 'message': 'Unsuccessful Request', 'data': error};
+  }
+
   Future<Map<String, dynamic>> login(String email, String password) async {
     var result;
     final Map<String, dynamic> apiBodyData = {
@@ -156,6 +161,53 @@ class AuthProvider extends ChangeNotifier {
 
     return result;
   }
+
+// Future<Map<String, dynamic>> register(String email, String password,
+//     String confirmPassword, String firstName, String lastName) async {
+//   final Map<String, dynamic> apiBodyData = {
+//     "email": email,
+//     "password": password,
+//     "confirmPassword": confirmPassword,
+//     "firstName": firstName,
+//     "lastName": lastName
+//   };
+//   // Register register = Register(
+//   //   email: "s1@gmail.com",
+//   //   phoneNumber: "08011111111",
+//   //   firstName: "st",
+//   //   lastName: "st",
+//   //   avataUrl: "assets/cart.png",
+//   //   password: "SimiPam123",
+//   //   confirmPassword: "SimiPam123",
+//   // );
+//
+//   // Register({
+//   // this.userId,
+//   // this.firstName,
+//   // this.lastName,
+//   // this.email,
+//   // this.phoneNumber,
+//   // this.avataUrl,
+//   // this.password,
+//   // this.confirmPassword});
+//
+//   // final Map<String, dynamic> apiBodyData = {
+//   //   "email": "s1@gmail.com",
+//   //   "password": "SimiPam123",
+//   //   "confirmPassword": "SimiPam123",
+//   //   "firstName": "st",
+//   //   "lastName": "pt",
+//   //   "phoneNumber": "08011111111",
+//   //   "username": "simi1",
+//   //   "avataUrl": "assets/cart.png"
+//   // };
+//
+//   return await post(AppUrl.register, body: json.encode(apiBodyData),
+//           // body: register,
+//           headers: {'Content-Type': 'application/json'})
+//       .then(onValue)
+//       .catchError(onError);
+// }
 
   // Future<Map<String, dynamic>> login(String email, String password) async {
   //   var result;
@@ -209,8 +261,4 @@ class AuthProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  static onError(error) {
-    print('the error is $error');
-    return {'status': false, 'message': 'Unsuccessful Request', 'data': error};
-  }
 }

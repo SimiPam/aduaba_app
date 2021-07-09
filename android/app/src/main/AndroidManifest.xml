@@ -2,7 +2,7 @@
     package="simi.aduaba_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="aduaba_app"
+        android:label="aduaba fresh"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

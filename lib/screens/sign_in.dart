@@ -80,6 +80,8 @@ class _SignInState extends State<SignIn> {
           }
         });
       } else {
+        auth.loggedInStatus = Status.NotLoggedIn;
+        auth.notify();
         Flushbar(
           title: 'Invalid form',
           message: 'Please complete the form properly',
