@@ -1,5 +1,7 @@
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/screens/home_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 import 'checkout_screen.dart';
@@ -13,6 +15,7 @@ class ConfirmationTab extends StatefulWidget {
 class _ConfirmationTabState extends State<ConfirmationTab> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<Cart>(context).clearCart();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 24),

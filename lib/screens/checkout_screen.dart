@@ -1,6 +1,8 @@
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/screens/checkout_stepper_screen.dart';
 import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 
@@ -11,8 +13,10 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int _n = 0;
+  int deliveryCharge = 350;
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -51,8 +55,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: cart.items.length,
               itemBuilder: (_, index) {
+                double itemTotal = cart.items.values.toList()[index].unitPrice *
+                    cart.items.values.toList()[index].quantity;
+                // Provider.of<Cart>(context, listen: false).addCartToDB(
+                //     cart.items.values.toList()[index].id,
+                //     cart.items.values.toList()[index].quantity);
+
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -77,7 +87,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Container(
                                         width: 250,
                                         child: Text(
-                                          "Herbsconnect Organic Acai Berry Powder Freeze Dried",
+                                          cart.items.values
+                                              .toList()[index]
+                                              .description,
                                           style: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700,
@@ -88,7 +100,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         height: 5,
                                       ),
                                       Text(
-                                        "Emmanuel Produce",
+                                        cart.items.values.toList()[index].name,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
@@ -100,7 +112,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         height: 5,
                                       ),
                                       Text(
-                                        "Quantity: 5",
+                                        "Quantity: ${cart.items.values.toList()[index].quantity}",
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
@@ -116,7 +128,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "N35,000.00",
+                                            itemTotal.toString(),
                                             style: TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w700,
@@ -155,8 +167,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
-                                image: AssetImage(
-                                  "assets/fruitbasket.png",
+                                image: NetworkImage(
+                                  cart.items.values.toList()[index].imageUrl,
                                 ),
                                 fit: BoxFit.fill,
                               ),
@@ -205,7 +217,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "N35,000.00",
+                        "N${cart.totalAmount}",
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontSize: 13,
@@ -227,7 +239,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "N350.00",
+                        "N$deliveryCharge.00",
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontSize: 13,
@@ -249,7 +261,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        "N35,000.00",
+                        "N${cart.summaryAmount}",
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontSize: 17,

@@ -1,7 +1,11 @@
 import 'dart:async';
 
 import 'package:aduaba_app/model/product.dart';
+import 'package:aduaba_app/providers/cart.dart';
+import 'package:aduaba_app/providers/product_provider.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatefulWidget {
   final String imageUrl;
@@ -14,14 +18,21 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  bool isLiked = false;
-
-  void toggleLike() {
-    isLiked = !isLiked;
-  }
-
   @override
   Widget build(BuildContext context) {
+    // final cart = Provider.of<Cart>(context, listen: false);
+    // void toggleLike() {
+    //   // isLiked = !isLiked;
+    //   if (isLiked == true) {
+    //     Provider.of<ProductModel>(context, listen: false)
+    //         .addFavorite(widget.product.id);
+    //   } else {
+    //     Provider.of<ProductModel>(context, listen: false)
+    //         .removeFavorite(widget.product.id);
+    //   }
+    // }
+    bool isLiked = false;
+
     return Scaffold(
       body: Column(
         children: [
@@ -83,13 +94,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-                              toggleLike();
-                            });
+                            Provider.of<ProductModel>(context, listen: false)
+                                .addFavorite(widget.product.id);
+                            isLiked = true;
                           },
                           child: isLiked
                               ? Image.asset("assets/redheart.png")
-                              // : Image.asset("assets/whiteheart.png"),
                               : Icon(
                                   Icons.favorite_border_outlined,
                                   size: 25,
@@ -174,32 +184,47 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                            // backgroundColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5.0)),
-                            child: Container(
-                              height: 40,
-                              child: Center(
-                                child: Text(
-                                  "Added to cart!",
-                                  style: TextStyle(
-                                    color: Color(0xFF10151A),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ));
-                      },
+                    Provider.of<Cart>(context, listen: false).addItem(
+                      productId: widget.product.id,
+                      price: widget.product.unitPrice,
+                      title: widget.product.name,
+                      imageUrl: widget.product.imageUrl,
+                      description: widget.product.description,
+                      isAvailable: widget.product.isAvailable,
                     );
-                    Timer(
-                      const Duration(milliseconds: 300),
-                      () => Navigator.pop(context),
-                    );
+
+                    Flushbar(
+                      title: "Successful",
+                      message: "Added to cart!",
+                      duration: Duration(seconds: 3),
+                    ).show(context);
+
+                    print("added to cart");
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return Dialog(
+                    //         shape: RoundedRectangleBorder(
+                    //             borderRadius: BorderRadius.circular(5.0)),
+                    //         child: Container(
+                    //           height: 40,
+                    //           child: Center(
+                    //             child: Text(
+                    //               "Added to cart!",
+                    //               style: TextStyle(
+                    //                 color: Color(0xFF10151A),
+                    //                 fontSize: 20,
+                    //                 fontWeight: FontWeight.w700,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ));
+                    //   },
+                    // );
+                    // Timer(
+                    //   const Duration(milliseconds: 300),
+                    //   () => Navigator.pop(context),
+                    // );
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xFF3A953C),

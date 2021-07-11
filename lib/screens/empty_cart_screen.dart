@@ -62,7 +62,7 @@ class _EmptyCartScreenState extends State<EmptyCartScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "18 items selected",
+                      "0 items listed",
                       style: TextStyle(
                           color: Color(0xFFBBBBBB),
                           fontSize: 13,

@@ -5,6 +5,8 @@ import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/utilities/app_url.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
+import 'package:aduaba_app/widgets/cart_icon_widget.dart';
+import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -108,23 +110,7 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                                     color: Color(0xFF819272),
                                     fontWeight: FontWeight.w700),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          _cartEmpty
-                                              ? EmptyCartScreen()
-                                              : CartScreen(),
-                                    ),
-                                  );
-                                },
-                                child: CircleAvatar(
-                                  backgroundColor: Color(0xFF3A953C),
-                                  child: Image.asset("assets/homecart.png"),
-                                ),
-                              ),
+                              BuildCartIcon(),
                             ],
                           ),
                           SizedBox(
@@ -153,8 +139,9 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
+                                      CustomPageRoute(
+                                        direction: AxisDirection.left,
+                                        child:
                                             CategoryScreen(
                                           categoryName: category.categoryName,
                                         ),

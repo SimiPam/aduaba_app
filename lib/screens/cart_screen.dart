@@ -1,6 +1,8 @@
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/screens/checkout_screen.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 
@@ -11,8 +13,17 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   int _n = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Cart().itemsFromDb();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,7 +61,9 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "18 items selected",
+                      cart.items.length > 1
+                          ? "${cart.items.length} items selected"
+                          : "${cart.items.length} item selected",
                       style: TextStyle(
                           color: Color(0xFFBBBBBB),
                           fontSize: 13,
@@ -109,8 +122,10 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: 3,
+              itemCount: cart.items.length,
               itemBuilder: (_, index) {
+                double itemTotal = cart.items.values.toList()[index].unitPrice *
+                    cart.items.values.toList()[index].quantity;
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -149,7 +164,9 @@ class _CartScreenState extends State<CartScreen> {
                                       Container(
                                         width: 250,
                                         child: Text(
-                                          "Herbsconnect Organic Acai Berry Powder Freeze Dried",
+                                          cart.items.values
+                                              .toList()[index]
+                                              .description,
                                           style: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700,
@@ -160,7 +177,7 @@ class _CartScreenState extends State<CartScreen> {
                                         height: 5,
                                       ),
                                       Text(
-                                        "Emmanuel Produce",
+                                        cart.items.values.toList()[index].name,
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
@@ -176,7 +193,7 @@ class _CartScreenState extends State<CartScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "N35,000.00",
+                                            itemTotal.toString(),
                                             style: TextStyle(
                                               fontSize: 13,
                                               fontWeight: FontWeight.w700,
@@ -214,6 +231,15 @@ class _CartScreenState extends State<CartScreen> {
                                               setState(() {
                                                 _n--;
                                               });
+                                              cart.removeSingleItem(productId:cart
+                                                  .items.values
+                                                  .toList()[index]
+                                                  .id,
+                                              cartItemId: cart
+                                                  .items.values
+                                                  .toList()[index]
+                                                  .cartItemId
+                                              );
                                             },
                                             child: Container(
                                               height: 32,
@@ -235,7 +261,11 @@ class _CartScreenState extends State<CartScreen> {
                                             color: Color(0xFFF3F3F3),
                                             padding: EdgeInsets.all(8),
                                             child: Center(
-                                              child: Text('$_n',
+                                              child: Text(
+                                                  cart.items.values
+                                                      .toList()[index]
+                                                      .quantity
+                                                      .toString(),
                                                   style: TextStyle(
                                                       fontSize: 14.0)),
                                             ),
@@ -245,6 +275,29 @@ class _CartScreenState extends State<CartScreen> {
                                               setState(() {
                                                 _n++;
                                               });
+                                              cart.addItem(
+                                                productId: cart.items.values
+                                                    .toList()[index]
+                                                    .id,
+                                                price: cart.items.values
+                                                    .toList()[index]
+                                                    .unitPrice,
+                                                title: cart.items.values
+                                                    .toList()[index]
+                                                    .name,
+                                                imageUrl: cart.items.values
+                                                    .toList()[index]
+                                                    .imageUrl,
+                                                description: cart.items.values
+                                                    .toList()[index]
+                                                    .description,
+                                                isAvailable: cart.items.values
+                                                    .toList()[index]
+                                                    .isAvailable,
+                                                quantity: _n,
+                                                cartItemId: cart.items.values
+                                                    .toList()[index].cartItemId
+                                              );
                                             },
                                             child: Container(
                                               height: 32,
@@ -263,7 +316,11 @@ class _CartScreenState extends State<CartScreen> {
                                             width: 8,
                                           ),
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              cart.removeItem(cart.items.values
+                                                  .toList()[index]
+                                                  .id);
+                                            },
                                             child: Container(
                                               height: 32,
                                               width: 32,
@@ -292,8 +349,8 @@ class _CartScreenState extends State<CartScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),
                               image: DecorationImage(
-                                image: AssetImage(
-                                  "assets/fruitbasket.png",
+                                image: NetworkImage(
+                                  cart.items.values.toList()[index].imageUrl,
                                 ),
                                 fit: BoxFit.fill,
                               ),
@@ -326,14 +383,16 @@ class _CartScreenState extends State<CartScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total 2 Items",
+                        cart.items.length > 1
+                            ? "Total ${cart.items.length} Items"
+                            : "Total ${cart.items.length} Item",
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontSize: 13,
                             fontWeight: FontWeight.w400),
                       ),
                       Text(
-                        "N35,000.00",
+                        "N${cart.totalAmount}",
                         style: TextStyle(
                             color: Color(0xFF000000),
                             fontSize: 17,

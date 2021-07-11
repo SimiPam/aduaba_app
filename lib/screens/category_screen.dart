@@ -4,6 +4,7 @@ import 'package:aduaba_app/model/sort_model.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/cart_screen.dart';
 import 'package:aduaba_app/services/category_api.dart';
+import 'package:aduaba_app/widgets/cart_icon_widget.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:aduaba_app/widgets/product_widget.dart';
 import 'package:aduaba_app/widgets/sort_radio_item_widget.dart';
@@ -142,23 +143,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         color: Color(0xFF819272),
                                         fontWeight: FontWeight.w700),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              _cartEmpty
-                                                  ? EmptyCartScreen()
-                                                  : CartScreen(),
-                                        ),
-                                      );
-                                    },
-                                    child: CircleAvatar(
-                                      backgroundColor: Color(0xFF3A953C),
-                                      child: Image.asset("assets/homecart.png"),
-                                    ),
-                                  ),
+                                  BuildCartIcon(),
                                 ],
                               ),
                               SizedBox(

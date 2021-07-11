@@ -103,18 +103,38 @@ class ProductWidget extends StatelessWidget {
                 ),
               ),
             ),
+            // Container(
+            //   decoration: BoxDecoration(
+            //     color: Colors.white,
+            //     borderRadius: BorderRadius.circular(5),
+            //   ),
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(5),
+            //     child: Image(
+            //       width: MediaQuery.of(context).size.width / 2 - 32,
+            //       height: MediaQuery.of(context).size.width / 2 - 32,
+            //       image: NetworkImage(
+            //         img,
+            //       ),
+            //       fit: BoxFit.cover,
+            //       colorFilter:
+            //           ColorFilter.mode(Colors.black45, BlendMode.darken),
+            //     ),
+            //   ),
+            // ),
             Container(
+              width: MediaQuery.of(context).size.width / 2 - 32,
+              height: MediaQuery.of(context).size.width / 2 - 32,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(5),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image(
-                  width: MediaQuery.of(context).size.width / 2 - 32,
-                  height: MediaQuery.of(context).size.width / 2 - 32,
-                  image: NetworkImage(img),
+                image: DecorationImage(
+                  image: NetworkImage(
+                    img,
+                  ),
                   fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                      Colors.black45.withOpacity(0.2), BlendMode.darken),
                 ),
               ),
             ),
@@ -128,7 +148,7 @@ class ProductWidget extends StatelessWidget {
                     width: 20,
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
+                        // color: Colors.black.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(7)),
                     child: Image.asset(
                       "assets/whiteheart.png",

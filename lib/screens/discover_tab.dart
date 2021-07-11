@@ -8,6 +8,7 @@ import 'package:aduaba_app/screens/search_screen.dart';
 import 'package:aduaba_app/services/product_api.dart';
 import 'package:aduaba_app/utilities/app_url.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
+import 'package:aduaba_app/widgets/cart_icon_widget.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/product_widget.dart';
 import 'package:animations/animations.dart';
@@ -164,10 +165,7 @@ class _DiscoverTabState extends State<DiscoverTab> {
                                 SizedBox(
                                   width: 28,
                                 ),
-                                CircleAvatar(
-                                  backgroundColor: Color(0xFF3A953C),
-                                  child: Image.asset("assets/homecart.png"),
-                                ),
+                                BuildCartIcon(),
                               ],
                             ),
                           ],
