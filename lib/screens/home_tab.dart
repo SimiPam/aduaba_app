@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:aduaba_app/model/category.dart';
 import 'package:aduaba_app/model/user.dart';
-import 'package:aduaba_app/providers/cart.dart';
+import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/search_screen.dart';
+import 'package:aduaba_app/services/category_api.dart';
 import 'package:aduaba_app/utilities/app_url.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
-import 'package:aduaba_app/widgets/badge.dart';
-import 'package:aduaba_app/widgets/cart_icon_widget.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 import '../utilities/constants.dart';
 import 'cart_screen.dart';
 import 'categories_list_screen.dart';
@@ -30,9 +29,13 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  // Future<List<Category>> categoryAlbum;
+  Future<List<Category>> categoryAlbum;
 
   bool _cartEmpty = false;
+
+  List<Category> _categoryList = [];
+
+  int _selectedIindex = 0;
 
   Widget _buildCategoryList(int index, context, Category category) {
     final color = categoryColors[index % categoryColors.length];
@@ -73,42 +76,41 @@ class _HomeTabState extends State<HomeTab> {
 
   UserPreferences user = UserPreferences();
 
-  Future<List<Category>> getAllCategories() async {
-    await Future.delayed(Duration(seconds: 5));
+  // Future<List<Category>> getAllCategories() async {
+  //   await Future.delayed(Duration(seconds: 5));
 
-    String token = await user.getToken();
+  //   String token = await user.getToken();
 
-    final getCategory = await http.get(AppUrl.category, headers: {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    print(getCategory.statusCode);
-    final List responseBody = jsonDecode(getCategory.body);
-    print(responseBody);
+  //   final getCategory = await http.get(AppUrl.category, headers: {
+  //     'Content-type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Bearer $token',
+  //   });
+  //   print(getCategory.statusCode);
+  //   final List responseBody = jsonDecode(getCategory.body);
 
-    var result = responseBody.map((e) => Category.fromJson(e)).toList();
-    print("Category result: $result");
-    return result;
-  }
+  //   var result = responseBody.map((e) => Category.fromJson(e)).toList();
 
-  // Future<User> userData;
-
-  Future<User> getUserData() {
-    return UserPreferences().getUser();
-  }
+  //   return result;
+  // }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    print("here");
-    getAllCategories();
-    getUserData();
-    super.initState();
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   categoryAlbum = getAllCategories();
+  // }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    categoryAlbum = null;
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<User> getUserData() => UserPreferences().getUser();
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24.0),
       children: [
@@ -127,7 +129,21 @@ class _HomeTabState extends State<HomeTab> {
                 "Aduaba Fresh",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              BuildCartIcon(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          _cartEmpty ? EmptyCartScreen() : CartScreen(),
+                    ),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundColor: Color(0xFF3A953C),
+                  child: Image.asset("assets/homecart.png"),
+                ),
+              ),
             ],
           ),
         ),
@@ -150,6 +166,14 @@ class _HomeTabState extends State<HomeTab> {
                       ),
                     );
                   }),
+              // Text(
+              //   "Hi ${widget.name}",
+              //   style: TextStyle(
+              //     fontSize: 17,
+              //     color: Color(0xff3A683B),
+              //     fontWeight: FontWeight.w400,
+              //   ),
+              // ),
               SizedBox(
                 height: 8,
               ),
@@ -182,6 +206,11 @@ class _HomeTabState extends State<HomeTab> {
         subTitle(
           title: "Categories",
           onTapped: () {
+            // showDialog(
+            //   context: context,
+            //   builder: (context) =>
+            //       CategoriesListingScreen(openDrawer: openDraw),
+            // );
             Navigator.push(
                 context,
                 CustomPageRoute(
@@ -194,7 +223,7 @@ class _HomeTabState extends State<HomeTab> {
           height: 16,
         ),
         FutureBuilder(
-            future: getAllCategories(),
+            future: categoryAlbum,
             builder: (context, snapshot) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
