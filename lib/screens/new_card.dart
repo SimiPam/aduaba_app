@@ -1,8 +1,11 @@
+import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
 import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_credit_card/credit_card_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 
@@ -19,10 +22,25 @@ class _NewCardScreenState extends State<NewCardScreen> {
   String cardHolderName = '';
   String cvvCode = '';
   bool isCvvFocused = false;
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // List<AddNewCard> cardList = [];
+
+  // addCard(AddNewCard addNewCard) {
+  //   setState(() {
+  //     cardList.add(addNewCard);
+  //   });
+  // }
+
+  // deleteCard(AddNewCard addNewCard) {
+  //   setState(() {
+  //     cardList.removeWhere(
+  //         (_addNewCard) => _addNewCard.cardNumber == addNewCard.cardNumber);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    CardNotifier cardNotifier = Provider.of<CardNotifier>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +100,7 @@ class _NewCardScreenState extends State<NewCardScreen> {
               child: Column(
                 children: <Widget>[
                   CreditCardForm(
-                    formKey: formKey,
+                    formKey: _formKey,
                     obscureCvv: true,
                     obscureNumber: false,
                     cardNumber: cardNumber,
@@ -90,10 +108,11 @@ class _NewCardScreenState extends State<NewCardScreen> {
                     cardHolderName: cardHolderName,
                     expiryDate: expiryDate,
                     themeColor: Colors.blue,
-                    cardNumberDecoration: cardInputField('Number'),
-                    expiryDateDecoration: cardInputField('Expired Date'),
-                    cvvCodeDecoration: cardInputField('CVV'),
-                    cardHolderDecoration: cardInputField("Card Holder"),
+                    cardNumberDecoration: cardnputField(Text: 'Card Number'),
+                    expiryDateDecoration: cardnputField(Text: 'Expiry Date'),
+                    cvvCodeDecoration: cardnputField(Text: 'Cvv '),
+                    cardHolderDecoration:
+                        cardnputField(Text: 'Card Holders Name'),
                     onCreditCardModelChange: onCreditCardModelChange,
                   ),
                 ],
@@ -105,43 +124,109 @@ class _NewCardScreenState extends State<NewCardScreen> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 33),
         child: buttonWidget(
-            buttonText: "Save",
-            buttonColor: Color(0xFF3A953C),
-            buttonAction: () {
-              if (formKey.currentState.validate()) {
-                print('valid!');
-              } else {
-                print('invalid!');
-              }
-            }),
+          buttonText: "Save",
+          buttonColor: Color(0xFF3A953C),
+          buttonAction: () {
+            if (!_formKey.currentState.validate())
+              return _formKey.currentState.save();
+            cardNotifier.addCard(
+              AddNewCard(
+                cardHolderName: cardHolderName,
+                cardNumber: cardNumber,
+                ccv: cvvCode,
+                expiryDate: expiryDate,
+              ),
+            );
+
+            // addCard(
+            //   AddNewCard(
+            //     cardHolderName: cardHolderName,
+            //     cardNumber: cardNumber,
+            //     ccv: cvvCode,
+            //     expiryDate: expiryDate,
+            //   ),
+            // );
+          },
+        ),
       ),
     );
   }
 
   void onCreditCardModelChange(CreditCardModel creditCardModel) {
-    setState(() {
-      cardNumber = creditCardModel.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
-      cvvCode = creditCardModel.cvvCode;
-      isCvvFocused = creditCardModel.isCvvFocused;
-    });
+    setState(
+      () {
+        cardNumber = creditCardModel.cardNumber;
+        expiryDate = creditCardModel.expiryDate;
+        cardHolderName = creditCardModel.cardHolderName;
+        cvvCode = creditCardModel.cvvCode;
+        isCvvFocused = creditCardModel.isCvvFocused;
+      },
+    );
   }
 
-  InputDecoration cardInputField(String text) {
+//   InputDecoration cardInputField({
+//     //Function(String) validate,
+//     String text,
+//     Function(String) onSaved,
+//     initialValue,
+//     @required bool pass,
+//     TextInputType textInputType,
+//   }) {
+//     onSaved;
+
+//     pass;
+//     return InputDecoration(
+//       // validator: (String value) {
+//       //   if (value.isEmpty) {
+//       //     return 'field is requiued';
+//       //   }
+//       //   ;
+//       //   return null;
+//       // },
+
+//       filled: true,
+//       fillColor: Color(0xFFF7F7F7),
+//       enabledBorder: OutlineInputBorder(
+//         borderSide: BorderSide(width: 0, color: Color(0xFFF7F7F7)),
+//         borderRadius: BorderRadius.all(Radius.circular(5)),
+//       ),
+//       focusedBorder: OutlineInputBorder(
+//         borderRadius: BorderRadius.all(Radius.circular(5)),
+//         borderSide: BorderSide(color: Color(0xFFF7F7F7)),
+//       ),
+//       hintText: text,
+//       labelText: text,
+//     );
+//   }
+// }
+
+  InputDecoration cardnputField({
+    String Text,
+    final Function onSaved,
+  }) {
+    Widget build(BuildContext context) {
+      return TextFormField(
+        decoration: cardnputField(),
+        initialValue: '',
+        validator: (String value) {
+          if (value.isEmpty) {
+            return '$Text is required';
+          }
+
+          return null;
+        },
+        onSaved: onSaved,
+      );
+    }
+
     return InputDecoration(
+      fillColor: Colors.white,
       filled: true,
-      fillColor: Color(0xFFF7F7F7),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 0, color: Color(0xFFF7F7F7)),
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+      labelText: '$Text',
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        borderSide: BorderSide(color: Color(0xFFF7F7F7)),
-      ),
-      hintText: text,
-      labelText: text,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
     );
   }
 }

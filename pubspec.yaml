@@ -44,12 +44,17 @@ dependencies:
   shared_preferences: ^0.5.8
   flushbar: ^1.10.4
   async: ^2.5.0
-
+  flutter_launcher_icons: ^0.8.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "assets/drawerlogo.png"
+  android: true
+  ios: true   
 
 
 plugin:
