@@ -102,6 +102,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     print("here");
+    Cart().itemsFromDb();
     getAllCategories();
     getUserData();
     super.initState();

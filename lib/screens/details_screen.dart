@@ -32,6 +32,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     //   }
     // }
     bool isLiked = false;
+    // isLiked = widget.product.isFav;
 
     return Scaffold(
       body: Column(
@@ -185,13 +186,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ElevatedButton(
                   onPressed: () {
                     Provider.of<Cart>(context, listen: false).addItem(
-                      productId: widget.product.id,
-                      price: widget.product.unitPrice,
-                      title: widget.product.name,
-                      imageUrl: widget.product.imageUrl,
-                      description: widget.product.description,
-                      isAvailable: widget.product.isAvailable,
-                    );
+                        productId: widget.product.id,
+                        price: widget.product.unitPrice,
+                        title: widget.product.name,
+                        imageUrl: widget.product.imageUrl,
+                        description: widget.product.description,
+                        isAvailable: widget.product.isAvailable,
+                        quantity: 1);
 
                     Flushbar(
                       title: "Successful",
@@ -199,7 +200,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       duration: Duration(seconds: 3),
                     ).show(context);
 
-                    print("added to cart");
+                    print("added to cart 1");
                     // showDialog(
                     //   context: context,
                     //   builder: (BuildContext context) {

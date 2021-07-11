@@ -116,8 +116,7 @@ class UserAccount extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  WishlistScreen(),
+                              builder: (BuildContext context) => MyWishList(),
                             ),
                           );
                         },

@@ -54,13 +54,15 @@ class ProductModel extends ChangeNotifier {
         'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
-        print("done");
+        print("wishlist add done");
         // return true;
       } else {
+        print("wishlist add fail");
         print(response.body);
       }
       // return false;
     } catch (error) {
+      print("wishlist add error");
       // return false;
     }
   }
