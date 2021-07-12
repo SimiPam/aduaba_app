@@ -200,16 +200,17 @@ class Cart with ChangeNotifier {
     }
     if (_items[productId].quantity > 1) {
       _items.update(
-          productId,
-          (existingCartItem) => Item(
-                id: existingCartItem.id,
-                name: existingCartItem.name,
-                description: existingCartItem.description,
-                isAvailable: existingCartItem.isAvailable,
-                imageUrl: existingCartItem.imageUrl,
-                unitPrice: existingCartItem.unitPrice,
-                quantity: existingCartItem.quantity - 1,
-              ));
+        productId,
+        (existingCartItem) => Item(
+          id: existingCartItem.id,
+          name: existingCartItem.name,
+          description: existingCartItem.description,
+          isAvailable: existingCartItem.isAvailable,
+          imageUrl: existingCartItem.imageUrl,
+          unitPrice: existingCartItem.unitPrice,
+          quantity: existingCartItem.quantity - 1,
+        ),
+      );
       await updatedbCart(cartItemId, quantity);
     } else {
       _items.remove(productId);

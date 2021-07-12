@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/screens/my_order.dart';
 import 'package:aduaba_app/screens/my_wishlist.dart';
 import 'package:aduaba_app/screens/payment.dart';
@@ -6,7 +9,9 @@ import 'package:aduaba_app/screens/shipping_details.dart';
 import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:aduaba_app/screens/user_account_edit.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
+import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../utilities/constants.dart';
 
@@ -14,16 +19,50 @@ class UserAccount extends StatefulWidget {
   final String name;
   final String email;
   final String phoneNumber;
-  const UserAccount({Key key, this.name, this.email, this.phoneNumber})
+
+  UserAccount({Key key, this.name, this.email, this.phoneNumber})
       : super(key: key);
   @override
   State<UserAccount> createState() => _UserAccountState();
 }
 
 class _UserAccountState extends State<UserAccount> {
+  File _image;
+  String imagePath;
+  _imgFromCamera() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.camera, imageQuality: 50);
+
+    setState(() {
+      imagePath = image.path;
+      _image = image;
+      imageAdded = true;
+    });
+  }
+
+  _imgFromGallery() async {
+    File image = await ImagePicker.pickImage(
+        source: ImageSource.gallery, imageQuality: 50);
+
+    setState(() {
+      imagePath = image.path;
+      imageAdded = true;
+      _image = image;
+    });
+  }
+
+  bool imageAdded = false;
+  removeImage() {
+    setState(() {
+      imageAdded = false;
+      _image = null;
+    });
+  }
+
   Widget _widget;
   @override
   Widget build(BuildContext context) {
+    Future<User> getUserData() => UserPreferences().getUser();
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Padding(
@@ -68,9 +107,15 @@ class _UserAccountState extends State<UserAccount> {
                       SizedBox(
                         width: 20,
                       ),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage: AssetImage("assets/Profile.png"),
+                      Center(
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundImage: _image != null
+                              ? FileImage(
+                                  _image,
+                                )
+                              : AssetImage("assets/Profile.png"),
+                        ),
                       ),
                       SizedBox(
                         width: 16,
@@ -79,24 +124,20 @@ class _UserAccountState extends State<UserAccount> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text(
-                            " ${widget.name}",
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w700),
-                          ),
-                          Text(
-                            " ${widget.email}",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF999999),
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            " ${widget.phoneNumber}",
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Color(0xFF999999),
-                                fontWeight: FontWeight.w400),
+                          FutureBuilder(
+                            future: getUserData(),
+                            builder: (context, snapshot) {
+                              return Text(
+                                snapshot.hasData
+                                    ? "${snapshot.data.firstName} ${snapshot.data.lastName}\n${snapshot.data.email}\n${snapshot.data.phoneNumber}"
+                                    : "Hi there!",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Color(0xff3A683B),
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

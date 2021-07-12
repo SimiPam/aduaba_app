@@ -63,19 +63,20 @@ class DrawerWidget extends StatelessWidget {
                     //   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                     // ),
                     FutureBuilder(
-                        future: getUserData(),
-                        builder: (context, snapshot) {
-                          return Text(
-                            snapshot.hasData
-                                ? "Hi ${snapshot.data.firstName} ${snapshot.data.lastName}"
-                                : "Hi there!",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Color(0xff3A683B),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          );
-                        }),
+                      future: getUserData(),
+                      builder: (context, snapshot) {
+                        return Text(
+                          snapshot.hasData
+                              ? "${snapshot.data.firstName} ${snapshot.data.lastName}"
+                              : "Hi there!",
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: Color(0xff3A683B),
+                            fontWeight: FontWeight.w400,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 );
               }),

@@ -30,8 +30,8 @@ class _CancelOrderDialogBoxState extends State<CancelOrderDialogBox> {
     return Stack(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 20),
-          margin: EdgeInsets.only(top: 45),
+          padding: EdgeInsets.only(left: 20, top: 20, right: 20, bottom: 40),
+          margin: EdgeInsets.only(top: 150),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,

@@ -153,19 +153,20 @@ class _HomeTabState extends State<HomeTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FutureBuilder(
-                  future: getUserData(),
-                  builder: (context, snapshot) {
-                    return Text(
-                      snapshot.hasData
-                          ? "Hi ${snapshot.data.firstName}"
-                          : "Hi there!",
-                      style: TextStyle(
-                        fontSize: 17,
-                        color: Color(0xff3A683B),
-                        fontWeight: FontWeight.w400,
-                      ),
-                    );
-                  }),
+                future: getUserData(),
+                builder: (context, snapshot) {
+                  return Text(
+                    snapshot.hasData
+                        ? "Hi ${snapshot.data.firstName}"
+                        : "Hi there!",
+                    style: TextStyle(
+                      fontSize: 17,
+                      color: Color(0xff3A683B),
+                      fontWeight: FontWeight.w400,
+                    ),
+                  );
+                },
+              ),
               // Text(
               //   "Hi ${widget.name}",
               //   style: TextStyle(
