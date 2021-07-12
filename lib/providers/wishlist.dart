@@ -14,7 +14,7 @@ class Item {
   double unitPrice;
   String imageUrl;
   String categoryName;
-  String vendorName;
+  String vendorId;
   bool isAvailable;
   int quantity;
 
@@ -25,21 +25,23 @@ class Item {
     this.unitPrice,
     this.imageUrl,
     this.categoryName,
-    this.vendorName,
+    this.vendorId,
     this.isAvailable,
     this.quantity,
     this.cartItemId,
   });
 
   Item.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     cartItemId = json['cartItemId'];
-    id = json['productId'];
-    name = json['productName'];
-    quantity = json['quantity'];
+    name = json['name'];
+    description = json['description'];
     unitPrice = json['unitPrice'];
-    imageUrl = json['productImage'];
+    imageUrl = json['imageUrl'];
+    categoryName = json['categoryName'];
+    vendorId = json['vendorId'];
     isAvailable = json['isAvailable'];
-    vendorName = json['vendorName'];
+    quantity = json['quantity'];
   }
 }
 
@@ -50,20 +52,19 @@ class Cart with ChangeNotifier {
     return {..._items};
   }
 
-  void itemsFromDb(listItem) {
-    // List<Item> listItem = await getAllCartItems();
+  itemsFromDb() async {
+    List<Item> listItem = await getAllCartItems();
     listItem.forEach((element) {
-      addItemDb(
+      addItem(
           productId: element.id,
           price: element.unitPrice,
           title: element.name,
           description: element.description,
           imageUrl: element.imageUrl,
           isAvailable: element.isAvailable,
-          quantity: element.quantity);
+          quantity: element.quantity,
+          cartItemId: element.cartItemId);
     });
-
-    print("item count $itemCount");
   }
 
   int get itemCount {
@@ -107,12 +108,11 @@ class Cart with ChangeNotifier {
       print("add to cart error");
       print(error.toString());
     }
-    notifyListeners();
   }
 
   Future<void> updatedbCart(cartItemId, quantity) async {
     final Map<String, dynamic> apiBodyData = {
-      "productId": cartItemId,
+      "cartItemId": cartItemId,
       "quantity": quantity
     };
     String token = await UserPreferences().getToken();
@@ -130,10 +130,9 @@ class Cart with ChangeNotifier {
     } catch (error) {
       print(error.toString());
     }
-    notifyListeners();
   }
 
-  Future<int> getAllCartItems() async {
+  Future<List<Item>> getAllCartItems() async {
     await Future.delayed(Duration(seconds: 5));
 
     String token = await UserPreferences().getToken();
@@ -145,13 +144,11 @@ class Cart with ChangeNotifier {
     });
     print(getCartItems.statusCode);
     final List responseBody = jsonDecode(getCartItems.body);
-    // print(responseBody);
+    print(responseBody);
 
     var result = responseBody.map((e) => Item.fromJson(e)).toList();
-    print("Cart result: ${result[1].name}");
-    itemsFromDb(result);
-    notifyListeners();
-    return itemCount;
+    print("Cart result: $result");
+    return result;
   }
 
   void addItem(
@@ -163,21 +160,19 @@ class Cart with ChangeNotifier {
       bool isAvailable,
       int quantity,
       cartItemId}) async {
-    int q = 0;
     if (_items.containsKey(productId)) {
-      _items.update(productId, (existingCartItem) {
-        q = existingCartItem.quantity + 1;
-        return Item(
-          id: existingCartItem.id,
-          description: existingCartItem.description,
-          isAvailable: existingCartItem.isAvailable,
-          imageUrl: existingCartItem.imageUrl,
-          name: existingCartItem.name,
-          unitPrice: existingCartItem.unitPrice,
-          quantity: existingCartItem.quantity + 1,
-        );
-      });
-      await updatedbCart(productId, q);
+      _items.update(
+          productId,
+          (existingCartItem) => Item(
+                id: existingCartItem.id,
+                description: existingCartItem.description,
+                isAvailable: existingCartItem.isAvailable,
+                imageUrl: existingCartItem.imageUrl,
+                name: existingCartItem.name,
+                unitPrice: existingCartItem.unitPrice,
+                quantity: existingCartItem.quantity + 1,
+              ));
+      await updatedbCart(productId, quantity);
     } else {
       _items.putIfAbsent(
           productId,
@@ -191,34 +186,8 @@ class Cart with ChangeNotifier {
                 imageUrl: imageUrl,
                 quantity: 1,
               ));
-      print("additemDb $itemCount");
       await addCartToDB(productId, quantity);
     }
-    notifyListeners();
-  }
-
-  void addItemDb(
-      {String productId,
-      double price,
-      String title,
-      String imageUrl,
-      String description,
-      bool isAvailable,
-      int quantity,
-      cartItemId}) async {
-    _items.putIfAbsent(
-        productId,
-        () => Item(
-              // id: DateTime.now().toString(),
-              id: productId,
-              name: title,
-              unitPrice: price,
-              description: description,
-              isAvailable: isAvailable,
-              imageUrl: imageUrl,
-              quantity: quantity,
-            ));
-    print("additemDb $itemCount");
     notifyListeners();
   }
 
@@ -255,29 +224,17 @@ class Cart with ChangeNotifier {
     String token = await UserPreferences().getToken();
     // final Map<String, dynamic> apiBodyData = {"productId": productId};
 
-    final client = http.Client();
     final url = Uri.parse(AppUrl.removeCart);
-
-    try {
-      final request = http.Request("DELETE", url);
-      request.headers.addAll(<String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      });
-      request.body = jsonEncode({"productId": productId});
-      final response = await request.send();
-      if (response.statusCode == 200) {
-        print("remove successful");
-      } else {
-        print("remove failed");
-        print(response.stream.bytesToString());
-      }
-    } catch (e) {
-      print(e.toString());
-    } finally {
-      client.close();
-    }
+    final request = http.Request("DELETE", url);
+    request.headers.addAll(<String, String>{
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    request.body = jsonEncode({"productId": productId});
+    final response = await request.send();
+    if (response.statusCode != 200) print("remove failed");
     notifyListeners();
+    print("remove successful");
   }
 
   void clearCart() {
