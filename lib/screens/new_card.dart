@@ -1,5 +1,6 @@
 import 'package:aduaba_app/controllers/card_notifier.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
+import 'package:aduaba_app/services/card_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_credit_card/credit_card_form.dart';
@@ -40,7 +41,7 @@ class _NewCardScreenState extends State<NewCardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CardNotifier cardNotifier = Provider.of<CardNotifier>(context);
+    CardApi cardNotifier = Provider.of<CardApi>(context);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,17 +128,31 @@ class _NewCardScreenState extends State<NewCardScreen> {
           buttonText: "Save",
           buttonColor: Color(0xFF3A953C),
           buttonAction: () {
-            if (!_formKey.currentState.validate())
-              return _formKey.currentState.save();
-            cardNotifier.addCard(
-              AddNewCard(
-                cardHolderName: cardHolderName,
-                cardNumber: cardNumber,
-                ccv: cvvCode,
-                expiryDate: expiryDate,
-              ),
-            );
+            // if (!_formKey.currentState.validate()) {
+            //
+            // }
+            _formKey.currentState.save();
+            // cardNotifier.registerCard(
+            //     cardNumber, cardHolderName, expiryDate, cvvCode);
+            print(cardNumber.replaceAll(" ", ""));
+            print(cardHolderName);
+            cardNotifier.registerCard(
+                cardNo: cardNumber.replaceAll(" ", ""),
+                cardName: cardHolderName,
+                exp: expiryDate,
+                cvv: cvvCode);
 
+            Navigator.pop(context);
+            // }
+
+            // cardNotifier.addCard(
+            //   AddNewCard(
+            //     cardHolderName: cardHolderName,
+            //     cardNumber: cardNumber,
+            //     ccv: cvvCode,
+            //     expiryDate: expiryDate,
+            //   ),
+            // );
             // addCard(
             //   AddNewCard(
             //     cardHolderName: cardHolderName,

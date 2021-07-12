@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:aduaba_app/controllers/address_notifier.dart';
 import 'package:aduaba_app/controllers/card_notifier.dart';
-import 'package:aduaba_app/controllers/notifier_card.dart';
 import 'package:aduaba_app/providers/auth_provider.dart';
 import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
@@ -12,6 +11,7 @@ import 'package:aduaba_app/providers/user_provider.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:aduaba_app/screens/landing_page.dart';
 import 'package:aduaba_app/screens/onboarding.dart';
+import 'package:aduaba_app/services/card_api.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Cart()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => CardNotifier()),
-        ChangeNotifierProvider(create: (_) => NotifierCard()),
+        ChangeNotifierProvider(create: (_) => CardApi()),
         ChangeNotifierProvider(create: (_) => AddressNotifier()),
       ],
       child: MaterialApp(

@@ -13,6 +13,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   int _n = 0;
+  List<String> cartIds = [];
 
   @override
   void initState() {
@@ -124,6 +125,10 @@ class _CartScreenState extends State<CartScreen> {
             child: ListView.builder(
               itemCount: cart.items.length,
               itemBuilder: (_, index) {
+                // setState(() {
+                //   cartIds.add(cart.items.values.toList()[index].cartItemId);
+                // });
+
                 double itemTotal = cart.items.values.toList()[index].unitPrice *
                     cart.items.values.toList()[index].quantity;
                 return cart.items.values.toList()[index].quantity == 0
@@ -428,6 +433,10 @@ class _CartScreenState extends State<CartScreen> {
                       buttonText: "Proceed to Checkout",
                       buttonColor: Color(0xFF3A953C),
                       buttonAction: () {
+                        // Provider.of<Cart>(context, listen: false)
+                        //     .checkout(cartIds);
+
+                        print(cartIds);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

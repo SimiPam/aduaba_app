@@ -1,7 +1,9 @@
+import 'package:aduaba_app/controllers/address_notifier.dart';
 import 'package:aduaba_app/model/address_model.dart';
 import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/widgets/address_radio_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../utilities/constants.dart';
 
@@ -38,6 +40,7 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
   int _index = 0;
   @override
   Widget build(BuildContext context) {
+    AddressNotifier addressNotifier = Provider.of<AddressNotifier>(context);
     return Scaffold(
       body: Container(
         child: Column(
@@ -153,28 +156,167 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
               ),
             ),
             buildAddressSubTitle("Shipping address", () {
-              _addAddressModalBottomSheet(context, () {});
+              // _addAddressModalBottomSheet(context: context);
+
+              FontWeight _fontWeight = FontWeight.w400;
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                builder: (BuildContext context) {
+                  return StatefulBuilder(builder:
+                      (BuildContext context, StateSetter setModalState) {
+                    return AnimatedContainer(
+                      height: MediaQuery.of(context).size.height * 0.66,
+                      duration: Duration(milliseconds: 1000),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: SingleChildScrollView(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "New Address",
+                                          style: TextStyle(
+                                              fontSize: 24,
+                                              color: Color(0xFF819272),
+                                              fontWeight: FontWeight.w700),
+                                        ),
+                                        InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Icon(Icons.close)),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 34,
+                                    ),
+                                    Text(
+                                      "Full Name",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFF10151A),
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    buildAddressInputField(
+                                        text: "jane doe",
+                                        onSave: (val) => name = val),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxHeight:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                      child: Text(
+                                        "Address",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Color(0xFF10151A),
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    buildAddressInputField(
+                                        text: "Lagos",
+                                        onSave: (val) => address = val),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    Text(
+                                      "Phone Number",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Color(0xFF10151A),
+                                          fontWeight: FontWeight.w700),
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    buildAddressInputField(
+                                        text: "+23408012345678",
+                                        onSave: (val) => number = val),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 16.0),
+                                  child: buttonWidget(
+                                      buttonText: "Save",
+                                      buttonColor: Color(0xFF3A953C),
+                                      buttonAction: () {
+                                        _formKey.currentState.save();
+                                        addressNotifier.addAddress(AddressModel(
+                                            isSelected: false,
+                                            address: address,
+                                            number: number,
+                                            name: name));
+                                        Navigator.pop(context);
+                                      }),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              );
             }),
             Expanded(
-              child: ListView.builder(
-                itemCount: sampleData.length,
-                itemBuilder: (_, index) {
-                  return InkWell(
-                      //highlightColor: Colors.red,
-                      splashColor: Colors.blueAccent,
-                      onTap: () {
-                        if (sampleData.length > 1) {
-                          setState(() {
-                            sampleData.forEach(
-                                (element) => element.isSelected = false);
-                            sampleData[index].isSelected = true;
-                          });
-                        }
+              child: addressNotifier.addressList.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: addressNotifier.addressList.length,
+                      itemBuilder: (_, index) {
+                        return InkWell(
+                            //highlightColor: Colors.red,
+                            splashColor: Colors.blueAccent,
+                            onTap: () {
+                              if (addressNotifier.addressList.length > 1) {
+                                setState(() {
+                                  addressNotifier.addressList.forEach(
+                                      (element) => element.isSelected = false);
+                                  addressNotifier
+                                      .addressList[index].isSelected = true;
+                                });
+                                addressNotifier.saveAddress(
+                                    addressNotifier.addressList[index].address);
+                                // print(addressNotifier.add);
+                              }
+                            },
+                            child: AddressRadioItem(
+                                onPress: () {
+                                  addressNotifier.deleteAddress(
+                                      addressNotifier.addressList[index]);
+                                },
+                                item: addressNotifier.addressList[index],
+                                count: addressNotifier.addressList.length));
                       },
-                      child: AddressRadioItem(
-                          item: sampleData[index], count: sampleData.length));
-                },
-              ),
+                    )
+                  : Center(child: Text("add shipping address")),
             ),
           ],
         ),
@@ -195,111 +337,131 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
     );
   }
 
-  _addAddressModalBottomSheet(context, onPress) {
-    FontWeight _fontWeight = FontWeight.w400;
-    showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setModalState) {
-          return AnimatedContainer(
-            height: MediaQuery.of(context).size.height * 0.66,
-            duration: Duration(milliseconds: 1000),
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
-            child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "New Address",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  color: Color(0xFF819272),
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.close)),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 34,
-                        ),
-                        Text(
-                          "Full Name",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFF10151A),
-                              fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        buildAddressInputField(text: "jane doe"),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: MediaQuery.of(context).size.width,
-                          ),
-                          child: Text(
-                            "Address",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFF10151A),
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        buildAddressInputField(text: "Lagos"),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Text(
-                          "Phone Number",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xFF10151A),
-                              fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        buildAddressInputField(text: "+23408012345678"),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: buttonWidget(
-                          buttonText: "Save",
-                          buttonColor: Color(0xFF3A953C),
-                          buttonAction: onPress),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        });
-      },
-    );
-  }
+  String name;
+  String address;
+  String number;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // _addAddressModalBottomSheet({context, onPress}) {
+  //   FontWeight _fontWeight = FontWeight.w400;
+  //   showModalBottomSheet(
+  //     isScrollControlled: true,
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return StatefulBuilder(
+  //           builder: (BuildContext context, StateSetter setModalState) {
+  //         return AnimatedContainer(
+  //           height: MediaQuery.of(context).size.height * 0.66,
+  //           duration: Duration(milliseconds: 1000),
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //           ),
+  //           child: SingleChildScrollView(
+  //             child: Container(
+  //               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+  //               child: Form(
+  //                 key: _formKey,
+  //                 child: Column(
+  //                   crossAxisAlignment: CrossAxisAlignment.stretch,
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     Column(
+  //                       crossAxisAlignment: CrossAxisAlignment.stretch,
+  //                       children: [
+  //                         Row(
+  //                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                           crossAxisAlignment: CrossAxisAlignment.start,
+  //                           children: [
+  //                             Text(
+  //                               "New Address",
+  //                               style: TextStyle(
+  //                                   fontSize: 24,
+  //                                   color: Color(0xFF819272),
+  //                                   fontWeight: FontWeight.w700),
+  //                             ),
+  //                             InkWell(
+  //                                 onTap: () {
+  //                                   Navigator.pop(context);
+  //                                 },
+  //                                 child: Icon(Icons.close)),
+  //                           ],
+  //                         ),
+  //                         SizedBox(
+  //                           height: 34,
+  //                         ),
+  //                         Text(
+  //                           "Full Name",
+  //                           style: TextStyle(
+  //                               fontSize: 15,
+  //                               color: Color(0xFF10151A),
+  //                               fontWeight: FontWeight.w700),
+  //                         ),
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         buildAddressInputField(
+  //                             text: "jane doe", onSave: (val) => name = val),
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         ConstrainedBox(
+  //                           constraints: BoxConstraints(
+  //                             maxHeight: MediaQuery.of(context).size.width,
+  //                           ),
+  //                           child: Text(
+  //                             "Address",
+  //                             style: TextStyle(
+  //                                 fontSize: 15,
+  //                                 color: Color(0xFF10151A),
+  //                                 fontWeight: FontWeight.w700),
+  //                           ),
+  //                         ),
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         buildAddressInputField(
+  //                             text: "Lagos", onSave: (val) => address = val),
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         Text(
+  //                           "Phone Number",
+  //                           style: TextStyle(
+  //                               fontSize: 15,
+  //                               color: Color(0xFF10151A),
+  //                               fontWeight: FontWeight.w700),
+  //                         ),
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         buildAddressInputField(
+  //                             text: "+23408012345678",
+  //                             onSave: (val) => number = val),
+  //                       ],
+  //                     ),
+  //                     Padding(
+  //                       padding: const EdgeInsets.only(top: 16.0),
+  //                       child: buttonWidget(
+  //                           buttonText: "Save",
+  //                           buttonColor: Color(0xFF3A953C),
+  //                           buttonAction: () {
+  //
+  //                             _formKey.currentState.save();
+  //                             sampleData.add(AddressModel(
+  //                                 isSelected: false,
+  //                                 address: address,
+  //                                 number: number,
+  //                                 name: name));
+  //                           }),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         );
+  //       });
+  //     },
+  //   );
+  // }
 }

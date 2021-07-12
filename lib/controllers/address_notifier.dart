@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class AddressNotifier extends ChangeNotifier {
   List<AddressModel> _addressList = [];
+  String add;
 
   UnmodifiableListView<AddressModel> get addressList =>
       UnmodifiableListView(_addressList);
@@ -14,9 +15,19 @@ class AddressNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteAddress(index) {
-    _addressList.removeWhere(
-        (addressModel) => _addressList == _addressList[index].address);
+  deleteAddress(AddressModel addressModel) {
+    _addressList.remove(addressModel);
     notifyListeners();
   }
+
+  saveAddress(address) {
+    add = address;
+    notifyListeners();
+  }
+
+  // deleteAddress(index) {
+  //   _addressList.removeWhere(
+  //       (addressModel) => _addressList == _addressList[index].address);
+  //   notifyListeners();
+  // }
 }

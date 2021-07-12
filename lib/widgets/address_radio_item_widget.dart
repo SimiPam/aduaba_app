@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class AddressRadioItem extends StatelessWidget {
   final AddressModel item;
   final int count;
-  AddressRadioItem({this.item, this.count});
+  final VoidCallback onPress;
+  AddressRadioItem({this.item, this.count, this.onPress});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,6 +98,7 @@ class AddressRadioItem extends StatelessWidget {
                           ),
                           count > 1
                               ? TextButton(
+                                  onPressed: onPress,
                                   child: Text(
                                     "Delete",
                                     style: TextStyle(

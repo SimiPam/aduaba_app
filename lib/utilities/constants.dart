@@ -343,12 +343,14 @@ Widget buildAddressInputField(
     {String text,
     TextEditingController controller,
     Function(String) onChange,
+    Function(String) onSave,
     Function(String) validate}) {
   return TextFormField(
     autofocus: false,
     cursorColor: Color(0xFF10151A),
     style: TextStyle(
         fontSize: 15, color: Color(0xFF10151A), fontWeight: FontWeight.w700),
+    onSaved: onSave,
 
     onChanged: onChange,
     validator: validate,

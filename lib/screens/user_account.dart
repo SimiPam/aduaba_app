@@ -212,7 +212,7 @@ class _UserAccountState extends State<UserAccount> {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                ShippingDetailsScreen(),
+                                ShippingDetails(),
                           ),
                         );
                       },

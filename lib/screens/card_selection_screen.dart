@@ -1,46 +1,14 @@
-import 'package:aduaba_app/controllers/card_notifier.dart';
-import 'package:aduaba_app/controllers/notifier_card.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:aduaba_app/model/card_detail_model.dart';
+import 'package:aduaba_app/services/card_api.dart';
 import 'package:aduaba_app/widgets/card_carousel.dart';
+import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:paystack_manager/paystack_pay_manager.dart';
 import 'package:provider/provider.dart';
 import '../utilities/constants.dart';
 import 'confirmation_screen.dart';
-
-final List<CardModel> cards = [
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "VISA",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "MasterCard",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "VISA",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "VISA",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "MasterCard",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-  CardModel(
-      cardNo: "3282328232823282",
-      cardType: "VISA",
-      name: "Aycan Doganlar",
-      expDate: "09/23"),
-];
+import 'new_card.dart';
 
 class CardSelection extends StatefulWidget {
   CardSelection();
@@ -63,7 +31,6 @@ class _CardSelectionState extends State<CardSelection> {
 
   @override
   Widget build(BuildContext context) {
-    NotifierCard notifierCard = Provider.of<NotifierCard>(context);
     return Scaffold(
       body: Container(
         // padding: EdgeInsets.symmetric(horizontal: 24),
@@ -193,7 +160,14 @@ class _CardSelectionState extends State<CardSelection> {
                   ),
                   TextButton.icon(
                     onPressed: () {
-                      _addCardModalBottomSheet(context);
+                      // _addCardModalBottomSheet(context);
+                      Navigator.push(
+                        context,
+                        CustomPageRoute(
+                          direction: AxisDirection.up,
+                          child: NewCardScreen(),
+                        ),
+                      );
                     },
                     icon: Icon(
                       Icons.add,
@@ -214,75 +188,75 @@ class _CardSelectionState extends State<CardSelection> {
             SingleChildScrollView(
               child: CardCarousel(),
             ),
-            Expanded(
-              child: ListView.separated(
-                itemCount: notifierCard.cardList.length,
-                itemBuilder: (_, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                      left: 24.0,
-                      right: 24,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Consumer<CardNotifier>(
-                          builder: (
-                            _,
-                            notifier,
-                            __,
-                          ) =>
-                              Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: Image(
-                                  image:
-                                      AssetImage("assets/mastercardlogo.png"),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 70,
-                              ),
-                              Text(
-                                ' ${notifier.cardList[index].cardNumber}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Consumer<CardNotifier>(
-                          builder: (
-                            _,
-                            notifier,
-                            __,
-                          ) =>
-                              // IconButton(
-                              //   onPressed: () => notifier.deleteCard(index),
-                              //   icon: Icon(Icons.delete_forever),
-                              // )
-                              InkWell(
-                            onTap: () => notifier.deleteCard(index),
-                            child: SizedBox(
-                              width: 20,
-                              height: 30,
-                              child: Image.asset('assets/trash.png'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (_, index) {
-                  return Divider();
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: ListView.separated(
+            //     itemCount: notifierCard.cardList.length,
+            //     itemBuilder: (_, index) {
+            //       return Padding(
+            //         padding: const EdgeInsets.only(
+            //           left: 24.0,
+            //           right: 24,
+            //         ),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //           children: [
+            //             Consumer<CardNotifier>(
+            //               builder: (
+            //                 _,
+            //                 notifier,
+            //                 __,
+            //               ) =>
+            //                   Row(
+            //                 children: [
+            //                   CircleAvatar(
+            //                     backgroundColor: Colors.transparent,
+            //                     child: Image(
+            //                       image:
+            //                           AssetImage("assets/mastercardlogo.png"),
+            //                     ),
+            //                   ),
+            //                   SizedBox(
+            //                     width: 70,
+            //                   ),
+            //                   Text(
+            //                     ' ${notifier.cardList[index].cardNumber}',
+            //                     style: TextStyle(
+            //                       fontSize: 16,
+            //                       color: Colors.black,
+            //                       fontWeight: FontWeight.bold,
+            //                     ),
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //             Consumer<CardNotifier>(
+            //               builder: (
+            //                 _,
+            //                 notifier,
+            //                 __,
+            //               ) =>
+            //                   // IconButton(
+            //                   //   onPressed: () => notifier.deleteCard(index),
+            //                   //   icon: Icon(Icons.delete_forever),
+            //                   // )
+            //                   InkWell(
+            //                 onTap: () => notifier.deleteCard(index),
+            //                 child: SizedBox(
+            //                   width: 20,
+            //                   height: 30,
+            //                   child: Image.asset('assets/trash.png'),
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         ),
+            //       );
+            //     },
+            //     separatorBuilder: (_, index) {
+            //       return Divider();
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -339,6 +313,7 @@ class _CardSelectionState extends State<CardSelection> {
 
   void _onPaymentSuccessful(Transaction transaction) {
     print('Transaction succesful');
+
     Navigator.push(
       context,
       MaterialPageRoute(builder: (BuildContext context) => ConfirmationTab()),
@@ -367,7 +342,7 @@ class _CardSelectionState extends State<CardSelection> {
       isScrollControlled: true,
       context: context,
       builder: (BuildContext context) {
-        NotifierCard notifierCard = Provider.of<NotifierCard>(context);
+        CardApi cardNotifier = Provider.of<CardApi>(context);
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return AnimatedContainer(
@@ -379,106 +354,129 @@ class _CardSelectionState extends State<CardSelection> {
               child: SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "New Card",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: Color(0xFF819272),
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(Icons.close)),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 34,
-                          ),
-                          Text(
-                            "Name on Card",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFF10151A),
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            decoration: addressField(
-                                Text: 'Card Name',
-                                textInputType: TextInputType.name),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Card Number ",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFF10151A),
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            decoration: addressField(
-                                Text: 'Card Number',
-                                textInputType: TextInputType.number),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          Text(
-                            "Expiry Date",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Color(0xFF10151A),
-                                fontWeight: FontWeight.w700),
-                          ),
-                          SizedBox(
-                            height: 16,
-                          ),
-                          TextFormField(
-                            decoration: addressField(
-                                Text: 'Expiry Date',
-                                textInputType: TextInputType.number),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16.0),
-                        child: buttonWidget(
-                            buttonText: "Save",
-                            buttonColor: Color(0xFF3A953C),
-                            buttonAction: () {
-                              if (!_formKey.currentState.validate())
-                                return _formKey.currentState.save();
-                              notifierCard.addCard(
-                                AddNewCard(
-                                  cardHolderName: cardHolderName,
-                                  cardNumber: cardNumber,
-                                  ccv: cvvCode,
-                                  expiryDate: expiryDate,
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "New Card",
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      color: Color(0xFF819272),
+                                      fontWeight: FontWeight.w700),
                                 ),
-                              );
-                            }),
-                      ),
-                    ],
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Icon(Icons.close)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 34,
+                            ),
+                            Text(
+                              "Name on Card",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF10151A),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            TextFormField(
+                              decoration: addressField(
+                                  Text: 'Card Name',
+                                  textInputType: TextInputType.name,
+                                  onSaved: (val) => cardHolderName = val),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Card Number ",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF10151A),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            TextFormField(
+                              decoration: addressField(
+                                  Text: 'Card Number',
+                                  textInputType: TextInputType.number,
+                                  onSaved: (val) => cardNumber = val),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              "Expiry Date",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF10151A),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            TextFormField(
+                              decoration: addressField(
+                                  Text: 'Expiry Date',
+                                  textInputType: TextInputType.number,
+                                  onSaved: (val) => expiryDate = val),
+                            ),
+                            Text(
+                              "CVV",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF10151A),
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                            TextFormField(
+                              decoration: addressField(
+                                  Text: 'CVV',
+                                  textInputType: TextInputType.number,
+                                  onSaved: (val) {
+                                    cvvCode = val;
+                                  }),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: buttonWidget(
+                              buttonText: "Save",
+                              buttonColor: Color(0xFF3A953C),
+                              buttonAction: () {
+                                if (!_formKey.currentState.validate()) {
+                                  _formKey.currentState.save();
+                                  // cardNotifier.registerCard(
+                                  //   cardNumber,
+                                  //   cardHolderName,
+                                  //   expiryDate,
+                                  //   cvvCode,
+                                  // );
+                                }
+                              }),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -26,7 +26,7 @@ class AddressApi {
       'Accept': 'application/json'
     });
     final List responseBody = jsonDecode(getAddress.body);
-    //return responseBody.map((e) => AddressModel.fromJson(e)).toList();
+    return responseBody.map((e) => AddressModel.fromJson(e)).toList();
   }
 
   Future<AddressModel> getAllAddressFromModel(String name) async {

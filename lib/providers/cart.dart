@@ -148,7 +148,7 @@ class Cart with ChangeNotifier {
     // print(responseBody);
 
     var result = responseBody.map((e) => Item.fromJson(e)).toList();
-    print("Cart result: ${result[1].name}");
+    // print("Cart result: ${result[1].name}");
     itemsFromDb(result);
     notifyListeners();
     return itemCount;
@@ -276,6 +276,33 @@ class Cart with ChangeNotifier {
       print(e.toString());
     } finally {
       client.close();
+    }
+    notifyListeners();
+  }
+
+  Future<void> checkout(cartId) async {
+    await Future.delayed(Duration(seconds: 5));
+    // final Map<String, dynamic> apiBodyData = {
+    //   "productId": productId,
+    //   "quantity": quantity
+    // };
+    print("checkout");
+    String token = await UserPreferences().getToken();
+    try {
+      final response =
+          await http.post(AppUrl.checkout, body: json.encode(cartId), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      if (response.statusCode == 200) {
+        print("checkout done");
+      } else {
+        print("checkout fail");
+        print(response.body);
+      }
+    } catch (error) {
+      print("checkout error");
+      print(error.toString());
     }
     notifyListeners();
   }

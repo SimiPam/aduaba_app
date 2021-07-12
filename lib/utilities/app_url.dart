@@ -14,7 +14,9 @@ class AppUrl {
   static const String updateQuantity = baseUrl + '/UpdateQuantity';
   static const String removeWishList = baseUrl + '/delete-from-wishlist';
   static const String update = baseUrl + '/update';
+  static const String checkout = baseUrl + '/Checkout';
   static const String addCard = baseUrl + '/add-card';
+  static const String deleteCard = baseUrl + '/delete-card';
   static const String viewCards = baseUrl + '/view-cards';
   static const String resetPassword = baseUrl + '/reset-password';
   static const String addShippingAddress = baseUrl + '/add-shipping-address';
