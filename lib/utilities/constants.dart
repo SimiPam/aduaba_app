@@ -54,7 +54,7 @@ Widget buildTextField(String text) {
   return TextField(
     keyboardType: TextInputType.name,
     style: TextStyle(
-      color: Color(0xFFF7F7F7),
+      color: Color(0xFF10151A),
     ),
     decoration: InputDecoration(
       contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),

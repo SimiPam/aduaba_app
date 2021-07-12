@@ -18,12 +18,12 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Cart().itemsFromDb();
   }
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -126,250 +126,271 @@ class _CartScreenState extends State<CartScreen> {
               itemBuilder: (_, index) {
                 double itemTotal = cart.items.values.toList()[index].unitPrice *
                     cart.items.values.toList()[index].quantity;
-                return Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          // ListTile(
-                          //   leading:
-                          Checkbox(
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            activeColor: Color(0xFFE75A21),
-                            checkColor: Color(0xFFFFFFFF),
-                            // value: _item.isSelected ? true : false,
-                            value: true,
-                            tristate: false,
-                            onChanged: (value) {},
-                          ),
-                          // title:
-                          Container(
-                            margin: EdgeInsets.only(bottom: 16, top: 0),
-                            child: Column(
+                return cart.items.values.toList()[index].quantity == 0
+                    ? Container()
+                    : Container(
+                        margin: EdgeInsets.symmetric(horizontal: 24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
+                                // ListTile(
+                                //   leading:
+                                Checkbox(
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  activeColor: Color(0xFFE75A21),
+                                  checkColor: Color(0xFFFFFFFF),
+                                  // value: _item.isSelected ? true : false,
+                                  value: true,
+                                  tristate: false,
+                                  onChanged: (value) {},
+                                ),
+                                // title:
                                 Container(
-                                  height: 140,
+                                  margin: EdgeInsets.only(bottom: 16, top: 0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    // mainAxisAlignment:
-                                    //     MainAxisAlignment.spaceAround,
                                     children: [
                                       Container(
-                                        width: 250,
-                                        child: Text(
-                                          cart.items.values
-                                              .toList()[index]
-                                              .description,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        cart.items.values.toList()[index].name,
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 1.2,
-                                          color: Color(0xFFBBBBBB),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            itemTotal.toString(),
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 1.2,
-                                              color: Color(0xFFF39E28),
-                                            ),
-                                          ),
-                                          Text(
-                                            "・",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xFFF3A953C),
-                                            ),
-                                          ),
-                                          Text(
-                                            "In stock",
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400,
-                                              color: Color(0xFFF3A953C),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                _n--;
-                                              });
-                                              cart.removeSingleItem(productId:cart
-                                                  .items.values
-                                                  .toList()[index]
-                                                  .id,
-                                              cartItemId: cart
-                                                  .items.values
-                                                  .toList()[index]
-                                                  .cartItemId
-                                              );
-                                            },
-                                            child: Container(
-                                              height: 32,
-                                              width: 32,
-                                              color: Color(0xFFF3F3F3),
-
-                                              // padding: EdgeInsets.all(8),
-                                              child: Center(
-                                                  child: Icon(
-                                                Icons.remove,
-                                                size: 16,
-                                                color: Color(0xFF979797),
-                                              )),
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 32,
-                                            width: 32,
-                                            color: Color(0xFFF3F3F3),
-                                            padding: EdgeInsets.all(8),
-                                            child: Center(
+                                        height: 140,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          // mainAxisAlignment:
+                                          //     MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Container(
+                                              width: 250,
                                               child: Text(
-                                                  cart.items.values
-                                                      .toList()[index]
-                                                      .quantity
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      fontSize: 14.0)),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                _n++;
-                                              });
-                                              cart.addItem(
-                                                productId: cart.items.values
-                                                    .toList()[index]
-                                                    .id,
-                                                price: cart.items.values
-                                                    .toList()[index]
-                                                    .unitPrice,
-                                                title: cart.items.values
+                                                cart.items.values
                                                     .toList()[index]
                                                     .name,
-                                                imageUrl: cart.items.values
-                                                    .toList()[index]
-                                                    .imageUrl,
-                                                description: cart.items.values
-                                                    .toList()[index]
-                                                    .description,
-                                                isAvailable: cart.items.values
-                                                    .toList()[index]
-                                                    .isAvailable,
-                                                quantity: _n,
-                                                cartItemId: cart.items.values
-                                                    .toList()[index].cartItemId
-                                              );
-                                            },
-                                            child: Container(
-                                              height: 32,
-                                              width: 32,
-                                              color: Color(0xFFF3F3F3),
-                                              // padding: EdgeInsets.all(8),
-                                              child: Center(
-                                                  child: Icon(
-                                                Icons.add,
-                                                size: 16,
-                                                color: Color(0xFF979797),
-                                              )),
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              cart.removeItem(cart.items.values
-                                                  .toList()[index]
-                                                  .id);
-                                            },
-                                            child: Container(
-                                              height: 32,
-                                              width: 32,
-                                              color: Color(0xFFF3F3F3),
-                                              // padding: EdgeInsets.all(8),
-                                              child: Center(
-                                                  child: Icon(
-                                                Icons.delete,
-                                                size: 20,
-                                                color: Color(0xFF979797),
-                                              )),
+                                            SizedBox(
+                                              height: 5,
                                             ),
-                                          ),
-                                        ],
-                                      )
+                                            Text(
+                                              cart.items.values
+                                                      .toList()[index]
+                                                      .vendorName ??
+                                                  "Aduaba Fresh",
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                                letterSpacing: 1.2,
+                                                color: Color(0xFFBBBBBB),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  itemTotal.toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w700,
+                                                    letterSpacing: 1.2,
+                                                    color: Color(0xFFF39E28),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "・",
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color(0xFFF3A953C),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  "In stock",
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: Color(0xFFF3A953C),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _n--;
+                                                    });
+                                                    cart.removeSingleItem(
+                                                      productId: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .id,
+                                                      quantity: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .quantity,
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: 32,
+                                                    width: 32,
+                                                    color: Color(0xFFF3F3F3),
+
+                                                    // padding: EdgeInsets.all(8),
+                                                    child: Center(
+                                                        child: Icon(
+                                                      Icons.remove,
+                                                      size: 16,
+                                                      color: Color(0xFF979797),
+                                                    )),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 32,
+                                                  width: 32,
+                                                  color: Color(0xFFF3F3F3),
+                                                  padding: EdgeInsets.all(8),
+                                                  child: Center(
+                                                    child: Text(
+                                                        cart.items.values
+                                                            .toList()[index]
+                                                            .quantity
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 14.0)),
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      _n++;
+                                                    });
+                                                    cart.addItem(
+                                                      productId: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .id,
+                                                      price: cart.items.values
+                                                          .toList()[index]
+                                                          .unitPrice,
+                                                      title: cart.items.values
+                                                          .toList()[index]
+                                                          .name,
+                                                      imageUrl: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .imageUrl,
+                                                      description: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .description,
+                                                      isAvailable: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .isAvailable,
+                                                      quantity: cart
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .quantity,
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    height: 32,
+                                                    width: 32,
+                                                    color: Color(0xFFF3F3F3),
+                                                    // padding: EdgeInsets.all(8),
+                                                    child: Center(
+                                                        child: Icon(
+                                                      Icons.add,
+                                                      size: 16,
+                                                      color: Color(0xFF979797),
+                                                    )),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {
+                                                    cart.removeItem(cart
+                                                        .items.values
+                                                        .toList()[index]
+                                                        .id);
+                                                    cart.removeFromDb(cart
+                                                        .items.values
+                                                        .toList()[index]
+                                                        .id);
+                                                  },
+                                                  child: Container(
+                                                    height: 32,
+                                                    width: 32,
+                                                    color: Color(0xFFF3F3F3),
+                                                    // padding: EdgeInsets.all(8),
+                                                    child: Center(
+                                                        child: Icon(
+                                                      Icons.delete,
+                                                      size: 20,
+                                                      color: Color(0xFF979797),
+                                                    )),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ],
+                                  ),
+                                ),
+                                // ),
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                        cart.items.values
+                                            .toList()[index]
+                                            .imageUrl,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          // ),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  cart.items.values.toList()[index].imageUrl,
-                                ),
-                                fit: BoxFit.fill,
-                              ),
+                            Divider(
+                              color: Color(0xFFF5F5F5),
+                              // color: Colors.grey,
+                              thickness: 1,
+                              height: 0,
                             ),
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        color: Color(0xFFF5F5F5),
-                        // color: Colors.grey,
-                        thickness: 1,
-                        height: 0,
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                    ],
-                  ),
-                );
+                            SizedBox(
+                              height: 24,
+                            ),
+                          ],
+                        ),
+                      );
               },
             ),
           ),

@@ -4,20 +4,15 @@ import 'package:aduaba_app/model/category.dart';
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/search_screen.dart';
-import 'package:aduaba_app/services/category_api.dart';
-import 'package:aduaba_app/utilities/app_url.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
+import 'package:aduaba_app/widgets/cart_icon_widget.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:http/http.dart' as http;
 import '../utilities/constants.dart';
-import 'cart_screen.dart';
 import 'categories_list_screen.dart';
 import 'category_screen.dart';
 import 'details_screen.dart';
-import 'empty_cart_screen.dart';
 
 class HomeTab extends StatefulWidget {
   final VoidCallback openDraw;
@@ -29,13 +24,9 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  Future<List<Category>> categoryAlbum;
-
   bool _cartEmpty = false;
 
-  List<Category> _categoryList = [];
-
-  int _selectedIindex = 0;
+  Future<List<Category>> categoryAlbum;
 
   Widget _buildCategoryList(int index, context, Category category) {
     final color = categoryColors[index % categoryColors.length];
@@ -54,6 +45,7 @@ class _HomeTabState extends State<HomeTab> {
         width: 92,
         height: 50,
         margin: EdgeInsets.only(right: 8),
+        padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
@@ -61,12 +53,13 @@ class _HomeTabState extends State<HomeTab> {
         alignment: Alignment.center,
         child: Center(
           child: Text(
-            category.categoryName,
+            category.categoryName.toLowerCase(),
             style: TextStyle(
               fontSize: 13,
               color: color,
             ),
-            maxLines: 2,
+            // maxLines: 2,
+            textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -76,41 +69,25 @@ class _HomeTabState extends State<HomeTab> {
 
   UserPreferences user = UserPreferences();
 
-  // Future<List<Category>> getAllCategories() async {
-  //   await Future.delayed(Duration(seconds: 5));
+  // Future<User> userData;
 
-  //   String token = await user.getToken();
-
-  //   final getCategory = await http.get(AppUrl.category, headers: {
-  //     'Content-type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'Authorization': 'Bearer $token',
-  //   });
-  //   print(getCategory.statusCode);
-  //   final List responseBody = jsonDecode(getCategory.body);
-
-  //   var result = responseBody.map((e) => Category.fromJson(e)).toList();
-
-  //   return result;
-  // }
+  Future<User> getUserData() {
+    return UserPreferences().getUser();
+  }
 
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   categoryAlbum = getAllCategories();
-  // }
+  void initState() {
+    // TODO: implement initState
+    print("here");
+    // Cart().itemsFromDb();
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    categoryAlbum = null;
+    categoryAlbum = CategoryModel().getAllCategories();
+    getUserData();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<User> getUserData() => UserPreferences().getUser();
     return ListView(
       padding: EdgeInsets.symmetric(horizontal: 24.0),
       children: [
@@ -129,21 +106,7 @@ class _HomeTabState extends State<HomeTab> {
                 "Aduaba Fresh",
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          _cartEmpty ? EmptyCartScreen() : CartScreen(),
-                    ),
-                  );
-                },
-                child: CircleAvatar(
-                  backgroundColor: Color(0xFF3A953C),
-                  child: Image.asset("assets/homecart.png"),
-                ),
-              ),
+              BuildCartIcon(),
             ],
           ),
         ),
@@ -153,28 +116,19 @@ class _HomeTabState extends State<HomeTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FutureBuilder(
-                future: getUserData(),
-                builder: (context, snapshot) {
-                  return Text(
-                    snapshot.hasData
-                        ? "Hi ${snapshot.data.firstName}"
-                        : "Hi there!",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Color(0xff3A683B),
-                      fontWeight: FontWeight.w400,
-                    ),
-                  );
-                },
-              ),
-              // Text(
-              //   "Hi ${widget.name}",
-              //   style: TextStyle(
-              //     fontSize: 17,
-              //     color: Color(0xff3A683B),
-              //     fontWeight: FontWeight.w400,
-              //   ),
-              // ),
+                  future: getUserData(),
+                  builder: (context, snapshot) {
+                    return Text(
+                      snapshot.hasData
+                          ? "Hi ${snapshot.data.firstName}"
+                          : "Hi there!",
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xff3A683B),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    );
+                  }),
               SizedBox(
                 height: 8,
               ),
@@ -207,11 +161,6 @@ class _HomeTabState extends State<HomeTab> {
         subTitle(
           title: "Categories",
           onTapped: () {
-            // showDialog(
-            //   context: context,
-            //   builder: (context) =>
-            //       CategoriesListingScreen(openDrawer: openDraw),
-            // );
             Navigator.push(
                 context,
                 CustomPageRoute(

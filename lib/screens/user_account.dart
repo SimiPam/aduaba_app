@@ -2,11 +2,8 @@ import 'dart:io';
 
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/screens/my_order.dart';
-import 'package:aduaba_app/screens/my_wishlist.dart';
 import 'package:aduaba_app/screens/payment.dart';
-import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/screens/shipping_details.dart';
-import 'package:aduaba_app/screens/shipping_tab.dart';
 import 'package:aduaba_app/screens/user_account_edit.dart';
 import 'package:aduaba_app/screens/wishlist.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';

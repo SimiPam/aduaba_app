@@ -124,7 +124,7 @@ class DrawerWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       CustomPageRoute(
-                        child: WishlistScreen(),
+                        child: MyWishList(),
                         direction: AxisDirection.left,
                       ),
                     );

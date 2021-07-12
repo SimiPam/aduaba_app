@@ -7,6 +7,8 @@ import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import 'cart.dart';
+
 enum Status {
   NotLoggedIn,
   NotRegistered,
@@ -144,6 +146,8 @@ class AuthProvider extends ChangeNotifier {
       User authUser = User.fromJson(responseData);
 
       UserPreferences().saveUser(authUser);
+
+      // Cart().itemsFromDb();
 
       _loggedInStatus = Status.LoggedIn;
       notifyListeners();

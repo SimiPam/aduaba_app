@@ -5,7 +5,7 @@ import 'package:aduaba_app/utilities/constants.dart';
 import 'package:aduaba_app/screens/sign_in.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/form_errors.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';

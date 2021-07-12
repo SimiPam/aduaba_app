@@ -88,8 +88,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         width: 250,
                                         child: Text(
                                           cart.items.values
-                                              .toList()[index]
-                                              .description,
+                                                  .toList()[index]
+                                                  .name ??
+                                              "",
                                           style: TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.w700,
@@ -100,7 +101,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         height: 5,
                                       ),
                                       Text(
-                                        cart.items.values.toList()[index].name,
+                                        cart.items.values
+                                                .toList()[index]
+                                                .vendorName ??
+                                            "Aduaba Fresh",
                                         style: TextStyle(
                                           fontSize: 13,
                                           fontWeight: FontWeight.w400,
