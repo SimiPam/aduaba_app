@@ -1,5 +1,6 @@
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/providers/auth_provider.dart';
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/user_provider.dart';
 import 'package:aduaba_app/utilities/constants.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
@@ -7,7 +8,7 @@ import 'package:aduaba_app/screens/reset_password.dart';
 import 'package:aduaba_app/screens/sign_up.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/form_errors.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +62,8 @@ class _SignInState extends State<SignIn> {
             User user = response['user'];
 
             Provider.of<UserProvider>(context, listen: false).setUser(user);
+
+            Provider.of<Cart>(context, listen: false).getAllCartItems();
 
             Navigator.push(
               context,

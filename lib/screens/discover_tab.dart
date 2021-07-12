@@ -218,11 +218,12 @@ class _DiscoverTabState extends State<DiscoverTab> {
                               (context, VoidCallback openContainer) =>
                                   ProductWidget(
                             onPress: openContainer,
-                            productName: product.name,
-                            productSubText: product.description,
+                            productName: product.vendorName ?? "Aduaba Fresh",
+                            productSubText: product.name,
                             productPrice: product.unitPrice.toString(),
                             img: product.imageUrl,
                             productAvailability: product.isAvailable,
+                            isLiked: product.itemIsinWishlist,
                           ),
                         );
                       },

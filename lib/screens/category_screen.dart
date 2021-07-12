@@ -279,6 +279,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             crossAxisSpacing: 16.0,
                             itemBuilder: (context, index) {
                               Product product = products[index];
+                              print(product.isInWishlist.toString());
+                              print(product.isAvailable.toString());
+                              print(product.name);
                               return OpenContainer(
                                 closedElevation: 0,
                                 openElevation: 0,
@@ -293,12 +296,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     (context, VoidCallback openContainer) =>
                                         ProductWidget(
                                   onPress: openContainer,
-                                  productName: product.name,
-                                  productSubText: product.description,
+                                  productName:
+                                      product.vendorName ?? "Aduaba Fresh",
+                                  productSubText: product.name,
+
                                   productPrice: product.unitPrice.toString(),
                                   img: product.imageUrl,
                                   // img: null,
                                   productAvailability: product.isAvailable,
+                                  isLiked: product.isInWishlist,
                                   // productAvailability: true,
                                 ),
                               );

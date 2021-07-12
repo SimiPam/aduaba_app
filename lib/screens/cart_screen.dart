@@ -23,6 +23,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -168,7 +169,7 @@ class _CartScreenState extends State<CartScreen> {
                                               child: Text(
                                                 cart.items.values
                                                     .toList()[index]
-                                                    .description,
+                                                    .name,
                                                 style: TextStyle(
                                                   fontSize: 17,
                                                   fontWeight: FontWeight.w700,
@@ -180,8 +181,9 @@ class _CartScreenState extends State<CartScreen> {
                                             ),
                                             Text(
                                               cart.items.values
-                                                  .toList()[index]
-                                                  .name,
+                                                      .toList()[index]
+                                                      .vendorName ??
+                                                  "Aduaba Fresh",
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w400,
@@ -243,10 +245,9 @@ class _CartScreenState extends State<CartScreen> {
                                                           .toList()[index]
                                                           .id,
                                                       quantity: cart
-                                                              .items.values
-                                                              .toList()[index]
-                                                              .quantity -
-                                                          1,
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .quantity,
                                                     );
                                                   },
                                                   child: Container(
@@ -307,10 +308,9 @@ class _CartScreenState extends State<CartScreen> {
                                                           .toList()[index]
                                                           .isAvailable,
                                                       quantity: cart
-                                                              .items.values
-                                                              .toList()[index]
-                                                              .quantity +
-                                                          1,
+                                                          .items.values
+                                                          .toList()[index]
+                                                          .quantity,
                                                     );
                                                   },
                                                   child: Container(
@@ -331,7 +331,11 @@ class _CartScreenState extends State<CartScreen> {
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    cart.removeItem(cart
+                                                    cart.removeFromDb(cart
+                                                        .items.values
+                                                        .toList()[index]
+                                                        .id);
+                                                    cart.removeFromDb(cart
                                                         .items.values
                                                         .toList()[index]
                                                         .id);

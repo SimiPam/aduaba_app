@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/product_provider.dart';
-import 'package:flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,9 +31,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
     //         .removeFavorite(widget.product.id);
     //   }
     // }
-    bool isLiked = false;
-    // isLiked = widget.product.isFav;
-
+    bool isLiked;
+    isLiked = widget.product.itemIsinWishlist ?? false;
+    //
     return Scaffold(
       body: Column(
         children: [
@@ -93,13 +93,26 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             ),
                           ),
                         ),
-                        GestureDetector(
+                        InkWell(
+                          splashColor: Colors.red.withOpacity(0.4),
                           onTap: () {
+                            // if (widget.product.itemIsinWishlist||widget.product.isInWishlist) {
+                            // setState(() {
+                            //   isLiked = false;
+                            // });
+                            // Provider.of<ProductModel>(context, listen: false)
+                            //     .removeFavorite(widget.product.id);
+                            // }
+                            // if (!widget.product.itemIsinWishlist||!widget.product.isInWishlist) {
+                            //   // setState(() {
+                            //   isLiked = true;
+                            // });
                             Provider.of<ProductModel>(context, listen: false)
                                 .addFavorite(widget.product.id);
-                            isLiked = true;
+                            // }
                           },
-                          child: isLiked
+                          child: widget.product.itemIsinWishlist ??
+                                  widget.product.isInWishlist
                               ? Image.asset("assets/redheart.png")
                               : Icon(
                                   Icons.favorite_border_outlined,
@@ -113,7 +126,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       height: 8,
                     ),
                     Text(
-                      widget.product.vendorId,
+                      widget.product.vendorName ?? "Aduaba Fresh",
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w400,
@@ -185,47 +198,32 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Provider.of<Cart>(context, listen: false).addItem(
-                        productId: widget.product.id,
-                        price: widget.product.unitPrice,
-                        title: widget.product.name,
-                        imageUrl: widget.product.imageUrl,
-                        description: widget.product.description,
-                        isAvailable: widget.product.isAvailable,
-                        quantity: 1);
+                    if (widget.product.isAvailable) {
+                      Provider.of<Cart>(context, listen: false).addItem(
+                          productId: widget.product.id,
+                          price: widget.product.unitPrice,
+                          title: widget.product.name,
+                          imageUrl: widget.product.imageUrl,
+                          description: widget.product.description,
+                          isAvailable: widget.product.isAvailable,
+                          quantity: 1);
 
-                    Flushbar(
-                      title: "Successful",
-                      message: "Added to cart!",
-                      duration: Duration(seconds: 3),
-                    ).show(context);
+                      Flushbar(
+                        title: "Successful",
+                        message: "Added to cart!",
+                        duration: Duration(seconds: 3),
+                      ).show(context);
 
-                    print("added to cart 1");
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return Dialog(
-                    //         shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(5.0)),
-                    //         child: Container(
-                    //           height: 40,
-                    //           child: Center(
-                    //             child: Text(
-                    //               "Added to cart!",
-                    //               style: TextStyle(
-                    //                 color: Color(0xFF10151A),
-                    //                 fontSize: 20,
-                    //                 fontWeight: FontWeight.w700,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ));
-                    //   },
-                    // );
-                    // Timer(
-                    //   const Duration(milliseconds: 300),
-                    //   () => Navigator.pop(context),
-                    // );
+                      print("added to cart 1");
+                    } else {
+                      Flushbar(
+                        title: "Oops!",
+                        message: "Out of stock :(",
+                        duration: Duration(seconds: 3),
+                      ).show(context);
+
+                      print("out of stock");
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     primary: Color(0xFF3A953C),

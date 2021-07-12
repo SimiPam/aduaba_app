@@ -9,7 +9,8 @@ class ProductWidget extends StatelessWidget {
       this.onFav,
       this.productPrice,
       this.img,
-      this.productAvailability});
+      this.productAvailability,
+      this.isLiked});
 
   final VoidCallback onPress;
   final VoidCallback onFav;
@@ -18,6 +19,7 @@ class ProductWidget extends StatelessWidget {
   final String productPrice;
   final bool productAvailability;
   final String img;
+  final bool isLiked;
 
   @override
   Widget build(BuildContext context) {
@@ -103,25 +105,6 @@ class ProductWidget extends StatelessWidget {
                 ),
               ),
             ),
-            // Container(
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(5),
-            //   ),
-            //   child: ClipRRect(
-            //     borderRadius: BorderRadius.circular(5),
-            //     child: Image(
-            //       width: MediaQuery.of(context).size.width / 2 - 32,
-            //       height: MediaQuery.of(context).size.width / 2 - 32,
-            //       image: NetworkImage(
-            //         img,
-            //       ),
-            //       fit: BoxFit.cover,
-            //       colorFilter:
-            //           ColorFilter.mode(Colors.black45, BlendMode.darken),
-            //     ),
-            //   ),
-            // ),
             Container(
               width: MediaQuery.of(context).size.width / 2 - 32,
               height: MediaQuery.of(context).size.width / 2 - 32,
@@ -144,16 +127,26 @@ class ProductWidget extends StatelessWidget {
               child: GestureDetector(
                 onTap: onFav,
                 child: Container(
-                    height: 20,
-                    width: 20,
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        // color: Colors.black.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(7)),
-                    child: Image.asset(
-                      "assets/whiteheart.png",
-                      fit: BoxFit.fill,
-                    )),
+                  height: 20,
+                  width: 20,
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                      // color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(7)),
+                  // child: Image.asset(
+                  //   "assets/whiteheart.png",
+                  //   fit: BoxFit.fill,
+                  // ),
+                  child: isLiked
+                      ? Image.asset(
+                          "assets/redheart.png",
+                          fit: BoxFit.fill,
+                        )
+                      : Image.asset(
+                          "assets/whiteheart.png",
+                          fit: BoxFit.fill,
+                        ),
+                ),
               ),
             ),
           ],

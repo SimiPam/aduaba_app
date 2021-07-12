@@ -30,8 +30,6 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  // Future<List<Category>> categoryAlbum;
-
   bool _cartEmpty = false;
 
   Widget _buildCategoryList(int index, context, Category category) {
@@ -51,6 +49,7 @@ class _HomeTabState extends State<HomeTab> {
         width: 92,
         height: 50,
         margin: EdgeInsets.only(right: 8),
+        padding: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
           color: color.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
@@ -58,12 +57,13 @@ class _HomeTabState extends State<HomeTab> {
         alignment: Alignment.center,
         child: Center(
           child: Text(
-            category.categoryName,
+            category.categoryName.toLowerCase(),
             style: TextStyle(
               fontSize: 13,
               color: color,
             ),
-            maxLines: 2,
+            // maxLines: 2,
+            textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -85,10 +85,10 @@ class _HomeTabState extends State<HomeTab> {
     });
     print(getCategory.statusCode);
     final List responseBody = jsonDecode(getCategory.body);
-    print(responseBody);
+    // print(responseBody);
 
     var result = responseBody.map((e) => Category.fromJson(e)).toList();
-    print("Category result: $result");
+    // print("Category result: $result");
     return result;
   }
 
@@ -102,7 +102,8 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     // TODO: implement initState
     print("here");
-    Cart().itemsFromDb();
+    // Cart().itemsFromDb();
+
     getAllCategories();
     getUserData();
     super.initState();

@@ -5,8 +5,10 @@ class Product {
   double unitPrice;
   String imageUrl;
   String categoryName;
-  String vendorId;
+  String vendorName;
   bool isAvailable;
+  bool itemIsinWishlist;
+  bool isInWishlist;
   int quantity;
 
   Product({
@@ -16,7 +18,9 @@ class Product {
     this.unitPrice,
     this.imageUrl,
     this.categoryName,
-    this.vendorId,
+    this.vendorName,
+    this.itemIsinWishlist,
+    this.isInWishlist,
     this.isAvailable,
     this.quantity,
   });
@@ -28,8 +32,10 @@ class Product {
     unitPrice = json['unitPrice'];
     imageUrl = json['imageUrl'];
     categoryName = json['categoryName'];
-    vendorId = json['vendorId'];
+    vendorName = json['vendorName'];
     isAvailable = json['isAvailable'];
+    itemIsinWishlist = json['itemIsinWishlist'];
+    isInWishlist = json['isInWishlist'];
     quantity = json['quantity'];
   }
 
@@ -41,8 +47,10 @@ class Product {
     data['unitPrice'] = this.unitPrice;
     data['imageUrl'] = this.imageUrl;
     data['categoryName'] = this.categoryName;
-    data['vendorId'] = this.vendorId;
+    data['vendorName'] = this.vendorName;
     data['isAvailable'] = this.isAvailable;
+    data['itemIsinWishlist'] = this.itemIsinWishlist;
+    data['isInWishlist'] = this.isInWishlist;
     data['quantity'] = this.quantity;
     return data;
   }

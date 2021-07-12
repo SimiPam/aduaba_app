@@ -1,7 +1,9 @@
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/screens/discover_tab.dart';
 import 'package:aduaba_app/screens/home_tab.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.switchTab, this.name}) : super(key: key);
@@ -66,6 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<Cart>(context, listen: false).getAllCartItems();
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
