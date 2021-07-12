@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:aduaba_app/model/user.dart';
+import 'package:aduaba_app/widgets/profile_formField.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,6 +15,11 @@ class UserAccountEdit extends StatefulWidget {
 }
 
 class _UserAccountEditState extends State<UserAccountEdit> {
+  final _formKey = GlobalKey<FormState>();
+  User user = User();
+  String _firstName;
+  String _lastName;
+  String _phoneNumber;
   File _image;
   String imagePath;
   _imgFromCamera() async {
@@ -47,6 +54,9 @@ class _UserAccountEditState extends State<UserAccountEdit> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _firstName = new TextEditingController();
+    TextEditingController _lastName = new TextEditingController();
+    TextEditingController _phoneNumber = new TextEditingController();
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -80,99 +90,135 @@ class _UserAccountEditState extends State<UserAccountEdit> {
             ),
           ),
           Expanded(
+            child: Form(
+              key: _formKey,
               child: Container(
-            padding: EdgeInsets.only(left: 24, right: 24),
-            child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.start,start
-              children: [
-                Container(
-                  child: Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          radius: 65,
-                          backgroundImage: _image != null
-                              ? FileImage(
-                                  _image,
-                                )
-                              : AssetImage("assets/Profile.png"),
-                        ),
-                      ),
-                      Positioned(
-                        top: 0.0,
-                        right: 111.0,
-                        child: InkWell(
-                          onTap: () {
-                            _showPicker(context);
-                          },
-                          child: Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border:
-                                    Border.all(color: Colors.white, width: 3),
-                                color: Color(0xff979797)),
-                            child: Padding(
-                              padding: EdgeInsets.all(10.0),
-                              child: Image.asset(
-                                "assets/vector.png",
-                                fit: BoxFit.scaleDown,
+                padding: EdgeInsets.only(left: 24, right: 24),
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,start
+                  children: [
+                    Container(
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: CircleAvatar(
+                              radius: 65,
+                              backgroundImage: _image != null
+                                  ? FileImage(
+                                      _image,
+                                    )
+                                  : AssetImage("assets/Profile.png"),
+                            ),
+                          ),
+                          Positioned(
+                            top: 10,
+                            right: 110,
+                            child: InkWell(
+                              onTap: () {
+                                _showPicker(context);
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    border: Border.all(
+                                        color: Colors.white, width: 3),
+                                    color: Color(0xff979797)),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.0),
+                                  child: Image.asset(
+                                    "assets/vector.png",
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    SizedBox(height: 40),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      width: 40,
+                      child: ProfileFormField(
+                        hintText: 'First Name',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter your first name';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) => value.isEmpty
+                            ? 'Please first Name '
+                            : _firstName = _firstName,
+                        onSaved: (val) => _firstName = val,
+                        initialValue: '',
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      width: 40,
+                      child: ProfileFormField(
+                        hintText: 'Last Name',
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Enter your last name';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) => value.isEmpty
+                            ? 'Please last name'
+                            : _lastName = _lastName,
+                        onSaved: (val) => _lastName = val,
+                        initialValue: '',
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.topCenter,
+                      width: 40,
+                      child: ProfileFormField(
+                        textInputType: TextInputType.number,
+                        hintText: 'Phone Number',
+                        validator: (String value) {
+                          if (value.length < 11) {
+                            return 'Phone number should be 11 digi';
+                          }
 
-                SizedBox(height: 40),
-                Text(
-                  "First Name",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
+                          return null;
+                        },
+                        onChanged: (value) => value.isEmpty
+                            ? 'Enter phone number'
+                            : _phoneNumber = _phoneNumber,
+                        onSaved: (val) => _phoneNumber = val,
+                        initialValue: '',
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 15),
-                buildTextField('First Name'),
-                SizedBox(height: 25),
-                Text(
-                  "Last Name",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 15),
-                buildTextField('Last Name'),
-                SizedBox(height: 25),
-                Text(
-                  "Phone Number",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 15),
-                buildTextField('Phone Number'),
-                // SizedBox(height: 65),
-                // SizedBox(
-                //   width: double.infinity,
-                //   child:
-                // ),
-              ],
+              ),
             ),
-          ))
+          ),
+          Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: buttonWidget(
+                buttonText: "Save changes",
+                buttonColor: Color(0xFF3A953C),
+                buttonAction: () {
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                  }
+                },
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 150,
+          )
         ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 45),
-        child: buttonWidget(
-            buttonAction: () {},
-            buttonColor: Color(0xFF3A953C),
-            buttonText: 'Save Changes'),
       ),
     );
   }

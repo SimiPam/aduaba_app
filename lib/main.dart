@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aduaba_app/controllers/address_notifier.dart';
 import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/controllers/notifier_card.dart';
 import 'package:aduaba_app/providers/auth_provider.dart';
 import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => Cart()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => CardNotifier()),
+        ChangeNotifierProvider(create: (_) => NotifierCard()),
         ChangeNotifierProvider(create: (_) => AddressNotifier()),
       ],
       child: MaterialApp(

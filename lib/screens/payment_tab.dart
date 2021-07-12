@@ -267,9 +267,11 @@ class _PaymentTabState extends State<PaymentTab> {
                           groupValue: _index,
                           activeColor: Color(0xFFE75A21),
                           onChanged: (value) {
-                            setState(() {
-                              _index = value;
-                            });
+                            setState(
+                              () {
+                                _index = value;
+                              },
+                            );
                           },
                         ),
                       ],
@@ -296,23 +298,24 @@ class _PaymentTabState extends State<PaymentTab> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 33),
         child: buttonWidget(
-            buttonText: "Pay Now",
-            buttonColor: Color(0xFF3A953C),
-            buttonAction: () {
-              if (_index == 1) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => CardSelection()),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => ConfirmationTab()),
-                );
-              }
-            }),
+          buttonText: "Pay Now",
+          buttonColor: Color(0xFF3A953C),
+          buttonAction: () {
+            if (_index == 1) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => CardSelection()),
+              );
+            } else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => ConfirmationTab()),
+              );
+            }
+          },
+        ),
       ),
     );
   }
