@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/providers/auth_provider.dart';
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/user_provider.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
 import 'package:aduaba_app/screens/onboarding.dart';
@@ -19,6 +20,7 @@ class LandingPage extends StatefulWidget {
 class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
+
     authUser();
   }
 

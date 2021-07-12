@@ -26,11 +26,6 @@ class BuildCartIcon extends StatelessWidget {
                     ? EmptyCartScreen()
                     : CartScreen(),
               ),
-              // MaterialPageRoute(
-              //   builder: (BuildContext context) => cartObject.itemCount <= 0
-              //       ? EmptyCartScreen()
-              //       : CartScreen(),
-              // ),
             );
           },
           child: CircleAvatar(

@@ -40,6 +40,63 @@ class ProductModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Product>> fetchProducts() async {
+    try {
+      final apiProducts = await ProductApi.instance.getAllProducts();
+      products = apiProducts;
+    } catch (e) {
+      message = '$e';
+    }
+    notifyListeners();
+    return products;
+  }
+
+  List<Product> get localProductList {
+    return products;
+  }
+
+  List<Product> searchProductByName(enteredKeyword) {
+    List<Product> results = [];
+    results = products
+        .where((element) =>
+            element.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+        .toList();
+    notifyListeners();
+    return results;
+  }
+
+  searchProductByPrice(enteredKeyword) {
+    List<Product> results = [];
+    results = products
+        .where(
+            (element) => element.unitPrice.toString().contains(enteredKeyword))
+        .toList();
+  }
+
+  sortByPriceASC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
+  }
+
+  sortByPriceDESC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => b.unitPrice.compareTo(a.unitPrice));
+  }
+
+  sortByNameASC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => a.name.compareTo(b.name));
+  }
+
+  sortByNameDESC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => b.name.compareTo(a.name));
+  }
+
+  void notify() {
+    notifyListeners();
+  }
+
   Future<void> addFavorite(String productId) async {
     // isLiked = true;
     String token = await UserPreferences().getToken();
@@ -54,33 +111,45 @@ class ProductModel extends ChangeNotifier {
         'Authorization': 'Bearer $token',
       });
       if (response.statusCode == 200) {
-        print("done");
+        print("wishlist add done");
         // return true;
       } else {
+        print("wishlist add fail");
         print(response.body);
       }
       // return false;
     } catch (error) {
+      print("wishlist add error");
       // return false;
     }
+    notifyListeners();
   }
 
   Future<void> removeFavorite(String productId) async {
     // isLiked = false;
     String token = await UserPreferences().getToken();
-    // final Map<String, dynamic> apiBodyData = {"productId": productId};
-
+    final client = http.Client();
     final url = Uri.parse(AppUrl.removeWishList);
     final request = http.Request("DELETE", url);
-    request.headers.addAll(<String, String>{
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    request.body = jsonEncode({productId});
-    final response = await request.send();
-    if (response.statusCode != 200) print("remove failed");
+    try {
+      request.headers.addAll(<String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      });
+      request.body = jsonEncode(productId);
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print("remove successful");
+      } else {
+        print("remove failed");
+        print(response.stream.bytesToString());
+      }
+    } catch (e) {
+      print(e.toString());
+    } finally {
+      client.close();
+    }
     notifyListeners();
-    print("remove successful");
   }
 
   // Future<List<Product>> searchProducts(name) async {

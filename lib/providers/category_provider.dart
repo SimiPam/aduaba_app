@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class CategoryModel extends ChangeNotifier {
   HomeState _homeState = HomeState.Initial;
-  List<Category> categoryList = [];
+  Category categoryList;
   List<Product> productList = [];
   String message = '';
 
@@ -23,27 +23,9 @@ class CategoryModel extends ChangeNotifier {
 
   UserPreferences user = UserPreferences();
 
-  // Future<List<Category>> fetchCategories() async {
-  //   _homeState = HomeState.Loading;
-  //   try {
-  // await Future.delayed(Duration(seconds: 5));
-  //     final apiCategory = await CategoryApi.instance.getAllCategories();
-  //     categoryList = apiCategory;
-  //     print(categoryList);
-  //     _homeState = HomeState.Loaded;
-  //   } catch (e) {
-  //     message = '$e';
-  //     _homeState = HomeState.Error;
-  //   }
-  //   notifyListeners();
-  //   return categoryList;
-  // }
-
   Future<List<Category>> getAllCategories() async {
     await Future.delayed(Duration(seconds: 5));
-    _homeState = HomeState.Loading;
     String token = await user.getToken();
-    print("token: $token");
     final getCategory = await http.get(AppUrl.category, headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',
@@ -51,67 +33,21 @@ class CategoryModel extends ChangeNotifier {
     });
     print(getCategory.statusCode);
     final List responseBody = jsonDecode(getCategory.body);
-    print("response body: ");
-    print(responseBody);
-    _homeState = HomeState.Loaded;
     var result = responseBody.map((e) => Category.fromJson(e)).toList();
-    print(result);
-
-    notifyListeners();
     return result;
-
-    // return json.decode(responseBody);
   }
 
-// Future<List<Category>> fetchCategories() async {
-  //   return _fetchCategories();
-  // }
-
-  // Future<List<Category>> fetchCategories() async {
-  //   _homeState = HomeState.Loading;
-  //   try {
-  //     // await Future.delayed(Duration(seconds: 5));
-  //     final apiCategory = await CategoryApi.instance.getAllCategories();
-  //     categoryList = apiCategory;
-  //     print(categoryList);
-  //     _homeState = HomeState.Loaded;
-  //   } catch (e) {
-  //     message = '$e';
-  //     _homeState = HomeState.Error;
-  //   }
-  //   notifyListeners();
-  //   return categoryList;
-  // }
-}
-
-class CategoryProductModel extends ChangeNotifier {
-  HomeState _homeState = HomeState.Initial;
-  List<Category> categoryList = [];
-  String message = '';
-
-  CategoryProductModel() {
-    // _fetchProductsFromCategory();
+  Future<Category> fetchProductsFromCategory(String name) async {
+    print(name);
+    try {
+      await Future.delayed(Duration(seconds: 5));
+      final apiCategory =
+          await CategoryApi.instance.getAllProductsFromCategory(name);
+      categoryList = apiCategory;
+      print(categoryList);
+    } catch (e) {
+      message = '$e';
+    }
+    return categoryList;
   }
-
-  HomeState get homeState => _homeState;
-
-  // Future<List<Category>> fetchProductsFromCategory(String name) async {
-  //   return _fetchProductsFromCategory(name);
-  // }
-
-  // Future<List<Category>> _fetchProductsFromCategory(String name) async {
-  //   _homeState = HomeState.Loading;
-  //   try {
-  //     await Future.delayed(Duration(seconds: 5));
-  //     final apiCategory =
-  //         await CategoryApi.instance.getAllProductsFromCategory(name);
-  //     categoryList = apiCategory;
-  //     _homeState = HomeState.Loaded;
-  //   } catch (e) {
-  //     message = '$e';
-  //     _homeState = HomeState.Error;
-  //   }
-  //   notifyListeners();
-  //   return categoryList;
-  // }
 }
