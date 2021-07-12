@@ -35,30 +35,30 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
   Future<List<Category>> categoryAlbum;
   UserPreferences user = UserPreferences();
 
-  Future<List<Category>> getAllCategories() async {
-    await Future.delayed(Duration(seconds: 5));
-
-    String token = await user.getToken();
-
-    final getCategory = await http.get(AppUrl.category, headers: {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    print(getCategory.statusCode);
-    final List responseBody = jsonDecode(getCategory.body);
-
-    var result = responseBody.map((e) => Category.fromJson(e)).toList();
-
-    return result;
-  }
+  // Future<List<Category>> getAllCategories() async {
+  //   await Future.delayed(Duration(seconds: 5));
+  //
+  //   String token = await user.getToken();
+  //
+  //   final getCategory = await http.get(AppUrl.category, headers: {
+  //     'Content-type': 'application/json',
+  //     'Accept': 'application/json',
+  //     'Authorization': 'Bearer $token',
+  //   });
+  //   print(getCategory.statusCode);
+  //   final List responseBody = jsonDecode(getCategory.body);
+  //
+  //   var result = responseBody.map((e) => Category.fromJson(e)).toList();
+  //
+  //   return result;
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    categoryAlbum = getAllCategories();
+    categoryAlbum = CategoryModel().getAllCategories();
   }
 
   @override
@@ -141,8 +141,7 @@ class _CategoriesListingScreenState extends State<CategoriesListingScreen> {
                                       context,
                                       CustomPageRoute(
                                         direction: AxisDirection.left,
-                                        child:
-                                            CategoryScreen(
+                                        child: CategoryScreen(
                                           categoryName: category.categoryName,
                                         ),
                                       ),

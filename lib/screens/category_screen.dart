@@ -41,20 +41,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Future<Category> categoryAlbum;
   List<SortOptionsModel> sampleData = [];
 
-  Future<Category> _fetchProductsFromCategory(String name) async {
-    print(name);
-    try {
-      await Future.delayed(Duration(seconds: 5));
-      final apiCategory =
-          await CategoryApi.instance.getAllProductsFromCategory(name);
-      categoryList = apiCategory;
-      print(categoryList);
-    } catch (e) {
-      message = '$e';
-    }
-    return categoryList;
-  }
-
   @override
   void initState() {
     // TODO: implement initState
@@ -64,7 +50,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     print(widget.categoryName);
 
-    categoryAlbum = _fetchProductsFromCategory(widget.categoryName);
+    categoryAlbum =
+        CategoryModel().fetchProductsFromCategory(widget.categoryName);
 
     sampleData.add(SortOptionsModel(
       isSelected: false,

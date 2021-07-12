@@ -331,7 +331,7 @@ class _CartScreenState extends State<CartScreen> {
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    cart.removeFromDb(cart
+                                                    cart.removeItem(cart
                                                         .items.values
                                                         .toList()[index]
                                                         .id);

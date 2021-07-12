@@ -40,6 +40,59 @@ class ProductModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Product>> fetchProducts() async {
+    try {
+      final apiProducts = await ProductApi.instance.getAllProducts();
+      products = apiProducts;
+    } catch (e) {
+      message = '$e';
+    }
+    notifyListeners();
+    return products;
+  }
+
+  List<Product> get localProductList {
+    return products;
+  }
+
+  List<Product> searchProductByName(enteredKeyword) {
+    List<Product> results = [];
+    results = products
+        .where((element) =>
+            element.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+        .toList();
+    notifyListeners();
+    return results;
+  }
+
+  searchProductByPrice(enteredKeyword) {
+    List<Product> results = [];
+    results = products
+        .where(
+            (element) => element.unitPrice.toString().contains(enteredKeyword))
+        .toList();
+  }
+
+  sortByPriceASC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => a.unitPrice.compareTo(b.unitPrice));
+  }
+
+  sortByPriceDESC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => b.unitPrice.compareTo(a.unitPrice));
+  }
+
+  sortByNameASC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => a.name.compareTo(b.name));
+  }
+
+  sortByNameDESC(enteredKeyword) {
+    List<Product> results = products;
+    results.sort((a, b) => b.name.compareTo(a.name));
+  }
+
   void notify() {
     notifyListeners();
   }
@@ -89,7 +142,7 @@ class ProductModel extends ChangeNotifier {
         print("remove successful");
       } else {
         print("remove failed");
-        print(response.stream.toBytes().toString());
+        print(response.stream.bytesToString());
       }
     } catch (e) {
       print(e.toString());

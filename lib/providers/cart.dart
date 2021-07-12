@@ -37,7 +37,7 @@ class Item {
     name = json['productName'];
     quantity = json['quantity'];
     unitPrice = json['unitPrice'];
-    imageUrl = json['imageUrl'];
+    imageUrl = json['productImage'];
     isAvailable = json['isAvailable'];
     vendorName = json['vendorName'];
   }
@@ -53,7 +53,7 @@ class Cart with ChangeNotifier {
   void itemsFromDb(listItem) {
     // List<Item> listItem = await getAllCartItems();
     listItem.forEach((element) {
-      addItem(
+      addItemDb(
           productId: element.id,
           price: element.unitPrice,
           title: element.name,
@@ -163,19 +163,21 @@ class Cart with ChangeNotifier {
       bool isAvailable,
       int quantity,
       cartItemId}) async {
+    int q = 0;
     if (_items.containsKey(productId)) {
-      _items.update(
-          productId,
-          (existingCartItem) => Item(
-                id: existingCartItem.id,
-                description: existingCartItem.description,
-                isAvailable: existingCartItem.isAvailable,
-                imageUrl: existingCartItem.imageUrl,
-                name: existingCartItem.name,
-                unitPrice: existingCartItem.unitPrice,
-                quantity: existingCartItem.quantity + 1,
-              ));
-      await updatedbCart(productId, quantity);
+      _items.update(productId, (existingCartItem) {
+        q = existingCartItem.quantity + 1;
+        return Item(
+          id: existingCartItem.id,
+          description: existingCartItem.description,
+          isAvailable: existingCartItem.isAvailable,
+          imageUrl: existingCartItem.imageUrl,
+          name: existingCartItem.name,
+          unitPrice: existingCartItem.unitPrice,
+          quantity: existingCartItem.quantity + 1,
+        );
+      });
+      await updatedbCart(productId, q);
     } else {
       _items.putIfAbsent(
           productId,
@@ -187,7 +189,7 @@ class Cart with ChangeNotifier {
                 description: description,
                 isAvailable: isAvailable,
                 imageUrl: imageUrl,
-                quantity: quantity,
+                quantity: 1,
               ));
       print("additemDb $itemCount");
       await addCartToDB(productId, quantity);
@@ -255,8 +257,9 @@ class Cart with ChangeNotifier {
 
     final client = http.Client();
     final url = Uri.parse(AppUrl.removeCart);
-    final request = http.Request("DELETE", url);
+
     try {
+      final request = http.Request("DELETE", url);
       request.headers.addAll(<String, String>{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -267,7 +270,7 @@ class Cart with ChangeNotifier {
         print("remove successful");
       } else {
         print("remove failed");
-        print(response.stream.toBytes().toString());
+        print(response.stream.bytesToString());
       }
     } catch (e) {
       print(e.toString());

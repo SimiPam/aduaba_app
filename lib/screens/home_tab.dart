@@ -2,23 +2,17 @@ import 'dart:convert';
 
 import 'package:aduaba_app/model/category.dart';
 import 'package:aduaba_app/model/user.dart';
-import 'package:aduaba_app/providers/cart.dart';
+import 'package:aduaba_app/providers/category_provider.dart';
 import 'package:aduaba_app/screens/search_screen.dart';
-import 'package:aduaba_app/utilities/app_url.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
-import 'package:aduaba_app/widgets/badge.dart';
 import 'package:aduaba_app/widgets/cart_icon_widget.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import '../utilities/constants.dart';
-import 'cart_screen.dart';
 import 'categories_list_screen.dart';
 import 'category_screen.dart';
 import 'details_screen.dart';
-import 'empty_cart_screen.dart';
 
 class HomeTab extends StatefulWidget {
   final VoidCallback openDraw;
@@ -31,6 +25,8 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   bool _cartEmpty = false;
+
+  Future<List<Category>> categoryAlbum;
 
   Widget _buildCategoryList(int index, context, Category category) {
     final color = categoryColors[index % categoryColors.length];
@@ -73,25 +69,6 @@ class _HomeTabState extends State<HomeTab> {
 
   UserPreferences user = UserPreferences();
 
-  Future<List<Category>> getAllCategories() async {
-    await Future.delayed(Duration(seconds: 5));
-
-    String token = await user.getToken();
-
-    final getCategory = await http.get(AppUrl.category, headers: {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    print(getCategory.statusCode);
-    final List responseBody = jsonDecode(getCategory.body);
-    // print(responseBody);
-
-    var result = responseBody.map((e) => Category.fromJson(e)).toList();
-    // print("Category result: $result");
-    return result;
-  }
-
   // Future<User> userData;
 
   Future<User> getUserData() {
@@ -104,7 +81,7 @@ class _HomeTabState extends State<HomeTab> {
     print("here");
     // Cart().itemsFromDb();
 
-    getAllCategories();
+    categoryAlbum = CategoryModel().getAllCategories();
     getUserData();
     super.initState();
   }
@@ -196,7 +173,7 @@ class _HomeTabState extends State<HomeTab> {
           height: 16,
         ),
         FutureBuilder(
-            future: getAllCategories(),
+            future: categoryAlbum,
             builder: (context, snapshot) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,

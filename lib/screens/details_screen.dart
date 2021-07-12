@@ -20,17 +20,6 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    // final cart = Provider.of<Cart>(context, listen: false);
-    // void toggleLike() {
-    //   // isLiked = !isLiked;
-    //   if (isLiked == true) {
-    //     Provider.of<ProductModel>(context, listen: false)
-    //         .addFavorite(widget.product.id);
-    //   } else {
-    //     Provider.of<ProductModel>(context, listen: false)
-    //         .removeFavorite(widget.product.id);
-    //   }
-    // }
     bool isLiked;
     isLiked = widget.product.itemIsinWishlist ?? false;
     //

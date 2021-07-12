@@ -38,30 +38,6 @@ class _DiscoverTabState extends State<DiscoverTab> {
   Future<List<Category>> categoryAlbum;
   UserPreferences user = UserPreferences();
 
-  Future<List<Category>> getAllCategories() async {
-    await Future.delayed(Duration(seconds: 5));
-    String token = await user.getToken();
-    final getCategory = await http.get(AppUrl.category, headers: {
-      'Content-type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
-    print(getCategory.statusCode);
-    final List responseBody = jsonDecode(getCategory.body);
-    var result = responseBody.map((e) => Category.fromJson(e)).toList();
-    return result;
-  }
-
-  Future<List<Product>> _fetchProducts() async {
-    try {
-      final apiProducts = await ProductApi.instance.getAllProducts();
-      productList = apiProducts;
-    } catch (e) {
-      message = '$e';
-    }
-    return productList;
-  }
-
   Widget _buildCategoryList(int index, context, Category category) {
     final color = Colors.white;
     return GestureDetector(
@@ -95,8 +71,8 @@ class _DiscoverTabState extends State<DiscoverTab> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    productAlbum = _fetchProducts();
-    categoryAlbum = getAllCategories();
+    productAlbum = ProductModel().fetchProducts();
+    categoryAlbum = CategoryModel().getAllCategories();
   }
 
   @override
