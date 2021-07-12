@@ -1,4 +1,5 @@
 import 'package:aduaba_app/screens/my_order.dart';
+import 'package:aduaba_app/screens/my_wishlist.dart';
 import 'package:aduaba_app/screens/payment.dart';
 import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/screens/shipping_details.dart';
@@ -9,7 +10,18 @@ import 'package:flutter/material.dart';
 
 import '../utilities/constants.dart';
 
-class UserAccount extends StatelessWidget {
+class UserAccount extends StatefulWidget {
+  final String name;
+  final String email;
+  final String phoneNumber;
+  const UserAccount({Key key, this.name, this.email, this.phoneNumber})
+      : super(key: key);
+  @override
+  State<UserAccount> createState() => _UserAccountState();
+}
+
+class _UserAccountState extends State<UserAccount> {
+  Widget _widget;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,19 +80,19 @@ class UserAccount extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "Andrea Charles",
+                            " ${widget.name}",
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.w700),
                           ),
                           Text(
-                            "AndreaCharles@gmail.com",
+                            " ${widget.email}",
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF999999),
                                 fontWeight: FontWeight.w400),
                           ),
                           Text(
-                            "0908765432",
+                            " ${widget.phoneNumber}",
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF999999),
@@ -91,16 +103,16 @@ class UserAccount extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                UserAccountEdit(),
-                          ),
-                        );
-                      },
-                      child: Image.asset("assets/edit.png")),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => UserAccountEdit(),
+                        ),
+                      );
+                    },
+                    child: Image.asset("assets/edit.png"),
+                  ),
                 ],
               ),
               Container(
@@ -162,7 +174,7 @@ class UserAccount extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                ShippingAddressTab(),
+                                ShippingDetailsScreen(),
                           ),
                         );
                       },
