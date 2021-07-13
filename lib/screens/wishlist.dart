@@ -115,8 +115,8 @@ class _MyWishListState extends State<MyWishList> {
                                             borderRadius:
                                                 BorderRadius.circular(5),
                                             image: DecorationImage(
-                                              image: AssetImage(
-                                                "assets/image.png",
+                                              image: NetworkImage(
+                                                product.imageUrl,
                                               ),
                                               fit: BoxFit.fill,
                                             ),

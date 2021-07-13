@@ -1,5 +1,7 @@
+import 'package:aduaba_app/controllers/address_notifier.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:aduaba_app/model/card_detail_model.dart';
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/services/card_api.dart';
 import 'package:aduaba_app/widgets/card_carousel.dart';
 import 'package:aduaba_app/widgets/custom_page_route.dart';
@@ -9,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../utilities/constants.dart';
 import 'confirmation_screen.dart';
 import 'new_card.dart';
+import 'package:aduaba_app/providers/order_provider.dart';
 
 class CardSelection extends StatefulWidget {
   CardSelection();
@@ -31,6 +34,7 @@ class _CardSelectionState extends State<CardSelection> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       body: Container(
         // padding: EdgeInsets.symmetric(horizontal: 24),
@@ -188,75 +192,6 @@ class _CardSelectionState extends State<CardSelection> {
             SingleChildScrollView(
               child: CardCarousel(),
             ),
-            // Expanded(
-            //   child: ListView.separated(
-            //     itemCount: notifierCard.cardList.length,
-            //     itemBuilder: (_, index) {
-            //       return Padding(
-            //         padding: const EdgeInsets.only(
-            //           left: 24.0,
-            //           right: 24,
-            //         ),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             Consumer<CardNotifier>(
-            //               builder: (
-            //                 _,
-            //                 notifier,
-            //                 __,
-            //               ) =>
-            //                   Row(
-            //                 children: [
-            //                   CircleAvatar(
-            //                     backgroundColor: Colors.transparent,
-            //                     child: Image(
-            //                       image:
-            //                           AssetImage("assets/mastercardlogo.png"),
-            //                     ),
-            //                   ),
-            //                   SizedBox(
-            //                     width: 70,
-            //                   ),
-            //                   Text(
-            //                     ' ${notifier.cardList[index].cardNumber}',
-            //                     style: TextStyle(
-            //                       fontSize: 16,
-            //                       color: Colors.black,
-            //                       fontWeight: FontWeight.bold,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //             Consumer<CardNotifier>(
-            //               builder: (
-            //                 _,
-            //                 notifier,
-            //                 __,
-            //               ) =>
-            //                   // IconButton(
-            //                   //   onPressed: () => notifier.deleteCard(index),
-            //                   //   icon: Icon(Icons.delete_forever),
-            //                   // )
-            //                   InkWell(
-            //                 onTap: () => notifier.deleteCard(index),
-            //                 child: SizedBox(
-            //                   width: 20,
-            //                   height: 30,
-            //                   child: Image.asset('assets/trash.png'),
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       );
-            //     },
-            //     separatorBuilder: (_, index) {
-            //       return Divider();
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -266,13 +201,13 @@ class _CardSelectionState extends State<CardSelection> {
             buttonText: "Pay Now",
             buttonColor: Color(0xFF3A953C),
             buttonAction: () {
-              _processPayment();
+              _processPayment(context);
             }),
       ),
     );
   }
 
-  void _processPayment() {
+  void _processPayment(context) {
     try {
       PaystackPayManager(context: context)
         ..setSecretKey(kSECRET_KEY)
@@ -301,7 +236,9 @@ class _CardSelectionState extends State<CardSelection> {
             ]
           },
         )
-        ..onSuccesful(_onPaymentSuccessful)
+        ..onSuccesful(
+          _onPaymentSuccessful,
+        )
         ..onPending(_onPaymentPending)
         ..onFailed(_onPaymentFailed)
         ..onCancel(_onCancel)
@@ -313,6 +250,13 @@ class _CardSelectionState extends State<CardSelection> {
 
   void _onPaymentSuccessful(Transaction transaction) {
     print('Transaction succesful');
+
+    OrderProvider().addOrder(
+        itemTotal: Cart().itemCount,
+        totalAmount: Cart().summaryAmount,
+        payStackRef: transaction.refrenceNumber,
+        address: AddressNotifier().add,
+        status: "paymentbycard");
 
     Navigator.push(
       context,

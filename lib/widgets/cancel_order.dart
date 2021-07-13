@@ -1,13 +1,16 @@
 import 'dart:async';
 
 import 'package:aduaba_app/screens/empty_wishlist.dart';
+import 'package:aduaba_app/providers/order_provider.dart';
 import 'package:aduaba_app/screens/home_screen.dart';
+import 'package:aduaba_app/screens/my_order.dart';
 import 'package:flutter/material.dart';
 
 import '../utilities/constants.dart';
 
 class CancelOrderDialogBox extends StatefulWidget {
-  const CancelOrderDialogBox({Key key}) : super(key: key);
+  final String id;
+  const CancelOrderDialogBox({this.id});
 
   @override
   _CancelOrderDialogBoxState createState() => _CancelOrderDialogBoxState();
@@ -75,10 +78,11 @@ class _CancelOrderDialogBoxState extends State<CancelOrderDialogBox> {
                     buttonText: "Yes. Cancel Order",
                     buttonColor: Color(0xFFBB2F48),
                     buttonAction: () {
+                      OrderProvider().removeOrder(orderId: widget.id);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EmptyWishlist(),
+                          builder: (context) => MyOrdersScreen(),
                         ),
                       );
                     },

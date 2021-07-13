@@ -37,6 +37,7 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
     // ));
   }
 
+  String add;
   int _index = 0;
   @override
   Widget build(BuildContext context) {
@@ -304,7 +305,10 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
                                 });
                                 addressNotifier.saveAddress(
                                     addressNotifier.addressList[index].address);
-                                // print(addressNotifier.add);
+                                // setState(() {
+                                //   add = addressNotifier
+                                //       .addressList[index].address;
+                                // });
                               }
                             },
                             child: AddressRadioItem(
@@ -327,6 +331,7 @@ class _ShippingAddressTabState extends State<ShippingAddressTab> {
             buttonText: "Proceed To Payment",
             buttonColor: Color(0xFF3A953C),
             buttonAction: () {
+              print(addressNotifier.add);
               Navigator.push(
                 context,
                 MaterialPageRoute(

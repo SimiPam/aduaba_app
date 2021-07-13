@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:aduaba_app/model/address_model.dart';
 import 'package:flutter/material.dart';
 
-class AddressNotifier extends ChangeNotifier {
+class AddressNotifier with ChangeNotifier {
   List<AddressModel> _addressList = [];
   String add;
 

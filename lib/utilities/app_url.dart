@@ -16,6 +16,8 @@ class AppUrl {
   static const String wishList = baseUrl + '/get-wishlist';
   static const String update = baseUrl + '/update';
   static const String checkout = baseUrl + '/Checkout';
+  static const String order = baseUrl + '/create-order';
+  static const String vieworder = baseUrl + '/view-order';
   static const String addCard = baseUrl + '/add-card';
   static const String deleteCard = baseUrl + '/delete-card';
   static const String viewCards = baseUrl + '/view-cards';

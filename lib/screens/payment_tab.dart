@@ -1,7 +1,11 @@
+import 'package:aduaba_app/controllers/address_notifier.dart';
 import 'package:aduaba_app/model/address_model.dart';
+import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/widgets/address_radio_item_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:aduaba_app/providers/order_provider.dart';
 import '../utilities/constants.dart';
 import 'card_selection_screen.dart';
 import 'confirmation_screen.dart';
@@ -16,6 +20,8 @@ class _PaymentTabState extends State<PaymentTab> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
+    final address = Provider.of<AddressNotifier>(context);
     return Scaffold(
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 24),
@@ -308,6 +314,11 @@ class _PaymentTabState extends State<PaymentTab> {
                     builder: (BuildContext context) => CardSelection()),
               );
             } else {
+              OrderProvider().addOrder(
+                  itemTotal: cart.itemCount,
+                  totalAmount: cart.summaryAmount,
+                  address: address.add,
+                  status: "paymentondelivery");
               Navigator.push(
                 context,
                 MaterialPageRoute(

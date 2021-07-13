@@ -1,9 +1,14 @@
 import 'package:aduaba_app/utilities/constants.dart';
 import 'package:aduaba_app/widgets/cancel_order.dart';
 import 'package:flutter/material.dart';
+import 'package:aduaba_app/providers/order_provider.dart';
+import 'package:aduaba_app/model/order_item.dart';
 
 class OrderSummary extends StatefulWidget {
-  OrderSummary({Key key}) : super(key: key);
+  final OrderItem item;
+  final String deliveryDate;
+  final String orderDate;
+  OrderSummary({this.item, this.deliveryDate, this.orderDate});
 
   @override
   _OrderSummaryState createState() => _OrderSummaryState();
@@ -54,15 +59,16 @@ class _OrderSummaryState extends State<OrderSummary> {
                 child: ListView(
                   children: [
                     Text(
-                      "Your order code is: Z38-9811-K9",
+                      "Your order code is:${widget.item.orderId}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Color(0xff999999),
                           fontWeight: FontWeight.w700),
+                      overflow: TextOverflow.clip,
                     ),
                     SizedBox(height: 12),
                     Text(
-                      "2 Items: total ( including delivery ) N32,000.00",
+                      "${widget.item.totalNoOfCartItem} Items: total ( including delivery ) N${widget.item.totalAmount}",
                       style: TextStyle(
                           fontSize: 13,
                           color: Color(0xff999999),
@@ -70,23 +76,23 @@ class _OrderSummaryState extends State<OrderSummary> {
                     ),
                     SizedBox(height: 32),
                     OrderStepper(
-                      title: "Order placed on 26 July",
+                      title: "Order placed on ${widget.orderDate}",
                       subTitle: "We have received your order",
                       isDone: true,
                     ),
                     OrderStepper(
                       title: "Confirmed",
-                      subTitle: "Order accepted on 26 July",
+                      subTitle: "Order accepted on ${widget.orderDate}",
                       isDone: true,
                     ),
                     OrderStepper(
                       title: "Order Shipped",
-                      subTitle: "Estimated for 3rd Aug",
+                      subTitle: "Estimated for ${widget.deliveryDate}",
                       isDone: false,
                     ),
                     OrderStepper(
                       title: "Delivered",
-                      subTitle: "Estimated for 3rd Aug",
+                      subTitle: "Estimated for ${widget.deliveryDate}",
                       isDone: false,
                     ),
                   ],
@@ -104,7 +110,7 @@ class _OrderSummaryState extends State<OrderSummary> {
                 context: context,
                 builder: (context) {
                   return SingleChildScrollView(
-                    child: CancelOrderDialogBox(),
+                    child: CancelOrderDialogBox(id: widget.item.orderId),
                   );
                 },
               );
