@@ -110,13 +110,6 @@ class _EmptyWishlistState extends State<EmptyWishlist> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16),
-                child: buttonWidget(
-                    buttonText: "Start Ordering",
-                    buttonColor: Color(0xFF3A953C),
-                    buttonAction: () {}),
-              ),
             ],
           ),
       bottomNavigationBar: BottomNavigationBar(

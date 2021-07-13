@@ -105,11 +105,12 @@ Widget buildVendorSearchField(String text) {
   );
 }
 
-Widget buildSearchField(String text, Function(String) onSubmit) {
+Widget buildSearchField(String text, Function(String) onSubmit, control) {
   final color = Colors.white;
 
   return TextField(
     onSubmitted: onSubmit,
+    controller: control,
     style: TextStyle(
       color: Color(0xFF10151A),
     ),

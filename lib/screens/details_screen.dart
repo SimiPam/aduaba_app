@@ -98,6 +98,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             // });
                             Provider.of<ProductModel>(context, listen: false)
                                 .addFavorite(widget.product.id);
+                            widget.product.itemIsinWishlist = true;
+                            // widget.product.isInWishlist
                             // }
                           },
                           child: widget.product.itemIsinWishlist ??

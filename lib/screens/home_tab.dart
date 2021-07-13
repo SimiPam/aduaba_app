@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:aduaba_app/model/category.dart';
+import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/model/user.dart';
 import 'package:aduaba_app/providers/category_provider.dart';
+import 'package:aduaba_app/providers/product_provider.dart';
 import 'package:aduaba_app/screens/search_screen.dart';
 import 'package:aduaba_app/utilities/shared_preference.dart';
 import 'package:aduaba_app/widgets/cart_icon_widget.dart';
@@ -27,6 +29,8 @@ class _HomeTabState extends State<HomeTab> {
   bool _cartEmpty = false;
 
   Future<List<Category>> categoryAlbum;
+  Future<List<Product>> productAlbum;
+  TextEditingController searchController = new TextEditingController();
 
   Widget _buildCategoryList(int index, context, Category category) {
     final color = categoryColors[index % categoryColors.length];
@@ -83,6 +87,7 @@ class _HomeTabState extends State<HomeTab> {
 
     categoryAlbum = CategoryModel().getAllCategories();
     getUserData();
+    productAlbum = ProductModel().fetchProducts();
     super.initState();
   }
 
@@ -148,13 +153,14 @@ class _HomeTabState extends State<HomeTab> {
         ),
         buildSearchField('Search Product', (val) {
           // searchValues.add(val);
+          searchController.clear();
           Navigator.push(
             context,
             CustomPageRoute(
               child: SearchScreen(search: val),
             ),
           );
-        }),
+        }, searchController),
         SizedBox(
           height: 20,
         ),

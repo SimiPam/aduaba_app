@@ -8,6 +8,8 @@ import 'package:aduaba_app/model/product.dart';
 import 'package:aduaba_app/services/product_api.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:aduaba_app/model/wishlist_item.dart';
+
 enum HomeState {
   Initial,
   Loading,
@@ -15,9 +17,12 @@ enum HomeState {
   Error,
 }
 
+List<Product> genProducts = [];
+
 class ProductModel extends ChangeNotifier {
   HomeState _homeState = HomeState.Initial;
   List<Product> products = [];
+  List<WishListItem> wishList = [];
   String message = '';
 
   ProductModel() {
@@ -32,6 +37,7 @@ class ProductModel extends ChangeNotifier {
       await Future.delayed(Duration(seconds: 5));
       final apiProducts = await ProductApi.instance.getAllProducts();
       products = apiProducts;
+
       _homeState = HomeState.Loaded;
     } catch (e) {
       message = '$e';
@@ -44,11 +50,24 @@ class ProductModel extends ChangeNotifier {
     try {
       final apiProducts = await ProductApi.instance.getAllProducts();
       products = apiProducts;
+      genProducts = apiProducts;
     } catch (e) {
       message = '$e';
     }
     notifyListeners();
     return products;
+  }
+
+  Future<List<WishListItem>> fetchWishListProducts() async {
+    try {
+      await fetchProducts();
+      final apiProducts = await ProductApi.instance.getAllWishListProducts();
+      wishList = apiProducts;
+    } catch (e) {
+      message = '$e';
+    }
+    notifyListeners();
+    return wishList;
   }
 
   List<Product> get localProductList {
@@ -57,12 +76,25 @@ class ProductModel extends ChangeNotifier {
 
   List<Product> searchProductByName(enteredKeyword) {
     List<Product> results = [];
-    results = products
-        .where((element) =>
-            element.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+    results = genProducts
+        .where((element) => element.name
+            .toLowerCase()
+            .replaceAll(" ", "")
+            .contains(enteredKeyword.toLowerCase().replaceAll(" ", "")))
         .toList();
-    notifyListeners();
+    // notifyListeners();
     return results;
+  }
+
+  Future<List<Product>> searchProducts(name) async {
+    try {
+      await Future.delayed(Duration(seconds: 5));
+      final apiProducts = await ProductApi.instance.getProductByName(name);
+      products = apiProducts;
+    } catch (e) {
+      message = '$e';
+    }
+    return products;
   }
 
   searchProductByPrice(enteredKeyword) {
@@ -125,7 +157,10 @@ class ProductModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeFavorite(String productId) async {
+  Future<void> removeFavorite({String productId, product}) async {
+    // if (genProducts.isNotEmpty) {
+    //   genProducts.remove(product);
+    // }
     // isLiked = false;
     String token = await UserPreferences().getToken();
     final client = http.Client();

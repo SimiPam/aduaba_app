@@ -13,6 +13,7 @@ class AppUrl {
   static const String cart = baseUrl + '/view-cart';
   static const String updateQuantity = baseUrl + '/UpdateQuantity';
   static const String removeWishList = baseUrl + '/delete-from-wishlist';
+  static const String wishList = baseUrl + '/get-wishlist';
   static const String update = baseUrl + '/update';
   static const String checkout = baseUrl + '/Checkout';
   static const String addCard = baseUrl + '/add-card';
