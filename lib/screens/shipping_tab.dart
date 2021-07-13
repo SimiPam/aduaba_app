@@ -1,4 +1,4 @@
-import 'package:aduaba_app/controllers/address_notifier.dart';
+import 'package:aduaba_app/providers/address_notifier.dart';
 import 'package:aduaba_app/model/address_model.dart';
 import 'package:aduaba_app/screens/payment_tab.dart';
 import 'package:aduaba_app/widgets/address_radio_item_widget.dart';

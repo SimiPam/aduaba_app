@@ -1,4 +1,4 @@
-import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/providers/card_notifier.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:aduaba_app/services/card_api.dart';
 import 'package:flutter/material.dart';

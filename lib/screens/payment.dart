@@ -1,4 +1,4 @@
-import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/providers/card_notifier.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:aduaba_app/screens/new_card.dart';
 import 'package:aduaba_app/services/card_api.dart';
@@ -6,7 +6,7 @@ import 'package:aduaba_app/widgets/custom_page_route.dart';
 import 'package:aduaba_app/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/providers/card_notifier.dart';
 import '../utilities/constants.dart';
 import 'discover_tab.dart';
 import 'home_tab.dart';

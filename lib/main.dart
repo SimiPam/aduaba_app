@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:aduaba_app/controllers/address_notifier.dart';
-import 'package:aduaba_app/controllers/card_notifier.dart';
+import 'package:aduaba_app/providers/address_notifier.dart';
+import 'package:aduaba_app/providers/card_notifier.dart';
 import 'package:aduaba_app/providers/auth_provider.dart';
 import 'package:aduaba_app/providers/cart.dart';
 import 'package:aduaba_app/providers/category_provider.dart';

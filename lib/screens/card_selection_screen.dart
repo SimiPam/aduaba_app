@@ -1,4 +1,4 @@
-import 'package:aduaba_app/controllers/address_notifier.dart';
+import 'package:aduaba_app/providers/address_notifier.dart';
 import 'package:aduaba_app/model/add_new_card_moderl.dart';
 import 'package:aduaba_app/model/card_detail_model.dart';
 import 'package:aduaba_app/providers/cart.dart';
